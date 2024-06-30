@@ -41,6 +41,3 @@ jobs:
         with:
           publish: pnpm changeset publish
           createGithubReleases: true
-      # list all git tags (as verbose as possible)
-      - run: git tag -l -n99
-      - run: git push origin --tags
