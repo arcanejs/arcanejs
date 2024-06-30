@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.1.3
+
+### Patch Changes
+
+- bump version again to publish tags
+
 ## 0.1.2
 
 ### Patch Changes
