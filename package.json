@@ -2,9 +2,9 @@
   "name": "arcanejs",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
+    "build": "TURBO_TELEMETRY_DISABLED=1 turbo build",
+    "dev": "TURBO_TELEMETRY_DISABLED=1 turbo dev",
+    "lint": "TURBO_TELEMETRY_DISABLED=1 turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
