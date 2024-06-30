@@ -11,14 +11,10 @@
   "devDependencies": {
     "@arcanejs/eslint-config": "workspace:*",
     "@arcanejs/typescript-config": "workspace:*",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/node": "^20.11.24",
     "eslint": "^8.57.0",
+    "tsup": "^8.1.0",
     "typescript": "^5.3.3"
-  },
-  "dependencies": {
-    "react": "^18.2.0"
   }
 }
