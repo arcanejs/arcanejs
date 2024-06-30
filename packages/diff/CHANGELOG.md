@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.1.4
+
+### Patch Changes
+
+- bumping to release new package
+
 ## 0.1.3
 
 ### Patch Changes
