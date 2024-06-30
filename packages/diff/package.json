@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/diff",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "private": false,
   "description": "Create and apply JSON diffs of JSON objects",
   "keywords": [

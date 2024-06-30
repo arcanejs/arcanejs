@@ -7,7 +7,7 @@ export default function Home() {
     <div className={styles.page}>
       <main className={styles.main}>
         Hello World
-        {diffJson()}
+        {JSON.stringify(diffJson({ a: "456" }, { a: "654" }))}
       </main>
     </div>
   );

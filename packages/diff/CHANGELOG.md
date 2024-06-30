@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.2.0
+
+### Minor Changes
+
+- 779fae0: Initial implementation of diff
+
 ## 0.1.4
 
 ### Patch Changes
