@@ -1,4 +1,4 @@
-name: Publish
+name: Release & Publish
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   id-token: write
 
 jobs:
-  publish:
+  release-and-publish:
     runs-on: ubuntu-latest
     environment: main
     steps:
@@ -33,7 +33,14 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm changeset publish
+      - name: Run Changeset Workflow
+        uses: changesets/action@aba318e9165b45b7948c60273e0b72fce0a64eb9 # v1.4.7
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          publish: pnpm changeset publish
+          createGithubReleases: true
+      # list all git tags (as verbose as possible)
+      - run: git tag -l -n99
       - run: git push origin --tags
