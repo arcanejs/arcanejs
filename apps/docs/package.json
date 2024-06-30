@@ -15,8 +15,8 @@
     "next": "15.0.0-rc.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@arcanejs/eslint-config": "workspace:*",
+    "@arcanejs/typescript-config": "workspace:*",
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
