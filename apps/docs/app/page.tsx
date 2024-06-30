@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { diffJson } from '@arcanejs/diff';
+import { diffJson } from "@arcanejs/diff";
 
 export default function Home() {
   return (
