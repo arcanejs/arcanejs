@@ -1,8 +1,15 @@
-name: CI Checks
-on: pull_request
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  ci-checks:
+  release:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
@@ -18,7 +25,10 @@ jobs:
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-      - run: pnpm lint
-      - run: pnpm format:check
+
+      - name: Create Release Pull Request
+        uses: changesets/action@aba318e9165b45b7948c60273e0b72fce0a64eb9 # v1.4.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
