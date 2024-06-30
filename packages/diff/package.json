@@ -2,6 +2,24 @@
   "name": "@arcanejs/diff",
   "version": "0.1.0",
   "private": false,
+  "description": "Create and apply JSON diffs of JSON objects",
+  "keywords": [
+    "diff",
+    "json",
+    "patch",
+    "delta",
+    "websocket",
+    "state"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Sam Lanning",
+    "url": "https://samlanning.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcanejs/arcanejs.git"
+  },
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
@@ -22,5 +40,11 @@
     "eslint": "^8.57.0",
     "tsup": "^8.1.0",
     "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
