@@ -17,8 +17,9 @@ module.exports = {
   env: {
     node: true,
     browser: true,
+    "jest/globals": true,
   },
-  plugins: ["only-warn"],
+  plugins: ["only-warn", "jest"],
   settings: {
     "import/resolver": {
       typescript: {
