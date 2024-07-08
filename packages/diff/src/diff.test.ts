@@ -1,4 +1,4 @@
-import { diffJson } from "./";
+import { diffJson } from "./diff";
 
 describe("diff", () => {
   describe("simple matching values", () => {
