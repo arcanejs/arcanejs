@@ -25,6 +25,16 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./diff": {
+      "import": "./dist/diff.mjs",
+      "require": "./dist/diff.js",
+      "types": "./dist/diff.d.ts"
+    },
+    "./patch": {
+      "import": "./dist/patch.mjs",
+      "require": "./dist/patch.js",
+      "types": "./dist/patch.d.ts"
     }
   },
   "scripts": {

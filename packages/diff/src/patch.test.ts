@@ -2,15 +2,12 @@ import { diffJson, JSONValue } from "./diff";
 import { patchJson } from "./patch";
 
 describe("patchJson", () => {
-
   describe("matching values should return exact same instance", () => {
-      
-      for (const a of [5, "hello", true, { foo: 'bar'}, [1, 4]]) {
-        it(`${JSON.stringify(a)}`, () => {
-          expect(patchJson(a, diffJson(a, a))).toBe(a);
-        });
-      }
-  
+    for (const a of [5, "hello", true, { foo: "bar" }, [1, 4]]) {
+      it(`${JSON.stringify(a)}`, () => {
+        expect(patchJson(a, diffJson(a, a))).toBe(a);
+      });
+    }
   });
 
   describe("simple values should be replaces", () => {
@@ -69,11 +66,9 @@ describe("patchJson", () => {
       // Unchanged values must be exact same instance
       expect(result?.foo).toBe(a.foo);
     });
-
   });
 
   it("advanced change", () => {
-
     const a: JSONValue = {
       foo: {
         bar: {
@@ -81,7 +76,7 @@ describe("patchJson", () => {
         },
       },
       baz: "qux",
-      removed: 2
+      removed: 2,
     };
 
     const b: JSONValue = {
@@ -91,7 +86,7 @@ describe("patchJson", () => {
         },
       },
       baz: "quux",
-      added: 3
+      added: 3,
     };
 
     const result = patchJson(a, diffJson(a, b));
@@ -99,5 +94,4 @@ describe("patchJson", () => {
     // Unchanged values must be exact same instance
     expect(result?.foo).toBe(a.foo);
   });
-
 });
