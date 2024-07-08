@@ -34,6 +34,19 @@ describe("patchJson", () => {
       expect(result?.[1]).toBe(a[1]);
       expect(result?.[4]).toBe(a[3]);
     });
+
+    it("should update nested values minimally", () => {
+      const a = [[1], [2], { a: [5], b: [6] }, [6]];
+      const b = [[1], [2], { a: [5] }, [6]];
+      const result = patchJson(a, diffJson(a, b));
+      expect(result).toEqual(b);
+
+      // Unchanged values should be exactly the same
+      expect(result?.[0]).toBe(a[0]);
+      expect(result?.[1]).toBe(a[1]);
+      expect(result?.[3]).toBe(a[3]);
+      expect((result?.[2] as any)?.a).toBe((a[2] as any)?.a);
+    });
   });
 
   describe("object changes should be reflected", () => {

@@ -2,4 +2,4 @@
 "@arcanejs/diff": minor
 ---
 
-Introduce splice diffing
+Introduce advanced array diffing + patching (splices and nested changes)
