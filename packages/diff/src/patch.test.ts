@@ -22,20 +22,17 @@ describe("patchJson", () => {
     }
   });
 
-  describe("arrays should be replaced", () => {
-    // TODO, more intelligent patching
-    it("should replace arrays", () => {
-      const a = [[1], [2], [3]];
-      const b = [[1], [2], [4]];
+  describe("arrays should be updated", () => {
+    it("should splice arrays where possible", () => {
+      const a = [[1], [2], [3], [6]];
+      const b = [[1], [2], [4], [5], [6]];
       const result = patchJson(a, diffJson(a, b));
       expect(result).toEqual(b);
 
-      // Each value will have been replaced, even if equal
-      expect(result?.[0]).not.toBe(a[0]);
-      expect(result?.[1]).not.toBe(a[1]);
-      expect(result?.[2]).not.toBe(a[2]);
-
-      // TODO: update algorithm to more intelligently replace array values
+      // Unchanged values should be exactly the same
+      expect(result?.[0]).toBe(a[0]);
+      expect(result?.[1]).toBe(a[1]);
+      expect(result?.[4]).toBe(a[3]);
     });
   });
 

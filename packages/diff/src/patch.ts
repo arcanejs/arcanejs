@@ -12,6 +12,15 @@ export const patchJson = <V extends JSONValue>(
     return diff.after as V;
   }
 
+  if (diff.type === "splice") {
+    if (!Array.isArray(old)) {
+      throw new Error("Cannot apply splice diff to non-array value");
+    }
+    const result = [...old];
+    result.splice(diff.start, diff.count, ...diff.items);
+    return result as V;
+  }
+
   if (Array.isArray(old)) {
     throw new Error("Advanced array diffs not supported");
   }
