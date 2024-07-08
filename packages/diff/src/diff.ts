@@ -8,8 +8,9 @@ type PossibleRecursiveDiff<V extends JSONValue | undefined> =
 
 export type NestedDiff<V extends JSONValue> =
   // Primitives & Arrays may return `value`
-  | (V extends JSONPrimitive | JSONArray
-      ? { type: "value"; before: V; after: V }
+  | (V extends JSONPrimitive ? { type: "value"; before: V; after: V } : never)
+  | (V extends JSONArray
+      ? { type: "splice"; start: number; count: number; items: V }
       : never)
   // Objects may return `modified`
   | (V extends JSONObject
@@ -39,23 +40,38 @@ export const diffJson = <V extends JSONValue>(
     throw new Error("Types don't match, unable to diff");
   }
   if (Array.isArray(a) && Array.isArray(b)) {
-    // Compare arrays
-    let matching = true;
-    if (a.length === b.length) {
-      for (let i = 0; i < a.length; i++) {
-        const d = diffJson(a[i], b[i]);
-        if (d.type !== "match") {
-          matching = false;
-          break;
-        }
-      }
-    } else {
-      matching = false;
+    // Find earliest and latest non-matching items
+
+    // Find start index of difference
+    let start = 0;
+    while (
+      start < a.length &&
+      start < b.length &&
+      diffJson(a[start], b[start]).type === "match"
+    ) {
+      start++;
     }
-    if (matching) {
+
+    if (start === a.length && start === b.length) {
       return { type: "match" };
     }
-    return { type: "value", before: a, after: b } as Diff<V>;
+
+    // Find end index of difference
+    let endIndexA = a.length - 1;
+    let endIndexB = b.length - 1;
+    while (
+      endIndexA >= start &&
+      endIndexB >= start &&
+      diffJson(a[endIndexA], b[endIndexB]).type === "match"
+    ) {
+      endIndexA--;
+      endIndexB--;
+    }
+
+    const count = endIndexA - start + 1;
+    const items = b.slice(start, endIndexB + 1);
+
+    return { type: "splice", start, count, items } as Diff<V>;
   }
   if (a === null || b === null) {
     return { type: "value", before: a, after: b } as Diff<V>;

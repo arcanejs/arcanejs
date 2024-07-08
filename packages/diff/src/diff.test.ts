@@ -59,19 +59,77 @@ describe("diff", () => {
       expect(diffJson([1, 2, 3], [1, 2, 3])).toEqual({ type: "match" });
     });
 
-    it("should diff arrays with different elements", () => {
+    it("should diff identify single item to replace", () => {
       expect(diffJson([1, 2, 3], [1, 2, 4])).toEqual({
-        type: "value",
-        before: [1, 2, 3],
-        after: [1, 2, 4],
+        type: "splice",
+        start: 2,
+        count: 1,
+        items: [4],
       });
     });
 
-    it("should diff arrays with different lengths", () => {
-      expect(diffJson([1, 2, 3], [1, 2, 3, 4])).toEqual({
-        type: "value",
-        before: [1, 2, 3],
-        after: [1, 2, 3, 4],
+    describe("should identify single missing item", () => {
+      it("beginning", () => {
+        expect(diffJson([2, 3, 4], [1, 2, 3, 4])).toEqual({
+          type: "splice",
+          start: 0,
+          count: 0,
+          items: [1],
+        });
+      });
+      it("middle", () => {
+        expect(diffJson([1, 2, 4], [1, 2, 3, 4])).toEqual({
+          type: "splice",
+          start: 2,
+          count: 0,
+          items: [3],
+        });
+      });
+      it("end", () => {
+        expect(diffJson([1, 2, 3], [1, 2, 3, 4])).toEqual({
+          type: "splice",
+          start: 3,
+          count: 0,
+          items: [4],
+        });
+      });
+    });
+
+    describe("should identify single additional item", () => {
+      it("beginning", () => {
+        expect(diffJson([1, 2, 3, 4], [2, 3, 4])).toEqual({
+          type: "splice",
+          start: 0,
+          count: 1,
+          items: [],
+        });
+      });
+
+      it("middle", () => {
+        expect(diffJson([1, 2, 3, 4], [1, 2, 4])).toEqual({
+          type: "splice",
+          start: 2,
+          count: 1,
+          items: [],
+        });
+      });
+
+      it("end", () => {
+        expect(diffJson([1, 2, 3, 4], [1, 2, 3])).toEqual({
+          type: "splice",
+          start: 3,
+          count: 1,
+          items: [],
+        });
+      });
+    });
+
+    it("should identify multiple items to replace", () => {
+      expect(diffJson([1, 2, 3, 6, 7], [1, 2, 4, 5, 7])).toEqual({
+        type: "splice",
+        start: 2,
+        count: 2,
+        items: [4, 5],
       });
     });
   });
@@ -171,9 +229,10 @@ describe("diff", () => {
             changes: { d: { type: "value", before: 3, after: 4 } },
           },
           e: {
-            type: "value",
-            before: [4, 5, 6],
-            after: [4, 5, 7],
+            type: "splice",
+            start: 2,
+            count: 1,
+            items: [7],
           },
         },
       });
