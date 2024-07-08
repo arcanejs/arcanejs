@@ -6,7 +6,9 @@
     "dev": "TURBO_TELEMETRY_DISABLED=1 turbo dev",
     "lint": "TURBO_TELEMETRY_DISABLED=1 turbo lint",
     "format:check": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format:fix": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "TURBO_TELEMETRY_DISABLED=1 turbo test",
+    "test:watch": "TURBO_TELEMETRY_DISABLED=1 turbo test:watch"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.6",
