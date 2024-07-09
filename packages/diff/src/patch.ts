@@ -21,11 +21,22 @@ export const patchJson = <V extends JSONValue>(
     return result as V;
   }
 
-  if (Array.isArray(old)) {
-    throw new Error("Advanced array diffs not supported");
+  if (diff.type === "modified-a") {
+    if (!Array.isArray(old)) {
+      throw new Error("Cannot apply changes diff to non-array value");
+    }
+    const result = [...old];
+    for (const { i, diff: d } of diff.changes) {
+      result[i] = patchJson(old[i], d);
+    }
+    return result as V;
   }
 
-  if (diff.type === "modified") {
+  if (Array.isArray(old)) {
+    throw new Error("Unexpected array type");
+  }
+
+  if (diff.type === "modified-o") {
     if (typeof old !== "object" || old === null) {
       throw new Error("Cannot apply modified diff to non-object value");
     }

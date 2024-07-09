@@ -61,10 +61,8 @@ describe("diff", () => {
 
     it("should diff identify single item to replace", () => {
       expect(diffJson([1, 2, 3], [1, 2, 4])).toEqual({
-        type: "splice",
-        start: 2,
-        count: 1,
-        items: [4],
+        type: "modified-a",
+        changes: [{ i: 2, diff: { type: "value", before: 3, after: 4 } }],
       });
     });
 
@@ -125,10 +123,10 @@ describe("diff", () => {
     });
 
     it("should identify multiple items to replace", () => {
-      expect(diffJson([1, 2, 3, 6, 7], [1, 2, 4, 5, 7])).toEqual({
+      expect(diffJson([1, 2, 3, 6, 6.5, 7], [1, 2, 4, 5, 7])).toEqual({
         type: "splice",
         start: 2,
-        count: 2,
+        count: 3,
         items: [4, 5],
       });
     });
@@ -155,7 +153,7 @@ describe("diff", () => {
         describe(`value: ${JSON.stringify(v)}`, () => {
           it("deletions should be output", () => {
             expect(diffJson({ a: 1, b: v, c: 3 }, { a: 1, c: 3 })).toEqual({
-              type: "modified",
+              type: "modified-o",
               deletions: { b: v },
             });
           });
@@ -164,14 +162,14 @@ describe("diff", () => {
             expect(
               diffJson({ a: 1, b: v, c: 3 }, { a: 1, b: undefined, c: 3 }),
             ).toEqual({
-              type: "modified",
+              type: "modified-o",
               deletions: { b: v },
             });
           });
 
           it("additions should be output", () => {
             expect(diffJson({ a: 1, c: 3 }, { a: 1, b: v, c: 3 })).toEqual({
-              type: "modified",
+              type: "modified-o",
               additions: { b: v },
             });
           });
@@ -180,7 +178,7 @@ describe("diff", () => {
             expect(
               diffJson({ a: 1, b: undefined, c: 3 }, { a: 1, b: v, c: 3 }),
             ).toEqual({
-              type: "modified",
+              type: "modified-o",
               additions: { b: v },
             });
           });
@@ -190,14 +188,14 @@ describe("diff", () => {
 
     it("changes should be output", () => {
       expect(diffJson({ a: 1, b: 2, c: 3 }, { a: 1, b: 4, c: 3 })).toEqual({
-        type: "modified",
+        type: "modified-o",
         changes: { b: { type: "value", before: 2, after: 4 } },
       });
     });
 
     it("deletions, additions, and changes should be output", () => {
       expect(diffJson({ a: 1, b: 2, c: 3 }, { a: 1, c: 4, d: null })).toEqual({
-        type: "modified",
+        type: "modified-o",
         additions: { d: null },
         deletions: { b: 2 },
         changes: { c: { type: "value", before: 3, after: 4 } },
@@ -222,17 +220,15 @@ describe("diff", () => {
           { a: 1, b: { c: 2, d: 4 }, e: [4, 5, 7] },
         ),
       ).toEqual({
-        type: "modified",
+        type: "modified-o",
         changes: {
           b: {
-            type: "modified",
+            type: "modified-o",
             changes: { d: { type: "value", before: 3, after: 4 } },
           },
           e: {
-            type: "splice",
-            start: 2,
-            count: 1,
-            items: [7],
+            type: "modified-a",
+            changes: [{ i: 2, diff: { type: "value", before: 6, after: 7 } }],
           },
         },
       });
