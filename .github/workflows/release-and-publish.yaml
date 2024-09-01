@@ -34,9 +34,6 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - name: Configure PNPM to use token
-        run:
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
       - name: Run Changeset Workflow
         uses: s0/changesets-action@647b61a3307a9fec0838dde37c1594888ad0ff5e # pinned-vA
         env:
