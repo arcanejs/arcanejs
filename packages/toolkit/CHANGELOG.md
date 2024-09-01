@@ -1,5 +1,11 @@
 # @arcanejs/toolkit
 
+## 0.0.3
+
+### Patch Changes
+
+- 3607779: Use non-strict version for workspace packages
+
 ## 0.0.2
 
 ### Patch Changes
