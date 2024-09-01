@@ -45,8 +45,8 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@arcanejs/eslint-config": "workspace:*",
-    "@arcanejs/typescript-config": "workspace:*",
+    "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.24",

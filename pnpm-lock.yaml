@@ -24,7 +24,7 @@ importers:
   apps/docs:
     dependencies:
       '@arcanejs/diff':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/diff
       next:
         specifier: 15.0.0-rc.0
@@ -37,10 +37,10 @@ importers:
         version: 19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522)
     devDependencies:
       '@arcanejs/eslint-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/eslint-config
       '@arcanejs/typescript-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/typescript-config
       '@types/node':
         specifier: ^20
@@ -64,10 +64,10 @@ importers:
   packages/diff:
     devDependencies:
       '@arcanejs/eslint-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../eslint-config
       '@arcanejs/typescript-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../typescript-config
       '@types/eslint':
         specifier: ^8.56.5
@@ -125,14 +125,14 @@ importers:
   packages/toolkit:
     dependencies:
       '@arcanejs/diff':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../diff
     devDependencies:
       '@arcanejs/eslint-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../eslint-config
       '@arcanejs/typescript-config':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../typescript-config
       '@types/eslint':
         specifier: ^8.56.5

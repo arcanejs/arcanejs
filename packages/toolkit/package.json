@@ -29,8 +29,8 @@
     "dev": "tsup --watch"
   },
   "devDependencies": {
-    "@arcanejs/eslint-config": "workspace:*",
-    "@arcanejs/typescript-config": "workspace:*",
+    "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",
     "@types/node": "^20.11.24",
     "eslint": "^8.57.0",
@@ -38,7 +38,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@arcanejs/diff": "workspace:*"
+    "@arcanejs/diff": "workspace:^"
   },
   "files": [
     "dist"
