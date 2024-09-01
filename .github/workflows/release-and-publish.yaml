@@ -34,6 +34,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - run: cp .npmrc.ci .npmrc
       - name: Run Changeset Workflow
         uses: s0/changesets-action@647b61a3307a9fec0838dde37c1594888ad0ff5e # pinned-vA
         env:
