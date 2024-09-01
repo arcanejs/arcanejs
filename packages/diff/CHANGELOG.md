@@ -1,5 +1,12 @@
 # @arcanejs/diff
 
+## 0.3.0
+
+### Minor Changes
+
+- fe0d7fb: Introduce advanced array diffing + patching (splices and nested changes)
+- 6424c0a: Add initial patch implementation
+
 ## 0.2.0
 
 ### Minor Changes
