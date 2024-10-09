@@ -1,1 +1,5 @@
-console.log("hello world");
+export class ToolkitServer {
+  constructor() {
+    console.log("ToolkitServer created");
+  }
+}
