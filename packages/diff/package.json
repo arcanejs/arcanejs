@@ -39,7 +39,7 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "tsup && tsc --emitDeclarationOnly --declaration",
+    "build": "tsup",
     "dev": "tsup --watch",
     "test": "jest",
     "test:watch": "jest --watch"
