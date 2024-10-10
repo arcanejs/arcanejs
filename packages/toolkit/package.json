@@ -18,7 +18,6 @@
   },
   "exports": {
     ".": {
-      "@arcanejs/source": "./src/index.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
@@ -26,7 +25,7 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "tsup && tsc --emitDeclarationOnly --declaration",
+    "build": "tsup",
     "dev": "tsup --watch"
   },
   "devDependencies": {
