@@ -22,16 +22,19 @@
   },
   "exports": {
     ".": {
+      "@arcanejs/source": "./src/index.ts",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./diff": {
+      "@arcanejs/source": "./src/diff.ts",
       "import": "./dist/diff.mjs",
       "require": "./dist/diff.js",
       "types": "./dist/diff.d.ts"
     },
     "./patch": {
+      "@arcanejs/source": "./src/patch.ts",
       "import": "./dist/patch.mjs",
       "require": "./dist/patch.js",
       "types": "./dist/patch.d.ts"
