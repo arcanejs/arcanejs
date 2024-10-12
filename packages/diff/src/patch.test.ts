@@ -1,19 +1,19 @@
-import { diffJson, JSONValue } from "./diff";
-import { patchJson } from "./patch";
+import { diffJson, JSONValue } from './diff';
+import { patchJson } from './patch';
 
-describe("patchJson", () => {
-  describe("matching values should return exact same instance", () => {
-    for (const a of [5, "hello", true, { foo: "bar" }, [1, 4]]) {
+describe('patchJson', () => {
+  describe('matching values should return exact same instance', () => {
+    for (const a of [5, 'hello', true, { foo: 'bar' }, [1, 4]]) {
       it(`${JSON.stringify(a)}`, () => {
         expect(patchJson(a, diffJson(a, a))).toBe(a);
       });
     }
   });
 
-  describe("simple values should be replaces", () => {
+  describe('simple values should be replaces', () => {
     for (const [a, b] of [
       [5, 6],
-      ["hello", "goodbye"],
+      ['hello', 'goodbye'],
       [true, false],
     ]) {
       it(`${JSON.stringify(a)} -> ${JSON.stringify(b)}`, () => {
@@ -22,8 +22,8 @@ describe("patchJson", () => {
     }
   });
 
-  describe("arrays should be updated", () => {
-    it("should splice arrays where possible", () => {
+  describe('arrays should be updated', () => {
+    it('should splice arrays where possible', () => {
       const a = [[1], [2], [3], [6]];
       const b = [[1], [2], [4], [5], [6]];
       const result = patchJson(a, diffJson(a, b));
@@ -35,7 +35,7 @@ describe("patchJson", () => {
       expect(result?.[4]).toBe(a[3]);
     });
 
-    it("should update nested values minimally", () => {
+    it('should update nested values minimally', () => {
       const a = [[1], [2], { a: [5], b: [6] }, [6]];
       const b = [[1], [2], { a: [5] }, [6]];
       const result = patchJson(a, diffJson(a, b));
@@ -49,28 +49,28 @@ describe("patchJson", () => {
     });
   });
 
-  describe("object changes should be reflected", () => {
-    it("additions", () => {
-      const a = { foo: ["bar"] };
-      const b = { foo: ["bar"], baz: "qux" };
+  describe('object changes should be reflected', () => {
+    it('additions', () => {
+      const a = { foo: ['bar'] };
+      const b = { foo: ['bar'], baz: 'qux' };
       const result = patchJson(a, diffJson(a, b));
       expect(result).toEqual(b);
       // Unchanged values must be exact same instance
       expect(result?.foo).toBe(a.foo);
     });
 
-    it("deletions", () => {
-      const a = { foo: ["bar"], baz: "qux" };
-      const b = { foo: ["bar"] };
+    it('deletions', () => {
+      const a = { foo: ['bar'], baz: 'qux' };
+      const b = { foo: ['bar'] };
       const result = patchJson(a, diffJson(a, b));
       expect(result).toEqual(b);
       // Unchanged values must be exact same instance
       expect(result?.foo).toBe(a.foo);
     });
 
-    it("changes", () => {
-      const a = { foo: ["bar"], baz: "qux" };
-      const b = { foo: ["bar"], baz: "quux" };
+    it('changes', () => {
+      const a = { foo: ['bar'], baz: 'qux' };
+      const b = { foo: ['bar'], baz: 'quux' };
       const result = patchJson(a, diffJson(a, b));
       expect(result).toEqual(b);
       // Unchanged values must be exact same instance
@@ -78,24 +78,24 @@ describe("patchJson", () => {
     });
   });
 
-  it("advanced change", () => {
+  it('advanced change', () => {
     const a: JSONValue = {
       foo: {
         bar: {
-          baz: "qux",
+          baz: 'qux',
         },
       },
-      baz: "qux",
+      baz: 'qux',
       removed: 2,
     };
 
     const b: JSONValue = {
       foo: {
         bar: {
-          baz: "qux",
+          baz: 'qux',
         },
       },
-      baz: "quux",
+      baz: 'quux',
       added: 3,
     };
 

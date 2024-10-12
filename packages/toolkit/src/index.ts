@@ -1,9 +1,4 @@
-import { diffJson } from "@arcanejs/diff/diff";
+export { Toolkit } from './backend/toolkit';
 
-console.log(diffJson);
-
-export class ToolkitServer {
-  constructor() {
-    console.log("ToolkitServer created");
-  }
-}
+export type { Component } from './backend/components/base';
+export { Group, GroupHeader } from './backend/components/group';
