@@ -8,13 +8,13 @@ type PossibleRecursiveDiff<V extends JSONValue | undefined> =
 
 export type NestedDiff<V extends JSONValue> =
   // Primitives & Arrays may return `value`
-  | (V extends JSONPrimitive ? { type: "value"; before: V; after: V } : never)
+  | (V extends JSONPrimitive ? { type: 'value'; before: V; after: V } : never)
   | (V extends JSONArray
-      ? { type: "splice"; start: number; count: number; items: V }
+      ? { type: 'splice'; start: number; count: number; items: V }
       : never)
   | (V extends JSONArray
       ? {
-          type: "modified-a";
+          type: 'modified-a';
           changes: Array<{
             i: number;
             diff: PossibleRecursiveDiff<V[number]>;
@@ -24,14 +24,14 @@ export type NestedDiff<V extends JSONValue> =
   // Objects may return `modified`
   | (V extends JSONObject
       ? {
-          type: "modified-o";
+          type: 'modified-o';
           additions?: { [K in keyof V]: V[K] };
           deletions?: { [K in keyof V]: V[K] };
           changes?: { [K in keyof V]: PossibleRecursiveDiff<V[K]> };
         }
       : never);
 
-export type Diff<V extends JSONValue> = NestedDiff<V> | { type: "match" };
+export type Diff<V extends JSONValue> = NestedDiff<V> | { type: 'match' };
 
 const jsonTypeMatches = (a: JSONValue | undefined, b: JSONValue | undefined) =>
   typeof a === typeof b &&
@@ -43,7 +43,7 @@ export const diffJson = <V extends JSONValue>(
   b: V | undefined,
 ): Diff<V> => {
   if (a === b) {
-    return { type: "match" };
+    return { type: 'match' };
   }
   if (!jsonTypeMatches(a, b)) {
     throw new Error("Types don't match, unable to diff");
@@ -56,16 +56,16 @@ export const diffJson = <V extends JSONValue>(
       const changes: Array<{ i: number; diff: NestedDiff<JSONValue> }> = [];
       for (let i = 0; i < a.length; i++) {
         const d = diffJson(a[i], b[i]);
-        if (d.type !== "match") {
+        if (d.type !== 'match') {
           changes.push({ i, diff: d });
         }
       }
 
       if (changes.length === 0) {
-        return { type: "match" };
+        return { type: 'match' };
       }
 
-      return { type: "modified-a", changes } as Diff<V>;
+      return { type: 'modified-a', changes } as Diff<V>;
     } else {
       // Find earliest and latest non-matching items
 
@@ -74,7 +74,7 @@ export const diffJson = <V extends JSONValue>(
       while (
         start < a.length &&
         start < b.length &&
-        diffJson(a[start], b[start]).type === "match"
+        diffJson(a[start], b[start]).type === 'match'
       ) {
         start++;
       }
@@ -85,7 +85,7 @@ export const diffJson = <V extends JSONValue>(
       while (
         endIndexA >= start &&
         endIndexB >= start &&
-        diffJson(a[endIndexA], b[endIndexB]).type === "match"
+        diffJson(a[endIndexA], b[endIndexB]).type === 'match'
       ) {
         endIndexA--;
         endIndexB--;
@@ -94,17 +94,17 @@ export const diffJson = <V extends JSONValue>(
       const count = endIndexA - start + 1;
       const items = b.slice(start, endIndexB + 1);
 
-      return { type: "splice", start, count, items } as Diff<V>;
+      return { type: 'splice', start, count, items } as Diff<V>;
     }
   }
   if (a === null || b === null) {
-    return { type: "value", before: a, after: b } as Diff<V>;
+    return { type: 'value', before: a, after: b } as Diff<V>;
   }
   if (Array.isArray(a) || Array.isArray(b)) {
-    return { type: "value", before: a, after: b } as Diff<V>;
+    return { type: 'value', before: a, after: b } as Diff<V>;
   }
 
-  if (typeof a === "object" && typeof b === "object") {
+  if (typeof a === 'object' && typeof b === 'object') {
     // Compare objects
     const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
     const changes: { [key: string]: NestedDiff<JSONValue> } = {};
@@ -119,13 +119,13 @@ export const diffJson = <V extends JSONValue>(
         deletions[key] = valueA;
       } else if (valueA !== undefined && valueB !== undefined) {
         const d = diffJson(valueA, valueB);
-        if (d.type !== "match") {
+        if (d.type !== 'match') {
           changes[key] = d;
         }
       }
     }
     const result = {
-      type: "modified-o",
+      type: 'modified-o',
       ...(Object.keys(changes).length === 0 ? {} : { changes }),
       ...(Object.keys(additions).length === 0 ? {} : { additions }),
       ...(Object.keys(deletions).length === 0 ? {} : { deletions }),
@@ -133,10 +133,10 @@ export const diffJson = <V extends JSONValue>(
     if (result.changes || result.additions || result.deletions) {
       return result as Diff<V>;
     } else {
-      return { type: "match" };
+      return { type: 'match' };
     }
   }
 
   // Type matches and not array / object, so value must be different
-  return { type: "value", before: a, after: b } as Diff<V>;
+  return { type: 'value', before: a, after: b } as Diff<V>;
 };

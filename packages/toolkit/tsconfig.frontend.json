@@ -1,0 +1,8 @@
+{
+  "extends": "@arcanejs/typescript-config/react-library.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "src/backend", "src/index.ts"]
+}

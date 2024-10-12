@@ -4,7 +4,7 @@ const project = resolve(process.cwd(), "tsconfig.json");
 
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
-  extends: ["eslint:recommended", "prettier", "turbo"],
+  extends: ["eslint:recommended", 'plugin:@typescript-eslint/recommended', "prettier", "turbo"],
   plugins: ["only-warn", "jest"],
   globals: {
     React: true,
@@ -28,9 +28,21 @@ module.exports = {
     "dist/",
     "coverage/",
   ],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": ["warn", {
+      "varsIgnorePattern": "^_",
+      "argsIgnorePattern": "^_",
+    }],
+  },
   overrides: [
     {
       files: ["*.js?(x)", "*.ts?(x)"],
+    },
+    {
+      files: ["*.test.js?(x)", "*.test.ts?(x)"],
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+      }
     },
   ],
 };

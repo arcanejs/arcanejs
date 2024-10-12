@@ -1,6 +1,9 @@
 name: CI Checks
 on: pull_request
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   ci-checks:
     runs-on: ubuntu-latest
@@ -22,3 +25,8 @@ jobs:
       - run: pnpm build
       - run: pnpm lint
       - run: pnpm format:check
+        id: format_check
+        continue-on-error: true
+      - name: 'output prettier changes if failed'
+        if: steps.format_check.outcome == 'failure'
+        run: pnpm format:fix && git diff
