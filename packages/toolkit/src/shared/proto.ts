@@ -1,17 +1,18 @@
+import { Diff } from '@arcanejs/diff';
 import { GroupComponentStyle } from './styles';
 
-interface BaseComponent {
+type BaseComponent = {
   key: number;
-}
+};
 
 export type GroupCollapsedState = 'open' | 'closed';
 
 export type DefaultGroupCollapsedState = GroupCollapsedState | 'auto';
 
-export interface GroupHeaderComponent extends BaseComponent {
+export type GroupHeaderComponent = BaseComponent & {
   component: 'group-header';
   children: Component[];
-}
+};
 
 export type GroupComponent = BaseComponent &
   GroupComponentStyle & {
@@ -32,22 +33,27 @@ export type GroupComponent = BaseComponent &
 
 export type Component = GroupHeaderComponent | GroupComponent;
 
-export interface UpdateTreeMsg {
-  type: 'update_tree';
+export type SendTreeMsg = {
+  type: 'tree-full';
   root: GroupComponent;
-}
+};
 
-export type ServerMessage = UpdateTreeMsg;
+export type UpdateTreeMsg = {
+  type: 'tree-diff';
+  diff: Diff<GroupComponent>;
+};
 
-export interface BaseClientComponentMessage {
-  type: 'component_message';
+export type ServerMessage = SendTreeMsg | UpdateTreeMsg;
+
+export type BaseClientComponentMessage = {
+  type: 'component-message';
   componentKey: number;
-}
+};
 
-export interface GroupTitleChangeMessage extends BaseClientComponentMessage {
+export type GroupTitleChangeMessage = BaseClientComponentMessage & {
   component: 'group';
   title: string;
-}
+};
 
 export type ClientComponentMessage = GroupTitleChangeMessage;
 

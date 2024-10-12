@@ -25,11 +25,20 @@ const groupB = root.appendChild(
   }),
 );
 
+let s = 0;
+
 setInterval(() => {
-  groupA.setTitle('Group A ' + Math.random());
-  if (Math.random() > 0.5) {
-    root.removeChild(groupB);
-  } else {
-    root.appendChild(groupB);
+  switch (s) {
+    case 0:
+    case 2:
+      groupA.setTitle('Group A ' + Math.random());
+      break;
+    case 1:
+      root.removeChild(groupB);
+      break;
+    case 3:
+      root.appendChild(groupB);
+      break;
   }
+  s = (s + 1) % 4;
 }, 500);

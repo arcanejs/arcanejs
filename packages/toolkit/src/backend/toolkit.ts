@@ -11,9 +11,13 @@ import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Group } from './components/group';
 import { Component } from './components/base';
-import { ClientMessage } from '../shared/proto';
+import { ClientMessage, GroupComponent } from '../shared/proto';
 
 console.log(diffJson);
+
+type ConnectionMetadata = {
+  lastTreeSent: GroupComponent | undefined;
+};
 
 export class Toolkit {
   private readonly options: LightDeskOptions;
@@ -21,7 +25,7 @@ export class Toolkit {
    * Mapping from components to unique IDs that identify them
    */
   private readonly componentIDMap = new IDMap();
-  private readonly connections = new Set<Connection>();
+  private readonly connections = new Map<Connection, ConnectionMetadata>();
   private rootGroup: Group | null = null;
 
   constructor(options: Partial<LightDeskOptions> = {}) {
@@ -85,8 +89,12 @@ export class Toolkit {
       setImmediate(() => {
         if (!this.rootGroup) return;
         const root = this.rootGroup.getProtoInfo(this.componentIDMap);
-        for (const connection of this.connections) {
-          connection.sendMessage({ type: 'update_tree', root });
+        for (const [connection, meta] of this.connections.entries()) {
+          connection.sendMessage({
+            type: 'tree-diff',
+            diff: diffJson(meta.lastTreeSent, root),
+          });
+          meta.lastTreeSent = root;
         }
       });
     },
@@ -103,11 +111,13 @@ export class Toolkit {
   };
 
   private onNewConnection = (connection: Connection) => {
-    this.connections.add(connection);
-    if (this.rootGroup) {
+    const lastTreeSent =
+      this.rootGroup?.getProtoInfo(this.componentIDMap) ?? undefined;
+    this.connections.set(connection, { lastTreeSent });
+    if (lastTreeSent) {
       connection.sendMessage({
-        type: 'update_tree',
-        root: this.rootGroup.getProtoInfo(this.componentIDMap),
+        type: 'tree-full',
+        root: lastTreeSent,
       });
     }
   };
@@ -120,7 +130,7 @@ export class Toolkit {
   private onMessage = (_connection: Connection, message: ClientMessage) => {
     console.log('got message', message);
     switch (message.type) {
-      case 'component_message':
+      case 'component-message':
         if (this.rootGroup)
           this.rootGroup.routeMessage(this.componentIDMap, message);
         break;

@@ -196,7 +196,7 @@ const Group: FunctionComponent<Props> = (props) => {
 
   const updateTitle: EventHandler<SyntheticEvent<HTMLInputElement>> = (e) => {
     sendMessage?.({
-      type: 'component_message',
+      type: 'component-message',
       componentKey: props.info.key,
       component: 'group',
       title: e.currentTarget.value,

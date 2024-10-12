@@ -6,15 +6,16 @@ import * as proto from '../shared/proto';
 
 import { Group, GroupStateWrapper } from './components/group';
 import { StageContext } from './components/context';
+import { patchJson } from '@arcanejs/diff';
 
-interface Props {
+type Props = {
   className?: string;
-}
+};
 
-interface State {
-  root: proto.GroupComponent | null;
+type State = {
+  root: proto.GroupComponent | undefined;
   sendMessage: ((msg: proto.ClientMessage) => void) | null;
-}
+};
 
 const renderComponent = (info: proto.Component): JSX.Element => {
   switch (info.component) {
@@ -33,7 +34,7 @@ class Stage extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     this.state = {
-      root: null,
+      root: undefined,
       sendMessage: null,
     };
   }
@@ -78,8 +79,13 @@ class Stage extends React.Component<Props, State> {
   private handleMessage(msg: proto.ServerMessage) {
     console.log('handleMessage', msg);
     switch (msg.type) {
-      case 'update_tree':
+      case 'tree-full':
         this.setState({ root: msg.root });
+        return;
+      case 'tree-diff':
+        this.setState((state) => ({
+          root: patchJson(state.root, msg.diff),
+        }));
         return;
     }
   }

@@ -3,7 +3,7 @@
  *
  * Default Styling: [[GROUP_DEFAULT_STYLE]]
  */
-export interface GroupComponentStyle {
+export type GroupComponentStyle = {
   /**
    * In which way should child components of this group be organized?
    */
@@ -20,7 +20,7 @@ export interface GroupComponentStyle {
    * having to have visible boundaries between them.
    */
   noBorder?: boolean;
-}
+};
 
 /**
  * Default [[GroupComponentStyle]] for the [[Group]] component.
@@ -34,9 +34,9 @@ export const GROUP_DEFAULT_STYLE: GroupComponentStyle = {
  *
  * Default Styling: [[LABEL_DEFAULT_STYLE]]
  */
-export interface LabelComponentStyle {
+export type LabelComponentStyle = {
   /**
    * If true, make the text of this label bold
    */
   bold?: boolean;
-}
+};
