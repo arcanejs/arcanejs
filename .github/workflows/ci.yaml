@@ -1,6 +1,9 @@
 name: CI Checks
 on: pull_request
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   ci-checks:
     runs-on: ubuntu-latest
