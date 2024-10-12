@@ -11,3 +11,5 @@ if (!rootElement) {
 }
 const root = createRoot(rootElement);
 root.render(rootComponent());
+
+console.log('aaah');

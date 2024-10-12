@@ -26,11 +26,14 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "pnpm build:backend && pnpm build:frontend",
+    "build": "pnpm build:backend && pnpm type-check:frontend && pnpm build:frontend",
     "build:backend": "tsup",
     "build:frontend": "esbuild src/frontend/frontend.ts --bundle --sourcemap --outfile=dist/frontend.js",
-    "dev": "pnpm dev:frontend",
-    "dev:frontend": "pnpm build:frontend --watch"
+    "dev": "pnpm dev:backend & pnpm dev:frontend",
+    "dev:backend": "pnpm build:backend --watch",
+    "dev:frontend": "pnpm type-check:frontend:watch & pnpm build:frontend --watch",
+    "type-check:frontend": "tsc --noEmit -p tsconfig.frontend.json",
+    "type-check:frontend:watch": "pnpm type-check:frontend --watch --preserveWatchOutput"
   },
   "devDependencies": {
     "@arcanejs/eslint-config": "workspace:^",
