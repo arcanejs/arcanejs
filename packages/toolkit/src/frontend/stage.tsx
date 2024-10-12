@@ -12,11 +12,6 @@ type Props = {
   className?: string;
 };
 
-type State = {
-  root: proto.GroupComponent | undefined;
-  sendMessage: ((msg: proto.ClientMessage) => void) | null;
-};
-
 const renderComponent = (info: proto.Component): JSX.Element => {
   switch (info.component) {
     case 'group':
@@ -28,91 +23,78 @@ const renderComponent = (info: proto.Component): JSX.Element => {
   }
 };
 
-class Stage extends React.Component<Props, State> {
-  private socket: Promise<WebSocket> | null = null;
+const Stage: React.FC<Props> = ({ className }) => {
+  const [root, setRoot] = React.useState<proto.GroupComponent | undefined>(
+    undefined,
+  );
+  const socket = React.useRef<Promise<WebSocket> | null>(null);
 
-  public constructor(props: Props) {
-    super(props);
-    this.state = {
-      root: undefined,
-      sendMessage: null,
-    };
-  }
+  React.useEffect(() => {
+    initializeWebsocket();
+  }, []);
 
-  public componentDidMount() {
-    console.log('mounted');
-    this.initializeWebsocket();
-    this.setState({ sendMessage: this.sendMessage });
-  }
-
-  private initializeWebsocket = async () => {
+  const initializeWebsocket = async () => {
     console.log('initializing websocket');
-    const socket = new WebSocket(
+    const ws = new WebSocket(
       `ws://${window.location.hostname}:${window.location.port}${window.location.pathname}`,
     );
-    socket.onmessage = (event) => {
+    ws.onmessage = (event) => {
       console.log('message', event.data);
-      this.handleMessage(JSON.parse(event.data));
+      handleMessage(JSON.parse(event.data));
     };
-    socket.onclose = () => {
+    ws.onclose = () => {
       console.log('socket closed');
-      this.socket = null;
+      socket.current = null;
     };
-    this.socket = new Promise<WebSocket>((resolve, reject) => {
-      socket.onopen = () => {
-        resolve(socket);
+    socket.current = new Promise<WebSocket>((resolve, reject) => {
+      ws.onopen = () => {
+        resolve(ws);
       };
-      socket.onerror = (err) => {
+      ws.onerror = (err) => {
         reject(err);
-        this.socket = null;
+        socket.current = null;
       };
     });
-    return socket;
+    return ws;
   };
 
-  private sendMessage = async (msg: proto.ClientMessage) => {
-    (await (this.socket || this.initializeWebsocket())).send(
-      JSON.stringify(msg),
-    );
+  const sendMessage = async (msg: proto.ClientMessage) => {
+    (await (socket.current || initializeWebsocket())).send(JSON.stringify(msg));
   };
 
-  private handleMessage(msg: proto.ServerMessage) {
+  const handleMessage = (msg: proto.ServerMessage) => {
     console.log('handleMessage', msg);
     switch (msg.type) {
       case 'tree-full':
-        this.setState({ root: msg.root });
+        setRoot(msg.root);
         return;
       case 'tree-diff':
-        this.setState((state) => ({
-          root: patchJson(state.root, msg.diff),
-        }));
+        setRoot((prevRoot) => patchJson(prevRoot, msg.diff));
         return;
     }
-  }
+  };
 
-  public render() {
-    return (
-      <StageContext.Provider
-        value={{
-          sendMessage: this.state.sendMessage,
-          renderComponent,
-        }}
-      >
-        <GroupStateWrapper openByDefault={false}>
-          <div className={this.props.className}>
-            {this.state.root ? (
-              <Group info={this.state.root} />
-            ) : (
-              <div className="no-root">
-                No root has been added to the light desk
-              </div>
-            )}
-          </div>
-        </GroupStateWrapper>
-      </StageContext.Provider>
-    );
-  }
-}
+  return (
+    <StageContext.Provider
+      value={{
+        sendMessage,
+        renderComponent,
+      }}
+    >
+      <GroupStateWrapper openByDefault={false}>
+        <div className={className}>
+          {root ? (
+            <Group info={root} />
+          ) : (
+            <div className="no-root">
+              No root has been added to the light desk
+            </div>
+          )}
+        </div>
+      </GroupStateWrapper>
+    </StageContext.Provider>
+  );
+};
 
 const StyledStage = styled(Stage)`
   width: 100%;
