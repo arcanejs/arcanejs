@@ -92,7 +92,7 @@ export class Group
     return child;
   };
 
-  public removeHeaderButton = (button: Component) => {
+  public removeHeaderChild = (button: Component) => {
     for (const child of this.getChildren()) {
       if (child instanceof GroupHeader) {
         child.removeChild(button);
@@ -100,7 +100,7 @@ export class Group
     }
   };
 
-  public removeAllHeaderButtons = () => {
+  public removeAllHeaderChildren = () => {
     for (const child of this.getChildren()) {
       if (child instanceof GroupHeader) {
         child.removeAllChildren();
