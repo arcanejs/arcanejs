@@ -1,4 +1,4 @@
-import { Toolkit, Group, Button } from '@arcanejs/toolkit';
+import { Toolkit, Group, Button, Label } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
 
@@ -22,6 +22,8 @@ const button = root.addHeaderChild(
     icon: 'play_arrow',
   }),
 );
+
+root.appendChild(new Label({ text: 'Groups:', bold: true }));
 
 const groupA = root.appendChild(
   new Group({

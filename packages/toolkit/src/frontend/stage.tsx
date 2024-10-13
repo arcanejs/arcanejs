@@ -8,6 +8,7 @@ import { BaseStyle, GlobalStyle, THEME } from './styling';
 import { Group, GroupStateWrapper } from './components/group';
 import { StageContext } from './components/context';
 import { Button } from './components/button';
+import { Label } from './components/label';
 
 type Props = {
   className?: string;
@@ -23,6 +24,8 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       throw new Error(
         `Cannot render ${info.component} outside of expected parents`,
       );
+    case 'label':
+      return <Label key={info.key} info={info} />;
   }
 };
 

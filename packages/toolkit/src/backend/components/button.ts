@@ -1,7 +1,7 @@
-import * as proto from '../../shared/proto.js';
-import { IDMap } from '../util/id-map.js';
+import * as proto from '../../shared/proto';
+import { IDMap } from '../util/id-map';
 
-import { Base, EventEmitter, Listenable } from './base.js';
+import { Base, EventEmitter, Listenable } from './base';
 
 export type Events = {
   click: () => void | Promise<void>;
