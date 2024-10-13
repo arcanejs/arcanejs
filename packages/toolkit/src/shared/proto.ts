@@ -45,7 +45,17 @@ export type GroupComponent = BaseComponent &
     defaultCollapsibleState?: DefaultGroupCollapsedState;
   };
 
-export type Component = ButtonComponent | GroupHeaderComponent | GroupComponent;
+export type LabelComponent = BaseComponent & {
+  component: 'label';
+  bold?: boolean;
+  text: string;
+};
+
+export type Component =
+  | ButtonComponent
+  | GroupHeaderComponent
+  | GroupComponent
+  | LabelComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';
