@@ -73,9 +73,9 @@ export class Group
     this.updateProps(options);
   };
 
-  public setTitle(title: string) {
+  public setTitle = (title: string) => {
     this.updateProps({ title });
-  }
+  };
 
   public addLabel = (label: Label) => {
     this.updateProps({ labels: [...(this.props.labels || []), label] });
@@ -109,7 +109,7 @@ export class Group
   };
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.GroupComponent {
+  public getProtoInfo = (idMap: IDMap): proto.GroupComponent => {
     const children: proto.Component[] = [];
     const headers: proto.GroupHeaderComponent[] = [];
     for (const c of this.getChildren()) {
@@ -133,13 +133,12 @@ export class Group
       editableTitle: this.props.editableTitle || false,
       defaultCollapsibleState: this.props.defaultCollapsibleState,
     };
-  }
+  };
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage) {
+  public handleMessage = (message: proto.ClientComponentMessage) => {
     if (message.component === 'group') {
-      this.setTitle(message.title);
       this.events.emit('title-changed', message.title);
     }
-  }
+  };
 }

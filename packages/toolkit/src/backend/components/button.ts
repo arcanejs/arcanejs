@@ -55,7 +55,7 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
   };
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.ButtonComponent {
+  public getProtoInfo = (idMap: IDMap): proto.ButtonComponent => {
     return {
       component: 'button',
       key: idMap.getId(this),
@@ -65,10 +65,10 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
         : { state: this.props.mode },
       icon: this.props.icon ?? undefined,
     };
-  }
+  };
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage) {
+  public handleMessage = (message: proto.ClientComponentMessage) => {
     if (message.component === 'button') {
       this.events
         .emit('click')
@@ -85,5 +85,5 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
           });
         });
     }
-  }
+  };
 }

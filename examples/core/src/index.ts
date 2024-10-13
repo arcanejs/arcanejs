@@ -12,6 +12,8 @@ const root = new Group({
   editableTitle: true,
 });
 
+root.addListener('title-changed', root.setTitle);
+
 toolkit.setRoot(root);
 
 const button = root.appendChild(
