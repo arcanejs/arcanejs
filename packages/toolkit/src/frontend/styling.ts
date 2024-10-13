@@ -1,10 +1,17 @@
 import { createGlobalStyle, css } from 'styled-components';
+import { FONTS } from '../shared/static';
 
 export const GlobalStyle = createGlobalStyle`
 body {
   &.touch-mode * {
     cursor: none !important;
   }
+}
+
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  src: url(${FONTS.materialSymbolsOutlined}) format('woff');
 }
 `;
 

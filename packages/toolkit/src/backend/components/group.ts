@@ -3,6 +3,7 @@ import { GROUP_DEFAULT_STYLE, GroupComponentStyle } from '../../shared/styles';
 import { IDMap } from '../util/id-map';
 
 import { BaseParent, Component, EventEmitter, Listenable } from './base';
+import { Button } from './button';
 
 type Label = (proto.GroupComponent['labels'] & Array<unknown>)[number];
 
@@ -73,9 +74,9 @@ export class Group
     this.updateProps(options);
   };
 
-  public setTitle(title: string) {
+  public setTitle = (title: string) => {
     this.updateProps({ title });
-  }
+  };
 
   public addLabel = (label: Label) => {
     this.updateProps({ labels: [...(this.props.labels || []), label] });
@@ -85,17 +86,17 @@ export class Group
     this.updateProps({ labels });
   };
 
-  public addHeaderChild = (child: Component): Component => {
+  public addHeaderChild = <C extends Button>(child: C): C => {
     const header = new GroupHeader({});
     header.addChild(child);
     this.addChild(header);
     return child;
   };
 
-  public removeHeaderChild = (button: Component) => {
-    for (const child of this.getChildren()) {
-      if (child instanceof GroupHeader) {
-        child.removeChild(button);
+  public removeHeaderChild = (child: Button) => {
+    for (const c of this.getChildren()) {
+      if (c instanceof GroupHeader) {
+        c.removeChild(child);
       }
     }
   };
@@ -109,7 +110,7 @@ export class Group
   };
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.GroupComponent {
+  public getProtoInfo = (idMap: IDMap): proto.GroupComponent => {
     const children: proto.Component[] = [];
     const headers: proto.GroupHeaderComponent[] = [];
     for (const c of this.getChildren()) {
@@ -133,13 +134,12 @@ export class Group
       editableTitle: this.props.editableTitle || false,
       defaultCollapsibleState: this.props.defaultCollapsibleState,
     };
-  }
+  };
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage) {
+  public handleMessage = (message: proto.ClientComponentMessage) => {
     if (message.component === 'group') {
-      this.setTitle(message.title);
       this.events.emit('title-changed', message.title);
     }
-  }
+  };
 }

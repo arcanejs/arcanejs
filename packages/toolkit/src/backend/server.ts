@@ -5,6 +5,7 @@ import * as path from 'path';
 
 import { LightDeskOptions } from './options.js';
 import { ClientMessage, ServerMessage } from '../shared/proto.js';
+import { FONTS } from '../shared/static.js';
 
 // Get the module resolution custom conditions
 const parentDir = path.basename(__dirname);
@@ -32,6 +33,10 @@ const STATIC_FILES: { [id: string]: { path: string; contentType: string } } = {
   '/frontend.js.map': {
     path: path.join(DIST_DIR, 'frontend.js.map'),
     contentType: 'text/plain',
+  },
+  [`/${FONTS.materialSymbolsOutlined}`]: {
+    path: require.resolve('material-symbols/material-symbols-outlined.woff2'),
+    contentType: 'font/woff2',
   },
 };
 
