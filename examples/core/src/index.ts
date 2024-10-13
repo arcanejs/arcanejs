@@ -1,4 +1,4 @@
-import { Toolkit, Group } from '@arcanejs/toolkit';
+import { Toolkit, Group, Button } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
 
@@ -9,9 +9,17 @@ toolkit.start({
 
 const root = new Group({
   title: 'Hello World',
+  editableTitle: true,
 });
 
 toolkit.setRoot(root);
+
+const button = root.appendChild(
+  new Button({
+    text: 'Click me!',
+    icon: 'play',
+  }),
+);
 
 const groupA = root.appendChild(
   new Group({
@@ -27,7 +35,7 @@ const groupB = root.appendChild(
 
 let s = 0;
 
-setInterval(() => {
+const update = () => {
   switch (s) {
     case 0:
     case 2:
@@ -41,4 +49,6 @@ setInterval(() => {
       break;
   }
   s = (s + 1) % 4;
-}, 500);
+};
+
+button.addListener('click', update);

@@ -5,6 +5,20 @@ type BaseComponent = {
   key: number;
 };
 
+export type ButtonComponent = BaseComponent & {
+  component: 'button';
+  text: string;
+  icon?: string;
+  state:
+    | {
+        state: 'normal' | 'pressed';
+      }
+    | {
+        state: 'error';
+        error: string;
+      };
+};
+
 export type GroupCollapsedState = 'open' | 'closed';
 
 export type DefaultGroupCollapsedState = GroupCollapsedState | 'auto';
@@ -31,7 +45,7 @@ export type GroupComponent = BaseComponent &
     defaultCollapsibleState?: DefaultGroupCollapsedState;
   };
 
-export type Component = GroupHeaderComponent | GroupComponent;
+export type Component = ButtonComponent | GroupHeaderComponent | GroupComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';
@@ -50,11 +64,17 @@ export type BaseClientComponentMessage = {
   componentKey: number;
 };
 
+export interface ButtonPressMessage extends BaseClientComponentMessage {
+  component: 'button';
+}
+
 export type GroupTitleChangeMessage = BaseClientComponentMessage & {
   component: 'group';
   title: string;
 };
 
-export type ClientComponentMessage = GroupTitleChangeMessage;
+export type ClientComponentMessage =
+  | ButtonPressMessage
+  | GroupTitleChangeMessage;
 
 export type ClientMessage = ClientComponentMessage;
