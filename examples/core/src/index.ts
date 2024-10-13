@@ -16,7 +16,7 @@ root.addListener('title-changed', root.setTitle);
 
 toolkit.setRoot(root);
 
-const button = root.appendChild(
+const button = root.addHeaderChild(
   new Button({
     text: 'Click me!',
     icon: 'play_arrow',

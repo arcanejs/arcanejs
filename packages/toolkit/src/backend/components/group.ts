@@ -3,6 +3,7 @@ import { GROUP_DEFAULT_STYLE, GroupComponentStyle } from '../../shared/styles';
 import { IDMap } from '../util/id-map';
 
 import { BaseParent, Component, EventEmitter, Listenable } from './base';
+import { Button } from './button';
 
 type Label = (proto.GroupComponent['labels'] & Array<unknown>)[number];
 
@@ -85,17 +86,17 @@ export class Group
     this.updateProps({ labels });
   };
 
-  public addHeaderChild = (child: Component): Component => {
+  public addHeaderChild = <C extends Button>(child: C): C => {
     const header = new GroupHeader({});
     header.addChild(child);
     this.addChild(header);
     return child;
   };
 
-  public removeHeaderChild = (button: Component) => {
-    for (const child of this.getChildren()) {
-      if (child instanceof GroupHeader) {
-        child.removeChild(button);
+  public removeHeaderChild = (child: Button) => {
+    for (const c of this.getChildren()) {
+      if (c instanceof GroupHeader) {
+        c.removeChild(child);
       }
     }
   };
