@@ -19,7 +19,7 @@ toolkit.setRoot(root);
 const button = root.appendChild(
   new Button({
     text: 'Click me!',
-    icon: 'play',
+    icon: 'play_arrow',
   }),
 );
 
