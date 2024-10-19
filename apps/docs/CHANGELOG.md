@@ -1,5 +1,12 @@
 # docs
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [adfbcbf]
+  - @arcanejs/diff@0.3.1
+
 ## 0.1.6
 
 ### Patch Changes

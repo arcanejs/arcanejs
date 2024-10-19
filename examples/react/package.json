@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/examples-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Example app using toolkit",
   "scripts": {
@@ -10,6 +10,7 @@
     "start:button-adder": "pnpm start src/button-adder",
     "start:counter": "pnpm start src/counter",
     "start:editable-group-title": "pnpm start src/editable-group-title",
+    "start:readme": "pnpm start src/readme",
     "start:reorder-elements": "pnpm start src/reorder-elements",
     "start:tabs-colors-inputs": "pnpm start src/tabs-colors-inputs"
   },

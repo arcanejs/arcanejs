@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.3.1
+
+### Patch Changes
+
+- adfbcbf: Flesh out documentation for packages
+
 ## 0.3.0
 
 ### Minor Changes
