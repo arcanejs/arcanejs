@@ -80,6 +80,11 @@ export type TabsComponent = BaseComponent & {
   tabs: TabComponent[];
 };
 
+export type TextInputComponent = BaseComponent & {
+  component: 'text-input';
+  value: string;
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
@@ -89,7 +94,8 @@ export type Component =
   | SliderButtonComponent
   | SwitchComponent
   | TabComponent
-  | TabsComponent;
+  | TabsComponent
+  | TextInputComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';
@@ -126,10 +132,16 @@ export type SwitchToggleMessage = BaseClientComponentMessage & {
   component: 'switch';
 };
 
+export type TextInputUpdateMessage = BaseClientComponentMessage & {
+  component: 'text-input';
+  value: string;
+};
+
 export type ClientComponentMessage =
   | ButtonPressMessage
   | GroupTitleChangeMessage
   | SliderButtonUpdateMessage
-  | SwitchToggleMessage;
+  | SwitchToggleMessage
+  | TextInputUpdateMessage;
 
 export type ClientMessage = ClientComponentMessage;
