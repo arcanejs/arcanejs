@@ -11,6 +11,7 @@ import { Button } from './components/button';
 import { Label } from './components/label';
 import { Rect } from './components/rect';
 import { SliderButton } from './components/slider_button';
+import { Switch } from './components/switch';
 
 type Props = {
   className?: string;
@@ -32,6 +33,8 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       return <Rect key={info.key} info={info} />;
     case 'slider_button':
       return <SliderButton key={info.key} info={info} />;
+    case 'switch':
+      return <Switch key={info.key} info={info} />;
   }
 };
 

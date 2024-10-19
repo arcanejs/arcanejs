@@ -64,13 +64,19 @@ export type SliderButtonComponent = BaseComponent & {
   value: number | null;
 };
 
+export type SwitchComponent = BaseComponent & {
+  component: 'switch';
+  state: 'on' | 'off';
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
   | GroupComponent
   | LabelComponent
   | RectComponent
-  | SliderButtonComponent;
+  | SliderButtonComponent
+  | SwitchComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';
@@ -103,9 +109,14 @@ export type SliderButtonUpdateMessage = BaseClientComponentMessage & {
   value: number;
 };
 
+export type SwitchToggleMessage = BaseClientComponentMessage & {
+  component: 'switch';
+};
+
 export type ClientComponentMessage =
   | ButtonPressMessage
   | GroupTitleChangeMessage
-  | SliderButtonUpdateMessage;
+  | SliderButtonUpdateMessage
+  | SwitchToggleMessage;
 
 export type ClientMessage = ClientComponentMessage;
