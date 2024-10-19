@@ -105,20 +105,10 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
     return children;
   };
 
-  /**
-   * @deprecated use appendChildren instead
-   */
-  public addChildren = this.appendChildren;
-
   public appendChild = <C extends Component>(child: C): C => {
     this.appendChildren(child);
     return child;
   };
-
-  /**
-   * @deprecated use appendChild instead
-   */
-  public addChild = this.appendChild;
 
   public removeChild = (component: Component) => {
     const match = this.children.findIndex((c) => c === component);

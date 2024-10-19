@@ -88,8 +88,8 @@ export class Group
 
   public addHeaderChild = <C extends Button>(child: C): C => {
     const header = new GroupHeader({});
-    header.addChild(child);
-    this.addChild(header);
+    header.appendChild(child);
+    this.appendChild(header);
     return child;
   };
 
