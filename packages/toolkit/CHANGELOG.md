@@ -1,5 +1,11 @@
 # @arcanejs/toolkit
 
+## 0.2.0
+
+### Minor Changes
+
+- efc76ba: Removed unused prop headerComponents
+
 ## 0.1.1
 
 ### Patch Changes
