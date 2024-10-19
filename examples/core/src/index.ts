@@ -5,6 +5,7 @@ import {
   Label,
   Rect,
   SliderButton,
+  Switch,
 } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
@@ -77,3 +78,11 @@ const update = () => {
 button.addListener('click', update);
 
 root.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
+
+const sw = root.appendChild(new Switch({ state: 'on' }));
+
+const swLabel = root.appendChild(new Label({ text: 'Switch is ON' }));
+
+sw.addListener('change', (state) => {
+  swLabel.setText(`Switch is ${state.toUpperCase()}`);
+});
