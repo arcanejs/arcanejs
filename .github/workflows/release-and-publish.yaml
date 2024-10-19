@@ -36,7 +36,7 @@ jobs:
       - run: pnpm build
       - run: cp .npmrc.ci .npmrc
       - name: Run Changeset Workflow
-        uses: s0/changesets-action@647b61a3307a9fec0838dde37c1594888ad0ff5e # pinned-vA
+        uses: s0/changesets-action@50b4be2b5ce5350adb360d0ab15da3324e9976f5 # pinned-version of https://github.com/changesets/action/pull/391
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
