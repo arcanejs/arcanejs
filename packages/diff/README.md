@@ -4,8 +4,8 @@
 
 This package provides an easy way to:
 
-* Create diffs by comparing objects
-* Update objects by applying diffs
+- Create diffs by comparing objects
+- Update objects by applying diffs
 
 This library is written in TypeScript,
 and produces diffs that are type-safe,
@@ -26,7 +26,7 @@ import { patchJson } from '@arcanejs/diff/patch';
 type E = {
   foo: string;
   bar?: number[];
-}
+};
 
 const a: E = { foo: 'bar' };
 const b: E = { foo: 'baz', bar: [1] };

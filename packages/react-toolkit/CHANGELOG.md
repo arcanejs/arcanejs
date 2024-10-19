@@ -1,5 +1,13 @@
 # @arcanejs/react-toolkit
 
+## 0.1.1
+
+### Patch Changes
+
+- adfbcbf: Flesh out documentation for packages
+- Updated dependencies [adfbcbf]
+  - @arcanejs/toolkit@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

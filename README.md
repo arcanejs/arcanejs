@@ -31,17 +31,17 @@ and would like to have a way to interact with the state or configuration
 of these applications in real-time,
 for example:
 
-* Lighting control or AV systems
-* Home-Automation or Office building management and operation
+- Lighting control or AV systems
+- Home-Automation or Office building management and operation
 
 ### Why Not
 
 This project is not designed to be a general-purpose application framework,
 in particular, it's not suitable for any project / application that:
 
-* Needs to scale beyond a single Node.js process
-* Is stateless *(It's explicitly designed to manage in-memory state)*
-* Will be exposed over the internet *(no authentication has been implemented)*
+- Needs to scale beyond a single Node.js process
+- Is stateless _(It's explicitly designed to manage in-memory state)_
+- Will be exposed over the internet _(no authentication has been implemented)_
 
 ## [Usage](./packages/react-toolkit/#usage)
 

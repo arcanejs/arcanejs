@@ -1,10 +1,15 @@
 /*
  * This example script is the same as that included in the
-  * README.md file for the @arcanejs/react-toolkit package.
+ * README.md file for the @arcanejs/react-toolkit package.
  */
 import { useState } from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
-import { ToolkitRenderer, Group, Switch, SliderButton } from '@arcanejs/react-toolkit';
+import {
+  ToolkitRenderer,
+  Group,
+  Switch,
+  SliderButton,
+} from '@arcanejs/react-toolkit';
 
 const toolkit = new Toolkit();
 
@@ -21,13 +26,10 @@ const ControlPanel = () => {
   const [sliderValue, setSliderValue] = useState(50);
 
   return (
-    <Group direction='vertical'>
+    <Group direction="vertical">
       <Group>
         {`Switch State: ${switchState}`}
-        <Switch
-            state={switchState}
-            onChange={setSwitchState}
-          />
+        <Switch state={switchState} onChange={setSwitchState} />
       </Group>
       <Group>
         {`Slider Value: ${sliderValue}`}
@@ -36,7 +38,7 @@ const ControlPanel = () => {
           onChange={setSliderValue}
           min={0}
           max={100}
-          />
+        />
       </Group>
     </Group>
   );

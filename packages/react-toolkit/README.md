@@ -33,17 +33,17 @@ and would like to have a way to interact with the state or configuration
 of these applications in real-time,
 for example:
 
-* Lighting control or AV systems
-* Home-Automation or Office building management and operation
+- Lighting control or AV systems
+- Home-Automation or Office building management and operation
 
 ### Why Not
 
 This project is not designed to be a general-purpose application framework,
 in particular, it's not suitable for any project / application that:
 
-* Needs to scale beyond a single Node.js process
-* Is stateless *(It's explicitly designed to manage in-memory state)*
-* Will be exposed over the internet *(no authentication has been implemented)*
+- Needs to scale beyond a single Node.js process
+- Is stateless _(It's explicitly designed to manage in-memory state)_
+- Will be exposed over the internet _(no authentication has been implemented)_
 
 ## Usage
 
@@ -54,8 +54,9 @@ npm install --save react@^18 @arcanejs/toolkit @arcanejs/react-toolkit
 ```
 
 Note:
-* We explicitly require `react` version 18
-* We don't need `react-dom` or any react native libraries,
+
+- We explicitly require `react` version 18
+- We don't need `react-dom` or any react native libraries,
   `@arcanejs/react-toolkit` is the react renderer.
 
 Then you can then create control panels using react to manage the
@@ -113,15 +114,15 @@ from [localhost:3000](http://localhost:3000):
 
 Please note:
 
-* You can not use normal `react-dom` / HTML elements in these applications
+- You can not use normal `react-dom` / HTML elements in these applications
   or components, only `@arcanejs` components are supported.
 
-* You are welcome to abstract / componentize your application as you like,
+- You are welcome to abstract / componentize your application as you like,
   in the same manner that you would any `react-dom` or `react-native` project.
 
   _See the [counter example](https://github.com/arcanejs/arcanejs/blob/main/examples/react/src/counter.tsx)._
 
-* This react / component-tree / state is managed server-side,
+- This react / component-tree / state is managed server-side,
   and does not accurately represent the HTML used on the frontend.
   Your `@arcanejs` tree is converted to a JSON representation,
   and then sent to clients / browsers over a WebSocket.
@@ -129,7 +130,7 @@ Please note:
   that is loaded in the browser,
   and then used to render the JSON representation of the `@arcanejs` tree.
 
-* There is currently no ability to introduce custom components with your
+- There is currently no ability to introduce custom components with your
   own JSON definition and `react-dom` rendering in the browser.
   Apps can only be composed of the below supported components,
   or composite components directly built by these components.
