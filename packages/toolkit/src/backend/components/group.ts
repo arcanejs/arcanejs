@@ -126,7 +126,7 @@ export class Group
       key: idMap.getId(this),
       title: this.props.title ?? undefined,
       direction: this.props.direction,
-      noBorder: this.props.noBorder,
+      border: this.props.border,
       wrap: this.props.wrap,
       children,
       headers: headers.length > 0 ? headers : undefined,
