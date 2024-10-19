@@ -181,5 +181,5 @@ TODO
 ## [Examples](https://github.com/arcanejs/arcanejs/tree/main/examples/react)
 
 For a comprehensive list of examples,
-please see our example directory in the arcane monorepo:
+please see the example directory in the arcane monorepo:
 <https://github.com/arcanejs/arcanejs/tree/main/examples/react>
