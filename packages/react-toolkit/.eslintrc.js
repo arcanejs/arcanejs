@@ -7,4 +7,8 @@ module.exports = {
     project: "./tsconfig.lint.json",
     tsconfigRootDir: __dirname,
   },
+  rules: {
+    // Needed for types.ts
+    "@typescript-eslint/no-explicit-any": "off",
+  }
 };

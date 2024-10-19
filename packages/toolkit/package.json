@@ -22,6 +22,66 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./components/base": {
+      "@arcanejs/source": "./src/backend/components/base.ts",
+      "import": "./dist/backend/components/base.mjs",
+      "require": "./dist/backend/components/base.js",
+      "types": "./dist/backend/components/base.d.ts"
+    },
+    "./components/button": {
+      "@arcanejs/source": "./src/backend/components/button.ts",
+      "import": "./dist/backend/components/button.mjs",
+      "require": "./dist/backend/components/button.js",
+      "types": "./dist/backend/components/button.d.ts"
+    },
+    "./components/group": {
+      "@arcanejs/source": "./src/backend/components/group.ts",
+      "import": "./dist/backend/components/group.mjs",
+      "require": "./dist/backend/components/group.js",
+      "types": "./dist/backend/components/group.d.ts"
+    },
+    "./components/label": {
+      "@arcanejs/source": "./src/backend/components/label.ts",
+      "import": "./dist/backend/components/label.mjs",
+      "require": "./dist/backend/components/label.js",
+      "types": "./dist/backend/components/label.d.ts"
+    },
+    "./components/rect": {
+      "@arcanejs/source": "./src/backend/components/rect.ts",
+      "import": "./dist/backend/components/rect.mjs",
+      "require": "./dist/backend/components/rect.js",
+      "types": "./dist/backend/components/rect.d.ts"
+    },
+    "./components/slider-button": {
+      "@arcanejs/source": "./src/backend/components/slider-button.ts",
+      "import": "./dist/backend/components/slider-button.mjs",
+      "require": "./dist/backend/components/slider-button.js",
+      "types": "./dist/backend/components/slider-button.d.ts"
+    },
+    "./components/switch": {
+      "@arcanejs/source": "./src/backend/components/switch.ts",
+      "import": "./dist/backend/components/switch.mjs",
+      "require": "./dist/backend/components/switch.js",
+      "types": "./dist/backend/components/switch.d.ts"
+    },
+    "./components/tabs": {
+      "@arcanejs/source": "./src/backend/components/tabs.ts",
+      "import": "./dist/backend/components/tabs.mjs",
+      "require": "./dist/backend/components/tabs.js",
+      "types": "./dist/backend/components/tabs.d.ts"
+    },
+    "./components/text-input": {
+      "@arcanejs/source": "./src/backend/components/text-input.ts",
+      "import": "./dist/backend/components/text-input.mjs",
+      "require": "./dist/backend/components/text-input.js",
+      "types": "./dist/backend/components/text-input.d.ts"
+    },
+    "./components/timeline": {
+      "@arcanejs/source": "./src/backend/components/timeline.ts",
+      "import": "./dist/backend/components/timeline.mjs",
+      "require": "./dist/backend/components/timeline.js",
+      "types": "./dist/backend/components/timeline.d.ts"
     }
   },
   "scripts": {
@@ -47,8 +107,8 @@
     "@types/ws": "^8.5.12",
     "esbuild": "^0.24.0",
     "eslint": "^8.57.0",
-    "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "react": "^18",
+    "react-dom": "18.3.1",
     "styled-components": "^6.1.13",
     "tsup": "^8.1.0",
     "typescript": "^5.3.3"
