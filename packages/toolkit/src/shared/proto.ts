@@ -51,11 +51,17 @@ export type LabelComponent = BaseComponent & {
   text: string;
 };
 
+export type RectComponent = BaseComponent & {
+  component: 'rect';
+  color: string;
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
   | GroupComponent
-  | LabelComponent;
+  | LabelComponent
+  | RectComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';

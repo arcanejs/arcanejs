@@ -1,4 +1,4 @@
-import { Toolkit, Group, Button, Label } from '@arcanejs/toolkit';
+import { Toolkit, Group, Button, Label, Rect } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
 
@@ -56,3 +56,5 @@ const update = () => {
 };
 
 button.addListener('click', update);
+
+root.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
