@@ -1,0 +1,56 @@
+{
+  "name": "@arcanejs/react-toolkit",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Build web-accessible control interfaces for your long-running Node.js processes",
+  "keywords": [
+    "websocket",
+    "home-automation",
+    "react",
+    "state-management"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Sam Lanning",
+    "url": "https://samlanning.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcanejs/arcanejs.git"
+  },
+  "exports": {
+    ".": {
+      "@arcanejs/source": "./src/index.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/typescript-config": "workspace:^",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
+    "@types/react": "^18",
+    "@types/react-reconciler": "^0.28.8",
+    "eslint": "^8.57.0",
+    "react-reconciler": "^0.28.0",
+    "tsup": "^8.1.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@arcanejs/toolkit": "workspace:^",
+    "react": "^18"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
