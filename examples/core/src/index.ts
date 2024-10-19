@@ -7,6 +7,7 @@ import {
   SliderButton,
   Switch,
   Tabs,
+  TextInput,
 } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
@@ -125,4 +126,27 @@ const swLabel = switchGroup.appendChild(new Label({ text: 'Switch is ON' }));
 
 sw.addListener('change', (state) => {
   swLabel.setText(`Switch is ${state.toUpperCase()}`);
+});
+
+// Text Input
+
+const textInputGroup = tabs.addTab(
+  'Text Input',
+  new Group({
+    noBorder: true,
+  }),
+);
+
+const textInput = textInputGroup.appendChild(
+  new TextInput({
+    value: 'Hello World',
+  }),
+);
+
+const textInputLabel = textInputGroup.appendChild(
+  new Label({ text: 'Text Input Value: Hello World' }),
+);
+
+textInput.addListener('change', (value) => {
+  textInputLabel.setText(`Text Input Value: ${value}`);
 });

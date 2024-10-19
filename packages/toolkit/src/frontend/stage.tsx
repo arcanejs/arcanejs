@@ -13,6 +13,7 @@ import { Rect } from './components/rect';
 import { SliderButton } from './components/slider_button';
 import { Switch } from './components/switch';
 import { Tabs } from './components/tabs';
+import { TextInput } from './components/text-input';
 
 type Props = {
   className?: string;
@@ -34,6 +35,8 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       return <Switch key={info.key} info={info} />;
     case 'tabs':
       return <Tabs key={info.key} info={info} />;
+    case 'text-input':
+      return <TextInput key={info.key} info={info} />;
     case 'group-header':
     case 'tab':
       throw new Error(
