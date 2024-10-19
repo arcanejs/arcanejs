@@ -69,6 +69,17 @@ export type SwitchComponent = BaseComponent & {
   state: 'on' | 'off';
 };
 
+export type TabComponent = BaseComponent & {
+  component: 'tab';
+  name: string;
+  child?: Component;
+};
+
+export type TabsComponent = BaseComponent & {
+  component: 'tabs';
+  tabs: TabComponent[];
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
@@ -76,7 +87,9 @@ export type Component =
   | LabelComponent
   | RectComponent
   | SliderButtonComponent
-  | SwitchComponent;
+  | SwitchComponent
+  | TabComponent
+  | TabsComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';

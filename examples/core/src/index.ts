@@ -6,6 +6,7 @@ import {
   Rect,
   SliderButton,
   Switch,
+  Tabs,
 } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
@@ -16,42 +17,63 @@ toolkit.start({
 });
 
 const root = new Group({
-  title: 'Hello World',
-  editableTitle: true,
+  noBorder: true,
+  direction: 'vertical',
 });
-
-root.addListener('title-changed', root.setTitle);
 
 toolkit.setRoot(root);
 
-const button = root.addHeaderChild(
+const tabs = root.appendChild(new Tabs());
+
+// Slider Button
+
+const sliderButtonTab = tabs.addTab(
+  'Slider Button',
+  new Group({
+    noBorder: true,
+  }),
+);
+
+const slider = sliderButtonTab.appendChild(
+  new SliderButton({
+    value: 0,
+  }),
+);
+
+const sliderValue = sliderButtonTab.appendChild(
+  new Label({ text: 'Slider Value: 0' }),
+);
+
+// Groups
+
+const groupGroup = tabs.addTab(
+  'Groups',
+  new Group({
+    title: 'Hello World',
+    editableTitle: true,
+  }),
+);
+
+const groupButton = groupGroup.addHeaderChild(
   new Button({
     text: 'Click me!',
     icon: 'play_arrow',
   }),
 );
 
-const slider = root.appendChild(
-  new SliderButton({
-    value: 0,
-  }),
-);
+groupGroup.addListener('title-changed', groupGroup.setTitle);
 
-root.appendChild(new Label({ text: 'Groups:', bold: true }));
-
-const groupA = root.appendChild(
+const groupA = groupGroup.appendChild(
   new Group({
     title: 'Group A',
   }),
 );
 
-const sliderValue = groupA.appendChild(new Label({ text: 'Slider Value: 0' }));
-
 slider.addListener('change', (value) => {
   sliderValue.setText(`Slider Value: ${value}`);
 });
 
-const groupB = root.appendChild(
+const groupB = groupGroup.appendChild(
   new Group({
     title: 'Group B',
   }),
@@ -66,22 +88,40 @@ const update = () => {
       groupA.setTitle('Group A ' + Math.random());
       break;
     case 1:
-      root.removeChild(groupB);
+      groupGroup.removeChild(groupB);
       break;
     case 3:
-      root.appendChild(groupB);
+      groupGroup.appendChild(groupB);
       break;
   }
   s = (s + 1) % 4;
 };
 
-button.addListener('click', update);
+groupButton.addListener('click', update);
 
-root.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
+// Rect
 
-const sw = root.appendChild(new Switch({ state: 'on' }));
+const rectGroup = tabs.addTab(
+  'Rect',
+  new Group({
+    noBorder: true,
+  }),
+);
 
-const swLabel = root.appendChild(new Label({ text: 'Switch is ON' }));
+rectGroup.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
+
+// Switch
+
+const switchGroup = tabs.addTab(
+  'Switch',
+  new Group({
+    noBorder: true,
+  }),
+);
+
+const sw = switchGroup.appendChild(new Switch({ state: 'on' }));
+
+const swLabel = switchGroup.appendChild(new Label({ text: 'Switch is ON' }));
 
 sw.addListener('change', (state) => {
   swLabel.setText(`Switch is ${state.toUpperCase()}`);
