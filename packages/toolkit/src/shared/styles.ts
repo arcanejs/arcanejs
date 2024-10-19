@@ -15,11 +15,14 @@ export type GroupComponentStyle = {
    */
   wrap?: boolean;
   /**
-   * If true, this group will have the same colour background as its parent, and
-   * no border. This allows you to use groups to arrange components without
-   * having to have visible boundaries between them.
+   * If true, this group will have a border and a different color background
+   * to its parent.
+   *
+   * This allows you to add a distinctive border between components,
+   * without needing to set a header, add header components,
+   * or make it collapsible.
    */
-  noBorder?: boolean;
+  border?: true;
 };
 
 /**

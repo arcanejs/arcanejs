@@ -19,7 +19,6 @@ toolkit.start({
 });
 
 const root = new Group({
-  noBorder: true,
   direction: 'vertical',
 });
 
@@ -29,12 +28,7 @@ const tabs = root.appendChild(new Tabs());
 
 // Slider Button
 
-const sliderButtonTab = tabs.addTab(
-  'Slider Button',
-  new Group({
-    noBorder: true,
-  }),
-);
+const sliderButtonTab = tabs.addTab('Slider Button', new Group());
 
 const slider = sliderButtonTab.appendChild(
   new SliderButton({
@@ -103,23 +97,13 @@ groupButton.addListener('click', update);
 
 // Rect
 
-const rectGroup = tabs.addTab(
-  'Rect',
-  new Group({
-    noBorder: true,
-  }),
-);
+const rectGroup = tabs.addTab('Rect', new Group());
 
 rectGroup.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
 
 // Switch
 
-const switchGroup = tabs.addTab(
-  'Switch',
-  new Group({
-    noBorder: true,
-  }),
-);
+const switchGroup = tabs.addTab('Switch', new Group());
 
 const sw = switchGroup.appendChild(new Switch({ state: 'on' }));
 
@@ -131,12 +115,7 @@ sw.addListener('change', (state) => {
 
 // Text Input
 
-const textInputGroup = tabs.addTab(
-  'Text Input',
-  new Group({
-    noBorder: true,
-  }),
-);
+const textInputGroup = tabs.addTab('Text Input', new Group());
 
 const textInput = textInputGroup.appendChild(
   new TextInput({
@@ -157,16 +136,11 @@ textInput.addListener('change', (value) => {
 const timelineGroup = tabs.addTab(
   'Timeline',
   new Group({
-    noBorder: true,
     direction: 'vertical',
   }),
 );
 
-const timelineButtons = timelineGroup.appendChild(
-  new Group({
-    noBorder: true,
-  }),
-);
+const timelineButtons = timelineGroup.appendChild(new Group());
 
 const timeline = new Timeline({
   state: {

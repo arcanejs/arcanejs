@@ -52,8 +52,8 @@ export class Tabs extends BaseParent<InternalTabsProps> {
   public addTabs(...tabs: TabDefinition[]) {
     for (const t of tabs) {
       const tab = new Tab({ name: t.name });
-      tab.addChildren(t.component);
-      this.addChild(tab);
+      tab.appendChildren(t.component);
+      this.appendChild(tab);
     }
   }
 

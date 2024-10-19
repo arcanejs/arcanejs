@@ -168,36 +168,36 @@ export const GroupStateWrapper: React.FunctionComponent<{
   );
 };
 
-const Group: FunctionComponent<Props> = (props) => {
+const Group: FunctionComponent<Props> = ({ className, info }) => {
   const groupState = useContext(GroupStateContext);
   const { renderComponent, sendMessage } = useContext(StageContext);
   const [editingTitle, setEditingTitle] = useState(false);
   const children = (
-    <GroupChildren info={props.info}>
-      {props.info.children.map(renderComponent)}
+    <GroupChildren info={info}>
+      {info.children.map(renderComponent)}
     </GroupChildren>
   );
-  const collapsible = !!props.info.defaultCollapsibleState;
-  const collapsed = props.info.defaultCollapsibleState
-    ? groupState.isCollapsed(props.info.key, props.info.defaultCollapsibleState)
+  const collapsible = !!info.defaultCollapsibleState;
+  const collapsed = info.defaultCollapsibleState
+    ? groupState.isCollapsed(info.key, info.defaultCollapsibleState)
     : false;
   const collapsePressable = usePressable(() =>
-    groupState.toggleCollapsed(props.info.key),
+    groupState.toggleCollapsed(info.key),
   );
 
-  const showTitle = props.info.title || props.info.editableTitle;
+  const showTitle = info.title || info.editableTitle;
 
   const displayHeader = [
     showTitle,
-    props.info.labels?.length,
-    props.info.headers?.length,
+    info.labels?.length,
+    info.headers?.length,
     collapsible,
   ].some((v) => v);
 
   const updateTitle: EventHandler<SyntheticEvent<HTMLInputElement>> = (e) => {
     sendMessage?.({
       type: 'component-message',
-      componentKey: props.info.key,
+      componentKey: info.key,
       component: 'group',
       title: e.currentTarget.value,
     });
@@ -210,19 +210,16 @@ const Group: FunctionComponent<Props> = (props) => {
     }
   };
 
-  const childrenElements = props.info.noBorder ? (
-    children
-  ) : (
+  const hasBorder = info.border || displayHeader;
+
+  const childrenElements = hasBorder ? (
     <NestedContent>{children}</NestedContent>
+  ) : (
+    children
   );
 
   return (
-    <div
-      className={calculateClass(
-        props.className,
-        props.info.noBorder && 'no-border',
-      )}
-    >
+    <div className={calculateClass(className, !hasBorder && 'no-border')}>
       {displayHeader ? (
         <Header
           className={calculateClass(
@@ -236,34 +233,32 @@ const Group: FunctionComponent<Props> = (props) => {
               {...collapsePressable.handlers}
             />
           )}
-          {props.info.labels?.map((l) => <Label>{l.text}</Label>)}
+          {info.labels?.map((l) => <Label>{l.text}</Label>)}
           {showTitle &&
-            (props.info.editableTitle ? (
+            (info.editableTitle ? (
               editingTitle ? (
                 <TitleInput
                   // Focus input when it's created
                   ref={(input) => input?.focus()}
                   onBlur={updateTitle}
                   onKeyDown={keyDown}
-                  defaultValue={props.info.title}
+                  defaultValue={info.title}
                 />
               ) : (
                 <EditableTitle onClick={() => setEditingTitle(true)}>
-                  <span>{props.info.title}</span>
+                  <span>{info.title}</span>
                   <Icon className="icon" icon="edit" />
                 </EditableTitle>
               )
             ) : (
-              <span>{props.info.title}</span>
+              <span>{info.title}</span>
             ))}
           {collapsible ? (
             <CollapseBar {...collapsePressable.handlers} />
           ) : (
             <Grow />
           )}
-          {props.info.headers?.map((h) =>
-            h.children.map((c) => renderComponent(c)),
-          )}
+          {info.headers?.map((h) => h.children.map((c) => renderComponent(c)))}
         </Header>
       ) : null}
       {collapsible && collapsed ? null : childrenElements}
