@@ -2,7 +2,7 @@ import * as proto from '../../shared/proto';
 import { GROUP_DEFAULT_STYLE, GroupComponentStyle } from '../../shared/styles';
 import { IDMap } from '../util/id-map';
 
-import { BaseParent, Component, EventEmitter, Listenable } from './base';
+import { BaseParent, EventEmitter, Listenable } from './base';
 import { Button } from './button';
 
 type Label = (proto.GroupComponent['labels'] & Array<unknown>)[number];
