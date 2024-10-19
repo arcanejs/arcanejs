@@ -11,6 +11,9 @@ browsers / devices / clients simultaneously,
 and changes caused by any client will be immediately propagated to all other
 clients.
 
+The UI has also been designed primarily with touch devices in mind,
+but also works well with a cursor and keyboard.
+
 ## Status / Suitability / Security Disclaimer
 
 This project is **experimental**,
@@ -145,11 +148,111 @@ ready-to-run, we recommend that you check-out the
 
 ### `Button`
 
-TODO
+**Properties:**
+
+* `text: string` (optional)
+
+  Text to display on the button
+
+* `icon: string` (optional)
+
+  In icon name from [Material Icons](https://fonts.google.com/icons) to include
+  on the button.
+
+* `error: string` (optional)
+
+  When set, highlight the button in a way to indicate an error,
+  and expose the given text as a tooltip upon user hover.
+
+* `mode: 'normal' | 'pressed'` (default: `'normal'`)
+
+  Should the button display as pressed or not.
+
+* `onClick: () => void | Promise<void>`
+
+  Set an event listener for when the button is pressed.
+
+  The listener can throw an exception, or return a promise that rejects,
+  to indicate an error and propagate an error message to the user,
+  similar to setting the `error` property.
+
+e.g.:
+
+```tsx
+const MyComponent = () => (
+  <Button text="Stop" onClick={() => doAThing()} icon="close" />
+);
+```
 
 ### `Group`
 
-TODO
+This component is the primary building block when it comes to creating layouts,
+you generally have many groups,
+and nest them to achieve the desired layout.
+
+You can think of a group as similar to a `<div>` or `<section>` in HTML.
+
+**Properties:**
+
+* `direction: 'horizontal' | 'vertical'` (default: `'horizontal'`)
+
+  Whether to arrange the children of this group in a row or column.
+
+* `wrap: boolean` (default: false)
+
+  If true, when the group runs out of vertical or horizontal space, child
+  components will be wrapped, and start to be arranged on additional columns
+  or rows.
+
+* `border: boolean` (default: false)
+
+  If true, this group will have a border and a different color background
+  to its parent.
+  
+  This allows you to add a distinctive border between components,
+  without needing to set a header, add header components,
+  or make it collapsible.
+
+* `title: string` (optional)
+
+  If set, will display a title as a header at the top of the group.
+
+* `editableTitle: boolean` (default: false)
+
+  If true,
+  will allow the user to click on the title to change it,
+  which will trigger a callback to the listener `onTitleChanged`.
+
+* `defaultCollapsibleState: 'open' | 'closed' | 'auto'`
+  (optional, default: `undefined`)
+
+  If set,
+  will allow the user to expand / collapse the given group,
+  by default set to the given state.
+
+  Whether a group is open or closed is independent on a per-client basis,
+  and a fresh page reload will set the collapsible state to the default set here.
+
+* `labels: { text: string }[] | null` (default: null)
+
+  Adds labels next to the title in the group header.
+
+**Special Child Components**
+
+* `GroupHeader`
+
+  You can add components to the header of a group by wrapping them in a
+  `<GroupHeader/>` component directly under the `<Group/>`.
+
+  You can add as many separate `GroupHeader` components as needed throughout
+  a `<Group>` component's direct children,
+  and all nested components will be placed in the header.
+
+  Currently `GroupHeader` only supports rendering the following children:
+
+  * `Button`
+
+TODO: example
 
 ### `Label`
 

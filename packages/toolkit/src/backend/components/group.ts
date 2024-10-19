@@ -20,7 +20,6 @@ export type InternalProps = GroupComponentStyle &
   GroupOptions & {
     title: string | null;
     labels: Label[] | null;
-    headerComponents: Component[] | null;
   };
 
 export type Props = Partial<InternalProps>;
@@ -29,7 +28,6 @@ const DEFAULT_PROPS: InternalProps = {
   ...GROUP_DEFAULT_STYLE,
   title: null,
   labels: null,
-  headerComponents: null,
 };
 
 export class GroupHeader extends BaseParent<Record<never, never>> {

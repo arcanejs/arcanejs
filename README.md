@@ -9,6 +9,9 @@ browsers / devices / clients simultaneously,
 and changes caused by any client will be immediately propagated to all other
 clients.
 
+The UI has also been designed primarily with touch devices in mind,
+but also works well with a cursor and keyboard.
+
 ## Status / Suitability / Security Disclaimer
 
 This project is **experimental**,
