@@ -12,6 +12,7 @@ import { Label } from './components/label';
 import { Rect } from './components/rect';
 import { SliderButton } from './components/slider_button';
 import { Switch } from './components/switch';
+import { Tabs } from './components/tabs';
 
 type Props = {
   className?: string;
@@ -23,10 +24,6 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       return <Button key={info.key} info={info} />;
     case 'group':
       return <Group key={info.key} info={info} />;
-    case 'group-header':
-      throw new Error(
-        `Cannot render ${info.component} outside of expected parents`,
-      );
     case 'label':
       return <Label key={info.key} info={info} />;
     case 'rect':
@@ -35,6 +32,13 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       return <SliderButton key={info.key} info={info} />;
     case 'switch':
       return <Switch key={info.key} info={info} />;
+    case 'tabs':
+      return <Tabs key={info.key} info={info} />;
+    case 'group-header':
+    case 'tab':
+      throw new Error(
+        `Cannot render ${info.component} outside of expected parents`,
+      );
   }
 };
 
