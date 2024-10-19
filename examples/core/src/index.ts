@@ -1,4 +1,11 @@
-import { Toolkit, Group, Button, Label, Rect } from '@arcanejs/toolkit';
+import {
+  Toolkit,
+  Group,
+  Button,
+  Label,
+  Rect,
+  SliderButton,
+} from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
 
@@ -23,6 +30,12 @@ const button = root.addHeaderChild(
   }),
 );
 
+const slider = root.appendChild(
+  new SliderButton({
+    value: 0,
+  }),
+);
+
 root.appendChild(new Label({ text: 'Groups:', bold: true }));
 
 const groupA = root.appendChild(
@@ -30,6 +43,12 @@ const groupA = root.appendChild(
     title: 'Group A',
   }),
 );
+
+const sliderValue = groupA.appendChild(new Label({ text: 'Slider Value: 0' }));
+
+slider.addListener('change', (value) => {
+  sliderValue.setText(`Slider Value: ${value}`);
+});
 
 const groupB = root.appendChild(
   new Group({

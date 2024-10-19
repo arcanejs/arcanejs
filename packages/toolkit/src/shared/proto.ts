@@ -56,12 +56,21 @@ export type RectComponent = BaseComponent & {
   color: string;
 };
 
+export type SliderButtonComponent = BaseComponent & {
+  component: 'slider_button';
+  min: number;
+  max: number;
+  step: number;
+  value: number | null;
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
   | GroupComponent
   | LabelComponent
-  | RectComponent;
+  | RectComponent
+  | SliderButtonComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';
@@ -80,17 +89,23 @@ export type BaseClientComponentMessage = {
   componentKey: number;
 };
 
-export interface ButtonPressMessage extends BaseClientComponentMessage {
+export type ButtonPressMessage = BaseClientComponentMessage & {
   component: 'button';
-}
+};
 
 export type GroupTitleChangeMessage = BaseClientComponentMessage & {
   component: 'group';
   title: string;
 };
 
+export type SliderButtonUpdateMessage = BaseClientComponentMessage & {
+  component: 'slider_button';
+  value: number;
+};
+
 export type ClientComponentMessage =
   | ButtonPressMessage
-  | GroupTitleChangeMessage;
+  | GroupTitleChangeMessage
+  | SliderButtonUpdateMessage;
 
 export type ClientMessage = ClientComponentMessage;
