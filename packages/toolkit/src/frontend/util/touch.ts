@@ -53,3 +53,33 @@ export const usePressable = (
     },
   };
 };
+
+export function trackTouch(
+  touch: React.Touch,
+  move: (pos: { pageX: number; pageY: number }) => void,
+  end: (pos: { pageX: number; pageY: number }) => void,
+) {
+  const touchMove = (ev: TouchEvent) => {
+    ev.preventDefault();
+    for (const t of Array.from(ev.changedTouches)) {
+      if (t.identifier === touch.identifier) {
+        move({ pageX: t.pageX, pageY: t.pageY });
+      }
+    }
+  };
+
+  const touchEnd = (ev: TouchEvent) => {
+    for (const t of Array.from(ev.changedTouches)) {
+      if (t.identifier === touch.identifier) {
+        end({ pageX: t.pageX, pageY: t.pageY });
+        window.removeEventListener('touchmove', touchMove);
+        window.removeEventListener('touchend', touchEnd);
+        window.removeEventListener('touchcancel', touchEnd);
+      }
+    }
+  };
+
+  window.addEventListener('touchmove', touchMove, { passive: false });
+  window.addEventListener('touchend', touchEnd);
+  window.addEventListener('touchcancel', touchEnd);
+}

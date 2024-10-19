@@ -5,3 +5,4 @@ export { Button } from './backend/components/button';
 export { Group, GroupHeader } from './backend/components/group';
 export { Label } from './backend/components/label';
 export { Rect } from './backend/components/rect';
+export { SliderButton } from './backend/components/slider_button';
