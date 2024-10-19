@@ -85,6 +85,29 @@ export type TextInputComponent = BaseComponent & {
   value: string;
 };
 
+export type TimelineState =
+  | {
+      state: 'playing';
+      totalTimeMillis: number;
+      effectiveStartTime: number;
+      speed: number;
+    }
+  | {
+      state: 'stopped';
+      totalTimeMillis: number;
+      currentTimeMillis: number;
+    };
+
+export type TimelineComponent = BaseComponent & {
+  component: 'timeline';
+  state: TimelineState;
+  title?: string;
+  subtitles?: string[];
+  source?: {
+    name: string;
+  };
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
@@ -95,7 +118,8 @@ export type Component =
   | SwitchComponent
   | TabComponent
   | TabsComponent
-  | TextInputComponent;
+  | TextInputComponent
+  | TimelineComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';

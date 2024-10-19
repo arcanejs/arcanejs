@@ -9,3 +9,4 @@ export { SliderButton } from './backend/components/slider-button';
 export { Switch } from './backend/components/switch';
 export { Tab, Tabs } from './backend/components/tabs';
 export { TextInput } from './backend/components/text-input';
+export { Timeline } from './backend/components/timeline';

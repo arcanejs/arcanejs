@@ -8,6 +8,7 @@ import {
   Switch,
   Tabs,
   TextInput,
+  Timeline,
 } from '@arcanejs/toolkit';
 
 const toolkit = new Toolkit();
@@ -150,3 +151,122 @@ const textInputLabel = textInputGroup.appendChild(
 textInput.addListener('change', (value) => {
   textInputLabel.setText(`Text Input Value: ${value}`);
 });
+
+// Timeline
+
+const timelineGroup = tabs.addTab(
+  'Timeline',
+  new Group({
+    noBorder: true,
+    direction: 'vertical',
+  }),
+);
+
+const timelineButtons = timelineGroup.appendChild(
+  new Group({
+    noBorder: true,
+  }),
+);
+
+const timeline = new Timeline({
+  state: {
+    state: 'stopped',
+    totalTimeMillis: 10000,
+    currentTimeMillis: 0,
+  },
+  title: 'Timeline',
+  subtitles: ['Subtitle 1', 'Subtitle 2'],
+  source: {
+    name: 'Source',
+  },
+});
+
+const restartButton = timelineButtons.appendChild(
+  new Button({
+    text: 'Restart',
+    icon: 'replay',
+  }),
+);
+
+restartButton.addListener('click', () => {
+  timeline.setProps({
+    ...timeline.props,
+    state: {
+      state: 'stopped',
+      totalTimeMillis: timeline.props.state.totalTimeMillis,
+      currentTimeMillis: 0,
+    },
+  });
+  playPauseButton.setIcon('play_arrow');
+});
+
+const playPauseButton = timelineButtons.appendChild(
+  new Button({
+    text: 'Play',
+    icon: 'play_arrow',
+  }),
+);
+
+playPauseButton.addListener('click', () => {
+  const current = timeline.props.state;
+  if (current.state === 'stopped') {
+    timeline.setProps({
+      ...timeline.props,
+      state: {
+        state: 'playing',
+        effectiveStartTime: Date.now() - current.currentTimeMillis,
+        speed: 1,
+        totalTimeMillis: current.totalTimeMillis,
+      },
+    });
+    playPauseButton.setIcon('pause');
+  } else {
+    timeline.setProps({
+      ...timeline.props,
+      state: {
+        state: 'stopped',
+        currentTimeMillis: Date.now() - current.effectiveStartTime,
+        totalTimeMillis: current.totalTimeMillis,
+      },
+    });
+    playPauseButton.setIcon('play_arrow');
+  }
+});
+
+const addTimeButton = timelineButtons.appendChild(
+  new Button({
+    text: 'Add Time',
+    icon: 'add',
+  }),
+);
+
+addTimeButton.addListener('click', () => {
+  const current = timeline.props.state;
+  timeline.setProps({
+    ...timeline.props,
+    state: {
+      ...current,
+      totalTimeMillis: current.totalTimeMillis * 2,
+    },
+  });
+});
+
+const removeTimeButton = timelineButtons.appendChild(
+  new Button({
+    text: 'Remove Time',
+    icon: 'remove',
+  }),
+);
+
+removeTimeButton.addListener('click', () => {
+  const current = timeline.props.state;
+  timeline.setProps({
+    ...timeline.props,
+    state: {
+      ...current,
+      totalTimeMillis: current.totalTimeMillis / 2,
+    },
+  });
+});
+
+timelineGroup.appendChild(timeline);

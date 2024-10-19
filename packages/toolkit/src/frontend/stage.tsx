@@ -14,6 +14,7 @@ import { SliderButton } from './components/slider_button';
 import { Switch } from './components/switch';
 import { Tabs } from './components/tabs';
 import { TextInput } from './components/text-input';
+import { Timeline } from './components/timeline';
 
 type Props = {
   className?: string;
@@ -37,6 +38,9 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       return <Tabs key={info.key} info={info} />;
     case 'text-input':
       return <TextInput key={info.key} info={info} />;
+    case 'timeline':
+      return <Timeline key={info.key} info={info} />;
+    // Parent-Specific Components
     case 'group-header':
     case 'tab':
       throw new Error(
