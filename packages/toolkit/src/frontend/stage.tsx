@@ -9,6 +9,7 @@ import { Group, GroupStateWrapper } from './components/group';
 import { StageContext } from './components/context';
 import { Button } from './components/button';
 import { Label } from './components/label';
+import { Rect } from './components/rect';
 
 type Props = {
   className?: string;
@@ -26,6 +27,8 @@ const renderComponent = (info: proto.Component): JSX.Element => {
       );
     case 'label':
       return <Label key={info.key} info={info} />;
+    case 'rect':
+      return <Rect key={info.key} info={info} />;
   }
 };
 
