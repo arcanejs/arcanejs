@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.1.3
+
+### Patch Changes
+
+- Update docs with architacture diagram
+
 ## 0.1.2
 
 ### Patch Changes

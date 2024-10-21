@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" id="svg8" version="1.1" viewBox="0 0 800 200" width="800" height="200">
+  <style>
+    * {
+      font-size: 14px;
+      font-family: sans-serif;
+    }
+
+    #labels * {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    #code * {
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    .black-border {
+      stroke: #151516;
+      stroke-width: 1;
+    }
+
+    @keyframes btn-move-keyframes {
+      5% {
+        transform: translate(0, 0);
+      }
+      10% {
+        transform: translate(40px, 0);
+      }
+      55% {
+        transform: translate(40px, 0);
+      }
+      60% {
+        transform: translate(0, 0);
+      }
+    }
+
+    .btn-move {
+      animation: 6s linear 0s infinite normal none running btn-move-keyframes;  
+    }
+
+    @keyframes mouse-anim-keyframes {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      2.5% {
+        opacity: 1;
+        transform: scale(0.8);
+      }
+      5% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      7.5% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      10% {
+        opacity: 0;
+        transform: scale(1);
+      }
+      90% {
+        opacity: 0;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes highlight-keyframes {
+      0% {
+        opacity: 0;
+      }
+      2.45% {
+        opacity: 0;
+      }
+      2.5% {
+        opacity: 1;
+      }
+      10% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .mouse-anim-1 {
+      opacity: 0;
+      transform-origin: 60px 75px;
+      animation: 6s linear 0s infinite normal none running mouse-anim-keyframes;  
+    }
+
+    .highlight-anim-1 {
+      opacity: 0;
+      animation: 6s linear 0s infinite normal none running highlight-keyframes;
+    }
+
+    .mouse-anim-2 {
+      opacity: 0;
+      transform-origin: 620px 75px;
+      animation: 6s linear 3s infinite normal none running mouse-anim-keyframes;  
+    }
+
+    .highlight-anim-2 {
+      opacity: 0;
+      animation: 6s linear 3s infinite normal none running highlight-keyframes;
+    }
+
+    @keyframes state-keyframes {
+      4.9% {
+        opacity: 0;
+        fill: #aaa;
+      }
+      5% {
+        opacity: 1;
+        fill: #4286f4;
+      }
+      10% {
+        opacity: 1;
+        fill: #aaa;
+      }
+      54.9% {
+        opacity: 1;
+        fill: #aaa;
+      }
+      55% {
+        opacity: 0;
+        fill: #aaa;
+      }
+    }
+
+    .text-off {
+      font-weight: bold;
+      opacity: 0;
+      animation: 6s linear 3s infinite normal none running state-keyframes;  
+    }
+
+    .text-on {
+      font-weight: bold;
+      opacity: 0;
+      animation: 6s linear 0s infinite normal none running state-keyframes;  
+    }
+  </style>
+  <defs>
+    <linearGradient id="buttonOnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a77f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4286f4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonOffGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#242525;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#37383a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f5053;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#343436;stop-opacity:1" />
+    </linearGradient>
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+      <feOffset dx="0" dy="-1" result="offsetblur"/>
+      <feFlood flood-color="rgba(0,0,0,0.4)"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="inset-shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feComponentTransfer in="SourceAlpha">
+        <feFuncA type="table" tableValues="1 0" />
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="5" />
+      <feOffset dx="0" dy="0" result="offsetblur" />
+      <feFlood flood-color="black" result="color" />
+      <feComposite in2="offsetblur" operator="in" />
+      <feComposite in2="SourceAlpha" operator="in" />
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode />
+      </feMerge>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#777" />
+    </marker>
+    <g id="button_slider">
+      <rect x="-40" y="0" width="40" height="30" fill="url(#buttonOnGrad)" />
+      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">ON</text>
+      <rect x="29" y="0" width="41" height="30" fill="url(#buttonOffGrad)" />
+      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">OFF</text>
+      <rect x="-1" y="0" class="black-border" width="31" height="30" fill="url(#buttonGrad)" rx="3" ry="3" />
+    </g>
+    <g id="screen">
+      <rect x="0" y="0" width="200" height="100" fill="#252524" filter="url(#inset-shadow)" rx="3" ry="3" />
+      <mask id="button_slider_1_mask">
+        <rect x="10.5" y="10.5" width="70" height="30" fill="#ffffff" rx="3" ry="3" />
+      </mask>
+      <g mask="url(#button_slider_1_mask)">
+        <g class="btn-move">
+          <use x="10.5" y="10.5" href="#button_slider" />
+        </g>
+      </g>
+      <rect class="black-border" x="10.5" y="10.5" width="70" height="30" fill="none" rx="3" ry="3" />
+    </g>
+    <g id="browser">
+      <rect x="-10" y="0" width="220" height="150" fill="#ccc" rx="5" ry="5" stroke-width="2" stroke="#aaa" />
+      <rect x="40.5" y="10.5" width="160" height="20" fill="#fff" rx="3" ry="3" stroke-width="1" stroke="#aaa" />
+      <path d="M 10 15 L 0 20 L 10 25 Z" fill="#777" />
+      <path d="M 20 15 L 30 20 L 20 25 Z" fill="#777" />
+      <text x="120" y="20" height="30" dy="0.35em" text-anchor="middle" fill="#777">10.10.10.10:8080</text>
+    </g>
+    <g id="switch_highlight">
+      <rect x="0.5" y="0.5" width="82" height="42" fill="none" stroke="#4286f4" stroke-width="2" rx="6" ry="6" />
+    </g>
+    <g id="mouse">
+      <g style="transform: scale(3)">
+        <path fill="#fefefe" d="M5.986 21.07v-2.155h-.958V17H4.07v-1.915h-.957V12.93H1.915v-.958H.958v-1.916h2.155v.958h.957v2.873h.958V.957h1.916v9.1H7.9V5.985h2.155v4.07h.958V6.944h1.916v4.07h.957V7.901h1.198V9.1h.957v6.943h-.957v2.873h-1.198v2.155H5.986z"/>
+        <path d="M5.028 22.028v-3.113H4.07V17h-.957v-1.915H1.915V12.93H.958v-.958H0V9.099h3.113v.957h.957V.958h.958V0h1.916v.958H7.9v4.07h2.155v.958h2.874v.958h2.155V7.9h.957V9.1H17v6.943h-.958v2.873h-.957v3.113H5.028zm8.86-.958v-2.155h1.197v-2.873h.957V9.1h-.957V7.9h-1.198v3.113h-.957v-4.07h-1.916v3.112h-.958v-4.07H7.901v4.07h-.957V.958H5.028v12.93H4.07v-2.874h-.957v-.958H.958v1.916h.957v.958h1.198v2.155h.957V17h.958v1.915h.958v2.155h7.901z" />
+      </g>
+    </g>
+  </defs>
+
+  <g>
+    <use y="10" x="20" href="#browser" />
+    <use y="50" x="20" href="#screen" />
+
+    <use y="10" x="580" href="#browser" />
+    <use y="50" x="580" href="#screen" />
+
+    <use y="54" x="24" href="#switch_highlight" class="highlight-anim-1" />
+    <use y="75" x="50.5" href="#mouse" class="mouse-anim-1" />
+    <use y="54" x="584" href="#switch_highlight" class="highlight-anim-2" />
+    <use y="75" x="610.5" href="#mouse" class="mouse-anim-2" />
+  </g>
+
+  <g>
+    <rect x="290" y="10" width="220" height="150" fill="#333" rx="5" ry="5" stroke-width="2" stroke="#050505" />
+    <g id="code">
+      <text x="300" y="30" text-anchor="start" fill="#f5f5f5">const &#91;state, setState&#93; &#61;</text>
+      <text x="300" y="50" text-anchor="start" fill="#f5f5f5">&#160;&#160;useState&#40;&#39;off&#39;&#41;&#59;</text>
+      <text x="300" y="80" text-anchor="start" fill="#aaa" class="text-off">&#47;&#47; state &#61;&#61; &#39;off&#39;</text>
+      <text x="300" y="80" text-anchor="start" fill="#aaa" class="text-on">&#47;&#47; state &#61;&#61; &#39;on&#39;</text>
+      <text x="300" y="110" text-anchor="start" fill="#f5f5f5">&lt;Switch</text>
+      <text x="300" y="130" text-anchor="start" fill="#f5f5f5">&#160;&#160;state&#61;&#123;state&#125;</text>
+      <text x="300" y="150" text-anchor="start" fill="#f5f5f5">&#160;&#160;onChange&#61;&#123;setState&#125; &#47;&#62;</text>
+    </g>
+  </g>
+
+  <g id="labels">
+    <!-- WS -->
+    <line x1="235" y1="90" x2="285" y2="90" stroke="#777" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+    <rect x="235" y="52.5" width="50" height="25" fill="#f5f5f5" rx="6" ry="6" />
+    <text x="260" y="70" height="30" text-anchor="middle" fill="#333">WS</text>
+  
+    <line x1="515" y1="90" x2="565" y2="90" stroke="#777" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)" />
+    <rect x="515" y="52.5" width="50" height="25" fill="#f5f5f5" rx="6" ry="6" />
+    <text x="540" y="70" height="30" text-anchor="middle" fill="#333">WS</text>
+
+    <!-- Bottom -->
+    <rect x="35" y="167.5" width="170" height="25" fill="#f5f5f5" rx="6" ry="6" />
+    <text x="120" y="185" height="30" text-anchor="middle" fill="#333">Browser Client 1</text>
+    <rect x="315" y="167.5" width="170" height="25" fill="#f5f5f5" rx="6" ry="6" />
+    <text x="400" y="185" height="30" text-anchor="middle" fill="#333">Node.js Process</text>
+    <rect x="595" y="167.5" width="170" height="25" fill="#f5f5f5" rx="6" ry="6" />
+    <text x="680" y="185" height="30" text-anchor="middle" fill="#333">Browser Client 2</text>
+  </g>
+
+</svg> 
