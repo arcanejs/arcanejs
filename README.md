@@ -12,6 +12,8 @@ clients.
 The UI has also been designed primarily with touch devices in mind,
 but also works well with a cursor and keyboard.
 
+![Architecture Diagram](./packages/react-toolkit/docs/architecture.svg)
+
 ## Status / Suitability / Security Disclaimer
 
 This project is **experimental**,
