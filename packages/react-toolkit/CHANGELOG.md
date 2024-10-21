@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.1.4
+
+### Patch Changes
+
+- Update docs
+
 ## 0.1.3
 
 ### Patch Changes

@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/%40arcanejs%2Freact-toolkit)](https://www.npmjs.com/package/@arcanejs/react-toolkit)
 
 `@arcanejs/react-toolkit` Allows you to quickly create real-time control panels
-for your JavaScript / TypeScript single-server apps,
+for your single-process Node.js apps,
 using a custom react renderer, and WebSockets.
 
 Control panels can be accessed by any number of
@@ -18,20 +18,17 @@ but also works well with a cursor and keyboard.
   <img src="./docs/architecture.svg" alt="Architecture Diagram">
 </p>
 
-## Status / Suitability / Security Disclaimer
+## What
 
-This project is **experimental**,
-and takes advantage of unstable `react` APIs exposed via `react-render`.
-It's not suitable for production or commercial projects yet,
-especially those that rely on regular updates of dependencies
-for security reasons,
-as usage of this project may make it difficult to keep `react` up-to-date
-(that being said, the license does not prohibit this,
-so feel free to at-your-own-risk).
+- Easily create controller UIs for Node.js processes
 
-There are also no authentication mechanisms implemented yet,
-so be careful when exposing your control panels over the network,
-as this will allow anyone to interact with your processes.
+- Uses server-side **React** for state management and UI composition
+
+  - This is not SSR, you can use `useState()` hooks etc...
+
+- Instantly updates all clients using WebSockets
+
+- Collection of 9+ components to build your UIs
 
 ## Why
 
@@ -291,3 +288,18 @@ TODO
 For a comprehensive list of examples,
 please see the example directory in the arcane monorepo:
 <https://github.com/arcanejs/arcanejs/tree/main/examples/react>
+
+## Status / Suitability / Security Disclaimer
+
+This project is **experimental**,
+and takes advantage of unstable `react` APIs exposed via `react-render`.
+It's not suitable for production or commercial projects yet,
+especially those that rely on regular updates of dependencies
+for security reasons,
+as usage of this project may make it difficult to keep `react` up-to-date
+(that being said, the license does not prohibit this,
+so feel free to at-your-own-risk).
+
+There are also no authentication mechanisms implemented yet,
+so be careful when exposing your control panels over the network,
+as this will allow anyone to interact with your processes.
