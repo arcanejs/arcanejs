@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink" id="svg8" version="1.1" viewBox="0 0 400 60">
+  xmlns:xlink="http://www.w3.org/1999/xlink" id="svg8" version="1.1" viewBox="0 0 800 60" width="800" height="60">
   <style>
     .btn-1-pos {
-      transform: translate(10px, 10px);
+      transform: translate(10.5px, 10.5px);
     }
 
     .btn-2-pos {
-      transform: translate(300px, 10px);
+      transform: translate(300.5px, 10.5px);
     }
 
     .black-border {
@@ -65,7 +65,7 @@
     </g>
   </defs>
 
-  <rect x="0" y="0" width="400" height="60" fill="#f5f5f5" stroke="none" />
+  <rect x="0" y="0" width="800" height="60" fill="#f5f5f5" stroke="none" />
 
   <!-- Button 1 -->
   <mask id="button_slider_1_mask">
