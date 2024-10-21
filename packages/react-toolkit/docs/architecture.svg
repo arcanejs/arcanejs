@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink" id="svg8" version="1.1" viewBox="0 0 400 60">
+  <style>
+    .btn-1-pos {
+      transform: translate(10px, 10px);
+    }
+
+    .btn-2-pos {
+      transform: translate(300px, 10px);
+    }
+
+    .black-border {
+      stroke: #151516;
+      stroke-width: 1;
+    }
+
+    @keyframes btn-move-keyframes {
+      0% {
+        transform: translate(0, 0);
+      }
+      5% {
+        transform: translate(40px, 0);
+      }
+      50% {
+        transform: translate(40px, 0);
+      }
+      55% {
+        transform: translate(0, 0);
+      }
+   }
+
+   .btn-move {
+    animation: 4s linear 0s infinite normal none running btn-move-keyframes;  
+ }
+  </style>
+  <defs>
+    <linearGradient id="buttonOnGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a77f3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4286f4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonOffGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#242525;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#37383a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f5053;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#343436;stop-opacity:1" />
+    </linearGradient>
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+      <feOffset dx="0" dy="-1" result="offsetblur"/>
+      <feFlood flood-color="rgba(0,0,0,0.4)"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <g id="button_slider">
+      <rect x="-40" y="0" width="40" height="30" fill="url(#buttonOnGrad)" />
+      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)" font-family="sans-serif">ON</text>
+      <rect x="29" y="0" width="41" height="30" fill="url(#buttonOffGrad)" />
+      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)" font-family="sans-serif">OFF</text>
+      <rect x="-1" y="0" class="black-border" width="31" height="30" fill="url(#buttonGrad)" rx="3" ry="3" />
+    </g>
+  </defs>
+
+  <rect x="0" y="0" width="400" height="60" fill="#f5f5f5" stroke="none" />
+
+  <!-- Button 1 -->
+  <mask id="button_slider_1_mask">
+    <rect width="70" height="30" fill="#ffffff" rx="3" ry="3" class="btn-1-pos" />
+  </mask>
+  <g mask="url(#button_slider_1_mask)">
+    <g class="btn-move">
+      <use href="#button_slider" class="btn-1-pos" />
+    </g>
+  </g>
+  <rect class="btn-1-pos black-border" x="0" y="0" width="70" height="30" fill="none" rx="3" ry="3" />
+
+  <!-- Button 2 -->
+  <mask id="button_slider_2_mask">
+    <rect width="70" height="30" fill="#ffffff" rx="3" ry="3" class="btn-2-pos" />
+  </mask>
+  <g mask="url(#button_slider_2_mask)">
+    <g class="btn-move">
+      <use href="#button_slider" class="btn-2-pos" />
+    </g>
+  </g>
+  <rect class="btn-2-pos black-border" x="0" y="0" width="70" height="30" fill="none" rx="3" ry="3" />
+
+
+</svg> 
