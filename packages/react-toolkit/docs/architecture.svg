@@ -23,21 +23,20 @@
 
     @keyframes btn-move-keyframes {
       5% {
-        x: 10.5;
+        transform: translate(0, 0);
       }
       10% {
-        x: 50.5;
+        transform: translate(40px, 0);
       }
       55% {
-        x: 50.5;
+        transform: translate(40px, 0);
       }
       60% {
-        x: 10.5;
+        transform: translate(0, 0);
       }
     }
 
     .btn-move {
-      x: 10.5;
       animation: 6s linear 0s infinite normal none running btn-move-keyframes;  
     }
 
@@ -265,6 +264,10 @@
     <text x="400" y="185" height="30" text-anchor="middle" fill="#333">Node.js Process</text>
     <rect x="595" y="167.5" width="170" height="25" fill="#f5f5f5" rx="6" ry="6" />
     <text x="680" y="185" height="30" text-anchor="middle" fill="#333">Browser Client 2</text>
+  </g>
+
+  <g mask="url(#button_slider_1_mask)">
+    <use class="btn-move" x="10.5" y="10.5" href="#button_slider" />
   </g>
 
 </svg> 
