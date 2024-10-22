@@ -188,23 +188,16 @@
     </marker>
     <g id="button_slider">
       <rect x="-40" y="0" width="40" height="30" fill="url(#buttonOnGrad)" />
-      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">ON</text>
+      <text x="-20" y="14" width="40" height="30" dy="0.35em" text-anchor="middle" fill="#000" opacity="0.5">ON</text>
+      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white">ON</text>
       <rect x="29" y="0" width="41" height="30" fill="url(#buttonOffGrad)" />
-      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">OFF</text>
+      <text x="50" y="14" width="40" height="30" dy="0.35em" text-anchor="middle" fill="#000" opacity="0.5">OFF</text>
+      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white">OFF</text>
       <rect x="-1" y="0" class="black-border" width="31" height="30" fill="url(#buttonGrad)" rx="3" ry="3" />
     </g>
-    <g id="screen">
-      <rect x="0" y="0" width="200" height="100" fill="#252524" filter="url(#inset-shadow)" rx="3" ry="3" />
-      <mask id="button_slider_1_mask">
-        <rect x="10.5" y="10.5" width="70" height="30" fill="#ffffff" rx="3" ry="3" />
-      </mask>
-      <g mask="url(#button_slider_1_mask)">
-        <g class="btn-move">
-          <use x="10.5" y="10.5" href="#button_slider" />
-        </g>
-      </g>
-      <rect class="black-border" x="10.5" y="10.5" width="70" height="30" fill="none" rx="3" ry="3" />
-    </g>
+    <mask id="button_slider_mask">
+      <rect x="10.5" y="10.5" width="70" height="30" fill="#ffffff" rx="3" ry="3" />
+    </mask>
     <g id="browser">
       <rect x="-10" y="0" width="220" height="150" fill="#ccc" rx="5" ry="5" stroke-width="2" stroke="#aaa" />
       <rect x="40.5" y="10.5" width="160" height="20" fill="#fff" rx="3" ry="3" stroke-width="1" stroke="#aaa" />
@@ -225,10 +218,22 @@
 
   <g>
     <use y="10" x="20" href="#browser" />
-    <use y="50" x="20" href="#screen" />
+    <g style="transform: translate(20px, 50px)">
+      <rect x="0" y="0" width="200" height="100" fill="#252524" filter="url(#inset-shadow)" rx="3" ry="3" />
+      <g mask="url(#button_slider_mask)">
+        <use class="btn-move" x="10.5" y="10.5" href="#button_slider" />
+      </g>
+      <rect class="black-border" x="10.5" y="10.5" width="70" height="30" fill="none" rx="3" ry="3" />
+    </g>
 
     <use y="10" x="580" href="#browser" />
-    <use y="50" x="580" href="#screen" />
+    <g style="transform: translate(580px, 50px)">
+      <rect x="0" y="0" width="200" height="100" fill="#252524" filter="url(#inset-shadow)" rx="3" ry="3" />
+      <g mask="url(#button_slider_mask)">
+        <use class="btn-move" x="10.5" y="10.5" href="#button_slider" />
+      </g>
+      <rect class="black-border" x="10.5" y="10.5" width="70" height="30" fill="none" rx="3" ry="3" />
+    </g>
 
     <use y="54" x="24" href="#switch_highlight" class="highlight-anim-1" />
     <use y="75" x="50.5" href="#mouse" class="mouse-anim-1" />

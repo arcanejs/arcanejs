@@ -15,7 +15,7 @@ The UI has also been designed primarily with touch devices in mind,
 but also works well with a cursor and keyboard.
 
 <p align="center">
-  <img src="./docs/architecture.svg" alt="Architecture Diagram">
+  <img src="https://raw.githubusercontent.com/arcanejs/arcanejs/main/packages/react-toolkit/docs/architecture.svg" alt="Architecture Diagram">
 </p>
 
 ## What
@@ -114,7 +114,7 @@ ToolkitRenderer.render(<ControlPanel />, toolkit);
 You would then be able to access the following control panel
 from [localhost:3000](http://localhost:3000):
 
-![Control Panel Screenshot](./docs/example-controller.png)
+![Control Panel Screenshot](https://raw.githubusercontent.com/arcanejs/arcanejs/main/packages/react-toolkit/docs/example-controller.png)
 
 Please note:
 
