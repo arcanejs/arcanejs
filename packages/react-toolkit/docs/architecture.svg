@@ -267,4 +267,8 @@
     <text x="680" y="185" height="30" text-anchor="middle" fill="#333">Browser Client 2</text>
   </g>
 
+  <g mask="url(#button_slider_1_mask)">
+    <use class="btn-move" y="10.5" href="#button_slider" />
+  </g>
+
 </svg> 
