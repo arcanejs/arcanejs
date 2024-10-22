@@ -23,20 +23,21 @@
 
     @keyframes btn-move-keyframes {
       5% {
-        transform: translate(0, 0);
+        x: 10.5;
       }
       10% {
-        transform: translate(40px, 0);
+        x: 50.5;
       }
       55% {
-        transform: translate(40px, 0);
+        x: 50.5;
       }
       60% {
-        transform: translate(0, 0);
+        x: 10.5;
       }
     }
 
     .btn-move {
+      x: 10.5;
       animation: 6s linear 0s infinite normal none running btn-move-keyframes;  
     }
 
@@ -188,9 +189,9 @@
     </marker>
     <g id="button_slider">
       <rect x="-40" y="0" width="40" height="30" fill="url(#buttonOnGrad)" />
-      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">ON</text>
+      <text x="-20" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white">ON</text>
       <rect x="29" y="0" width="41" height="30" fill="url(#buttonOffGrad)" />
-      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white" filter="url(#textShadow)">OFF</text>
+      <text x="50" y="15" width="40" height="30" dy="0.35em" text-anchor="middle" fill="white">OFF</text>
       <rect x="-1" y="0" class="black-border" width="31" height="30" fill="url(#buttonGrad)" rx="3" ry="3" />
     </g>
     <g id="screen">
@@ -199,9 +200,7 @@
         <rect x="10.5" y="10.5" width="70" height="30" fill="#ffffff" rx="3" ry="3" />
       </mask>
       <g mask="url(#button_slider_1_mask)">
-        <g class="btn-move">
-          <use x="10.5" y="10.5" href="#button_slider" />
-        </g>
+        <use class="btn-move" y="10.5" href="#button_slider" />
       </g>
       <rect class="black-border" x="10.5" y="10.5" width="70" height="30" fill="none" rx="3" ry="3" />
     </g>
