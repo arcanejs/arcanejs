@@ -1,6 +1,7 @@
-import { createGlobalStyle, css } from 'styled-components';
+import { createGlobalStyle, css, RuleSet } from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle: ReturnType<typeof createGlobalStyle> =
+  createGlobalStyle`
 body {
   &.touch-mode * {
     cursor: none !important;
@@ -32,7 +33,8 @@ export const THEME = {
 
 export type Theme = typeof THEME;
 
-export const BaseStyle = createGlobalStyle`
+export const BaseStyle: ReturnType<typeof createGlobalStyle> =
+  createGlobalStyle`
 * {
   box-sizing: border-box;
 }
@@ -46,7 +48,7 @@ body {
 }
 `;
 
-export const buttonStateNormal = css`
+export const buttonStateNormal: RuleSet<object> = css`
   color: ${(p) => p.theme.textNormal};
   background: linear-gradient(to bottom, #4f5053, #343436);
   text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
@@ -55,14 +57,14 @@ export const buttonStateNormal = css`
     0 1px 0 0 rgba(0, 0, 0, 0.25);
 `;
 
-export const buttonStateNormalHover = css`
+export const buttonStateNormalHover: RuleSet<object> = css`
   color: ${(p) => p.theme.textNormal};
   outline-color: rgba(243, 243, 245, 0.3);
   background: linear-gradient(to bottom, #5e6064, #393a3b);
   text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
 `;
 
-export const buttonStateNormalActive = css`
+export const buttonStateNormalActive: RuleSet<object> = css`
   color: #ffffff;
   outline-color: rgba(255, 255, 255, 0.3);
   background: linear-gradient(to bottom, #242525, #37383a);
@@ -73,20 +75,20 @@ export const buttonStateNormalActive = css`
   transition-duration: 50ms;
 `;
 
-const buttonStatePressed = css`
+const buttonStatePressed: RuleSet<object> = css`
   ${buttonStateNormalActive}
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255,255,255,0.15);
 `;
 
-const buttonStatePressedHover = css`
+const buttonStatePressedHover: RuleSet<object> = css`
   ${buttonStateNormalActive}
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255,255,255,0.15);
   background: linear-gradient(to bottom, #282929, #414243);
 `;
 
-const buttonStatePressedActive = buttonStateNormalActive;
+const buttonStatePressedActive: RuleSet<object> = buttonStateNormalActive;
 
-const buttonStateDisabled = css`
+const buttonStateDisabled: RuleSet<object> = css`
   ${buttonStateNormal}
 
   cursor: default;
@@ -94,7 +96,7 @@ const buttonStateDisabled = css`
   color: rgba(${(p) => p.theme.textNormal}, 0.4);
 `;
 
-const button = css`
+const button: RuleSet<object> = css`
   position: relative;
   box-sizing: border-box;
   cursor: pointer;
@@ -117,7 +119,7 @@ const button = css`
   }
 `;
 
-export const buttonPressed = css`
+export const buttonPressed: RuleSet<object> = css`
   ${buttonStatePressed}
 
   &:hover {
@@ -129,7 +131,7 @@ export const buttonPressed = css`
   }
 `;
 
-export const buttonDisabled = css`
+export const buttonDisabled: RuleSet<object> = css`
   ${buttonStateDisabled}
 
   &:hover, &:active {
@@ -137,9 +139,9 @@ export const buttonDisabled = css`
   }
 `;
 
-export const rectButton = button;
+export const rectButton: RuleSet<object> = button;
 
-export const touchIndicatorNormal = css`
+export const touchIndicatorNormal: RuleSet<object> = css`
   position: absolute;
   top: -6px;
   right: -6px;
@@ -151,7 +153,7 @@ export const touchIndicatorNormal = css`
   transition: border-color 300ms;
 `;
 
-export const touchIndicatorTouching = css`
+export const touchIndicatorTouching: RuleSet<object> = css`
   border-color: ${(p) => p.theme.hint};
   background-color: rgba(${(p) => p.theme.hintRGB}, 0.2);
   transition: border-color 0s;

@@ -82,6 +82,12 @@
       "import": "./dist/backend/components/timeline.mjs",
       "require": "./dist/backend/components/timeline.js",
       "types": "./dist/backend/components/timeline.d.ts"
+    },
+    "./util": {
+      "@arcanejs/source": "./src/backend/util/index.ts",
+      "import": "./dist/backend/util/index.mjs",
+      "require": "./dist/backend/util/index.js",
+      "types": "./dist/backend/util/index.d.ts"
     }
   },
   "scripts": {

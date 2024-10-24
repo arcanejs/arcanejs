@@ -1,6 +1,6 @@
 import React, {
   EventHandler,
-  FunctionComponent,
+  FC,
   KeyboardEvent,
   SyntheticEvent,
   useContext,
@@ -167,7 +167,7 @@ export const GroupStateWrapper: React.FunctionComponent<{
   );
 };
 
-const Group: FunctionComponent<Props> = ({ className, info }) => {
+const Group: FC<Props> = ({ className, info }) => {
   const groupState = useContext(GroupStateContext);
   const { renderComponent, sendMessage } = useContext(StageContext);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -267,7 +267,7 @@ const Group: FunctionComponent<Props> = ({ className, info }) => {
 
 Group.displayName = 'Group';
 
-const StyledGroup = styled(Group)`
+const StyledGroup: FC<Props> = styled(Group)`
   border: 1px solid ${THEME.borderDark};
 
   > .title {

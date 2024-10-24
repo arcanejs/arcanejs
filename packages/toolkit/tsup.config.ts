@@ -13,6 +13,7 @@ export default defineConfig({
     'src/backend/components/tabs.ts',
     'src/backend/components/text-input.ts',
     'src/backend/components/timeline.ts',
+    'src/backend/util/index.ts',
   ],
   format: ['cjs', 'esm'],
   dts: true,
