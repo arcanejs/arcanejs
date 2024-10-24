@@ -1,8 +1,10 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { Icon } from './core/icon';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
+
+import { Icon } from './core';
+
 import { THEME } from '../styling';
 
 interface Props {
@@ -57,7 +59,7 @@ const Subtitle = styled.div`
   margin-bottom: 0.5em;
 `;
 
-const Timeline: FunctionComponent<Props> = (props) => {
+const Timeline: FC<Props> = (props) => {
   const { className, info } = props;
 
   const frameState = React.useRef<{

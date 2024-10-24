@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
+
 import { StageContext } from './context';
+
 import { THEME } from '../styling';
 
 interface Props {
@@ -11,11 +13,7 @@ interface Props {
   sendMessage: ((msg: proto.ClientMessage) => void) | null;
 }
 
-const TextInput: React.FunctionComponent<Props> = ({
-  className,
-  info,
-  sendMessage,
-}) => {
+const TextInput: FC<Props> = ({ className, info, sendMessage }) => {
   return (
     <input
       className={className}
@@ -32,7 +30,7 @@ const TextInput: React.FunctionComponent<Props> = ({
   );
 };
 
-const StyledTextInput = styled(TextInput)`
+const StyledTextInput: FC<Props> = styled(TextInput)`
   position: relative;
   box-sizing: border-box;
   padding: 6px 8px;
@@ -49,9 +47,7 @@ const StyledTextInput = styled(TextInput)`
   }
 `;
 
-const TextInputWrapper: React.FunctionComponent<Omit<Props, 'sendMessage'>> = (
-  props,
-) => (
+const TextInputWrapper: FC<Omit<Props, 'sendMessage'>> = (props) => (
   <StageContext.Consumer>
     {({ sendMessage }) => (
       <StyledTextInput {...props} sendMessage={sendMessage} />

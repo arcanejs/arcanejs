@@ -1,7 +1,7 @@
-// TODO: move this to a new core-frontend library
 import * as React from 'react';
 import { styled } from 'styled-components';
-import { calculateClass } from './utils';
+
+import { calculateClass } from '../../util';
 
 export const ICON_CLASS = 'icon';
 

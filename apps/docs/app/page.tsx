@@ -1,13 +1,19 @@
-import Image from 'next/image';
 import styles from './page.module.css';
-import { diffJson } from '@arcanejs/diff';
+import {
+  ToolkitDisplay,
+  ToolkitSimulatorProvider,
+} from './components/simulator';
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        Hello World
-        {JSON.stringify(diffJson({ a: '456' }, { a: '654' }))}
+        <ToolkitSimulatorProvider>
+          <h2>Toolkit A</h2>
+          <ToolkitDisplay />
+          <h2>Toolkit B</h2>
+          <ToolkitDisplay />
+        </ToolkitSimulatorProvider>
       </main>
     </div>
   );

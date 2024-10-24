@@ -1,22 +1,21 @@
-import * as React from 'react';
-import {
-  SyntheticEvent,
+import React, {
   EventHandler,
-  FunctionComponent,
-  useState,
-  useContext,
+  FC,
   KeyboardEvent,
+  SyntheticEvent,
+  useContext,
+  useState,
 } from 'react';
 import { styled } from 'styled-components';
-import { Icon } from './core/icon';
-import { calculateClass } from './core/utils';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
+
+import { THEME } from '../styling';
+import { calculateClass, usePressable } from '../util';
 
 import { StageContext } from './context';
+import { Icon } from './core';
 import { NestedContent } from './nesting';
-import { usePressable } from '../util/touch';
-import { THEME } from '../styling';
 
 interface Props {
   className?: string;
@@ -168,7 +167,7 @@ export const GroupStateWrapper: React.FunctionComponent<{
   );
 };
 
-const Group: FunctionComponent<Props> = ({ className, info }) => {
+const Group: FC<Props> = ({ className, info }) => {
   const groupState = useContext(GroupStateContext);
   const { renderComponent, sendMessage } = useContext(StageContext);
   const [editingTitle, setEditingTitle] = useState(false);
@@ -268,7 +267,7 @@ const Group: FunctionComponent<Props> = ({ className, info }) => {
 
 Group.displayName = 'Group';
 
-const StyledGroup = styled(Group)`
+const StyledGroup: FC<Props> = styled(Group)`
   border: 1px solid ${THEME.borderDark};
 
   > .title {

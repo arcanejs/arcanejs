@@ -1,15 +1,16 @@
-import React, { FunctionComponent, TouchEvent, useMemo, useState } from 'react';
+import React, { FC, TouchEvent, useMemo, useState } from 'react';
 import { styled } from 'styled-components';
+
+import * as proto from '@arcanejs/protocol';
+
 import {
   THEME,
   touchIndicatorNormal,
   touchIndicatorTouching,
 } from '../styling';
-
-import * as proto from '../../shared/proto';
+import { calculateClass } from '../util';
 
 import { StageContext } from './context';
-import { calculateClass } from './core/utils';
 
 const CLASS_TOUCHING = 'touching';
 const TOUCH_INDICATOR_CLASS = 'touch-indicator';
@@ -20,7 +21,7 @@ interface Props {
   sendMessage: ((msg: proto.ClientMessage) => void) | null;
 }
 
-const Switch: FunctionComponent<Props> = ({ className, info, sendMessage }) => {
+const Switch: FC<Props> = ({ className, info, sendMessage }) => {
   const [touching, setTouching] = useState(false);
 
   const onClick = useMemo(
@@ -76,7 +77,7 @@ const SWITCH_HEIGHT = 30;
 const BUTTON_WIDTH = 30;
 const TEXT_WIDTH = 40;
 
-const StyledSwitch = styled(Switch)`
+const StyledSwitch: FC<Props> = styled(Switch)`
   position: relative;
 
   .inner {
@@ -161,9 +162,7 @@ const StyledSwitch = styled(Switch)`
   }
 `;
 
-const SwitchWrapper: FunctionComponent<Omit<Props, 'sendMessage'>> = (
-  props,
-) => (
+const SwitchWrapper: FC<Omit<Props, 'sendMessage'>> = (props) => (
   <StageContext.Consumer>
     {({ sendMessage }) => <StyledSwitch {...props} sendMessage={sendMessage} />}
   </StageContext.Consumer>

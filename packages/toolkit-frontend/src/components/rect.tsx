@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '../../shared/proto.js';
+import * as proto from '@arcanejs/protocol';
 
 const TRANSPARENCY_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
@@ -31,7 +31,7 @@ const Inner = styled.div`
   height: 100%;
 `;
 
-const Rect: React.FunctionComponent<Props> = ({ className, info }) => (
+const Rect: FC<Props> = ({ className, info }) => (
   <Wrapper className={className}>
     <Inner style={{ backgroundColor: info.color }} />
   </Wrapper>

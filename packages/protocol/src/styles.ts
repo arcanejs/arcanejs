@@ -26,13 +26,6 @@ export type GroupComponentStyle = {
 };
 
 /**
- * Default [[GroupComponentStyle]] for the [[Group]] component.
- */
-export const GROUP_DEFAULT_STYLE: GroupComponentStyle = {
-  direction: 'horizontal',
-};
-
-/**
  * Styling options for the [[Label]] component
  *
  * Default Styling: [[LABEL_DEFAULT_STYLE]]

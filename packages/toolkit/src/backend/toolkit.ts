@@ -11,7 +11,7 @@ import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Group } from './components/group';
 import { Component } from './components/base';
-import { ClientMessage, GroupComponent } from '../shared/proto';
+import { ClientMessage, GroupComponent } from '@arcanejs/protocol';
 
 console.log(diffJson);
 

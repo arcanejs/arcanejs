@@ -2,51 +2,24 @@ import { patchJson } from '@arcanejs/diff';
 import * as React from 'react';
 import { styled, ThemeProvider } from 'styled-components';
 
-import * as proto from '../shared/proto';
+import * as proto from '@arcanejs/protocol';
+import {
+  BaseStyle,
+  GlobalStyle,
+  THEME,
+} from '@arcanejs/toolkit-frontend/styling';
 
-import { BaseStyle, GlobalStyle, THEME } from './styling';
-import { Group, GroupStateWrapper } from './components/group';
-import { StageContext } from './components/context';
-import { Button } from './components/button';
-import { Label } from './components/label';
-import { Rect } from './components/rect';
-import { SliderButton } from './components/slider_button';
-import { Switch } from './components/switch';
-import { Tabs } from './components/tabs';
-import { TextInput } from './components/text-input';
-import { Timeline } from './components/timeline';
+import {
+  Group,
+  GroupStateWrapper,
+  StageContext,
+  renderStandardComponent,
+} from '@arcanejs/toolkit-frontend/components';
+
+import { MaterialFontStyle } from './styling';
 
 type Props = {
   className?: string;
-};
-
-const renderComponent = (info: proto.Component): JSX.Element => {
-  switch (info.component) {
-    case 'button':
-      return <Button key={info.key} info={info} />;
-    case 'group':
-      return <Group key={info.key} info={info} />;
-    case 'label':
-      return <Label key={info.key} info={info} />;
-    case 'rect':
-      return <Rect key={info.key} info={info} />;
-    case 'slider_button':
-      return <SliderButton key={info.key} info={info} />;
-    case 'switch':
-      return <Switch key={info.key} info={info} />;
-    case 'tabs':
-      return <Tabs key={info.key} info={info} />;
-    case 'text-input':
-      return <TextInput key={info.key} info={info} />;
-    case 'timeline':
-      return <Timeline key={info.key} info={info} />;
-    // Parent-Specific Components
-    case 'group-header':
-    case 'tab':
-      throw new Error(
-        `Cannot render ${info.component} outside of expected parents`,
-      );
-  }
 };
 
 const Stage: React.FC<Props> = ({ className }) => {
@@ -104,7 +77,7 @@ const Stage: React.FC<Props> = ({ className }) => {
     <StageContext.Provider
       value={{
         sendMessage,
-        renderComponent,
+        renderComponent: renderStandardComponent,
       }}
     >
       <GroupStateWrapper openByDefault={false}>
@@ -135,6 +108,7 @@ export function rootComponent() {
     <>
       <BaseStyle />
       <GlobalStyle />
+      <MaterialFontStyle />
       <ThemeProvider theme={THEME}>
         <StyledStage />
       </ThemeProvider>

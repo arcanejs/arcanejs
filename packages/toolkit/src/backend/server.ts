@@ -2,9 +2,9 @@ import * as http from 'http';
 import { WebSocket } from 'ws';
 import * as fs from 'fs';
 import * as path from 'path';
+import { ClientMessage, ServerMessage } from '@arcanejs/protocol';
 
 import { LightDeskOptions } from './options.js';
-import { ClientMessage, ServerMessage } from '../shared/proto.js';
 import { FONTS } from '../shared/static.js';
 
 // Get the module resolution custom conditions

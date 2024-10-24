@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
-import { calculateClass } from './core/utils';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
+
+import { THEME } from '../styling';
+import { calculateClass } from '../util';
 
 import { StageContext } from './context';
 import { NestedContent } from './nesting';
-import { THEME } from '../styling';
 
 interface Props {
   info: proto.TabsComponent;
@@ -52,7 +53,7 @@ const TabItem = styled.div`
   }
 `;
 
-const Tabs: React.FunctionComponent<Props> = (props) => {
+const Tabs: FC<Props> = (props) => {
   const { renderComponent } = React.useContext(StageContext);
   const [touching, setTouching] = React.useState<null | number>(null);
   const [currentTab, setCurrentTab] = React.useState<number>(0);

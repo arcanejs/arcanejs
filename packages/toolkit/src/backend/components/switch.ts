@@ -1,4 +1,4 @@
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';

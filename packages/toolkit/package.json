@@ -82,6 +82,12 @@
       "import": "./dist/backend/components/timeline.mjs",
       "require": "./dist/backend/components/timeline.js",
       "types": "./dist/backend/components/timeline.d.ts"
+    },
+    "./util": {
+      "@arcanejs/source": "./src/backend/util/index.ts",
+      "import": "./dist/backend/util/index.mjs",
+      "require": "./dist/backend/util/index.js",
+      "types": "./dist/backend/util/index.d.ts"
     }
   },
   "scripts": {
@@ -97,6 +103,7 @@
   },
   "devDependencies": {
     "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/toolkit-frontend": "workspace:^",
     "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",
     "@types/express": "^5.0.0",
@@ -115,6 +122,7 @@
   },
   "dependencies": {
     "@arcanejs/diff": "workspace:^",
+    "@arcanejs/protocol": "workspace:^",
     "express": "^4.21.1",
     "lodash": "^4.17.21",
     "material-symbols": "^0.25.0",

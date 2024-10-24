@@ -1,18 +1,18 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '../../shared/proto.js';
+import * as proto from '@arcanejs/protocol';
 
 interface Props {
   className?: string;
   info: proto.LabelComponent;
 }
 
-const Label: React.FunctionComponent<Props> = ({ className, info }) => (
+const Label: FC<Props> = ({ className, info }) => (
   <div className={className}>{info.text}</div>
 );
 
-const StyledLabel = styled(Label)`
+const StyledLabel: FC<Props> = styled(Label)`
   font-weight: ${(p) => (p.info.bold ? 'bold' : 'normal')};
   white-space: nowrap;
 `;
