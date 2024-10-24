@@ -1,7 +1,8 @@
 import { createRoot } from 'react-dom/client';
 
+import { initialiseListeners } from '@arcanejs/toolkit-frontend/util';
+
 import { rootComponent } from './stage';
-import { initialiseListeners } from './util/touch';
 
 initialiseListeners();
 

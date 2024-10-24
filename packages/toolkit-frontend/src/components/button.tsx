@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
+
 import * as proto from '@arcanejs/protocol';
 
-import { Icon } from './core/icon';
-import { calculateClass } from './core/utils';
 import {
-  rectButton,
+  THEME,
   buttonStateNormalActive,
+  rectButton,
   touchIndicatorNormal,
   touchIndicatorTouching,
-  THEME,
 } from '../styling';
+import { calculateClass, usePressable } from '../util';
 
-import { StageContext } from './context.js';
-import { usePressable } from '../util/touch.js';
+import { Icon } from './core';
+import { StageContext } from './context';
 
 const TOUCH_INDICATOR_CLASS = 'touch-indicator';
 const TOUCHING_CLASS = 'touching';

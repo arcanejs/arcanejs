@@ -1,22 +1,21 @@
-import * as React from 'react';
-import {
-  SyntheticEvent,
+import React, {
   EventHandler,
   FunctionComponent,
-  useState,
-  useContext,
   KeyboardEvent,
+  SyntheticEvent,
+  useContext,
+  useState,
 } from 'react';
 import { styled } from 'styled-components';
-import { Icon } from './core/icon';
-import { calculateClass } from './core/utils';
 
 import * as proto from '@arcanejs/protocol';
 
-import { StageContext } from './context';
-import { NestedContent } from './nesting';
-import { usePressable } from '../util/touch';
 import { THEME } from '../styling';
+import { calculateClass, usePressable } from '../util';
+
+import { StageContext } from './context';
+import { Icon } from './core';
+import { NestedContent } from './nesting';
 
 interface Props {
   className?: string;

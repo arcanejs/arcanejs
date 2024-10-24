@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
+
 import * as proto from '@arcanejs/protocol';
 
 const TRANSPARENCY_SVG = `

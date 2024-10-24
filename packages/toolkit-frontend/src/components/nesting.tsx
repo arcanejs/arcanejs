@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
-import { calculateClass } from './core/utils';
+
+import { calculateClass } from '../util';
+
 import { THEME } from '../styling';
 
 type GroupColor = 'dark' | 'lighter' | 'lighterer';

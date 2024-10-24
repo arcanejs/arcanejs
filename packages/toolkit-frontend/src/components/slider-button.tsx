@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
+
+import * as proto from '@arcanejs/protocol';
+
 import {
   THEME,
   buttonPressed,
   buttonStateNormal,
   buttonStateNormalHover,
 } from '../styling';
-
-import * as proto from '@arcanejs/protocol';
 import { trackTouch } from '../util/touch';
 
 import { StageContext } from './context';

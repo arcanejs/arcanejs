@@ -97,6 +97,7 @@
   },
   "devDependencies": {
     "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/toolkit-frontend": "workspace:^",
     "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",
     "@types/express": "^5.0.0",

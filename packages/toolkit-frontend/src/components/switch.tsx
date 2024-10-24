@@ -1,15 +1,16 @@
 import React, { FunctionComponent, TouchEvent, useMemo, useState } from 'react';
 import { styled } from 'styled-components';
+
+import * as proto from '@arcanejs/protocol';
+
 import {
   THEME,
   touchIndicatorNormal,
   touchIndicatorTouching,
 } from '../styling';
-
-import * as proto from '@arcanejs/protocol';
+import { calculateClass } from '../util';
 
 import { StageContext } from './context';
-import { calculateClass } from './core/utils';
 
 const CLASS_TOUCHING = 'touching';
 const TOUCH_INDICATOR_CLASS = 'touch-indicator';
