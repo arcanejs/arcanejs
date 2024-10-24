@@ -11,6 +11,7 @@
   "dependencies": {
     "@arcanejs/diff": "workspace:^",
     "@arcanejs/protocol": "workspace:^",
+    "@arcanejs/react-toolkit": "workspace:^",
     "@arcanejs/toolkit": "workspace:^",
     "@arcanejs/toolkit-frontend": "workspace:^",
     "react": "19.0.0-rc-f994737d14-20240522",

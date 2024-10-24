@@ -29,6 +29,9 @@ importers:
       '@arcanejs/protocol':
         specifier: workspace:^
         version: link:../../packages/protocol
+      '@arcanejs/react-toolkit':
+        specifier: workspace:^
+        version: link:../../packages/react-toolkit
       '@arcanejs/toolkit':
         specifier: workspace:^
         version: link:../../packages/toolkit
@@ -237,6 +240,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-reconciler:
+        specifier: ^0.28.0
+        version: 0.28.0(react@18.3.1)
     devDependencies:
       '@arcanejs/eslint-config':
         specifier: workspace:^
@@ -259,9 +265,6 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
-      react-reconciler:
-        specifier: ^0.28.0
-        version: 0.28.0(react@18.3.1)
       tsup:
         specifier: ^8.1.0
         version: 8.1.0(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5))(typescript@5.4.5)

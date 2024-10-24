@@ -1,18 +1,18 @@
 import Reconciler from 'react-reconciler';
 import { DefaultEventPriority } from 'react-reconciler/constants';
-import * as ld from '@arcanejs/toolkit';
-import { Base, BaseParent } from '@arcanejs/toolkit/components/base';
-import { Props as GroupProps } from '@arcanejs/toolkit/components/group';
-import { LightDeskIntrinsicElements } from './types';
+import * as components from '@arcanejs/toolkit/components';
+import type { Props as GroupProps } from '@arcanejs/toolkit/components/group';
+import type { Toolkit } from '@arcanejs/toolkit';
+import type{ LightDeskIntrinsicElements } from './types';
 
 export type { LightDeskIntrinsicElements };
 export * from './components.js';
 
 type Type = keyof LightDeskIntrinsicElements;
 type Props = { [key: string]: any };
-type Container = ld.Group;
-type Instance = ld.Component;
-type TextInstance = ld.Label;
+type Container = components.Group;
+type Instance = components.Component;
+type TextInstance = components.Label;
 
 type SuspenseInstance = any;
 type HydratableInstance = any;
@@ -45,8 +45,8 @@ const isType = <T extends keyof LightDeskIntrinsicElements>(
   _props: Props,
 ): _props is LightDeskIntrinsicElements[T] => targetType === type;
 
-const canSetProps = (instance: ld.Component): instance is Base<unknown> =>
-  instance instanceof Base;
+const canSetProps = (instance: components.Component): instance is components.Base<unknown> =>
+  instance instanceof components.Base;
 
 const updateListener = <
   EventName extends string,
@@ -76,19 +76,19 @@ const updateListener = <
 
 const updateListeners = (
   type: Type,
-  instance: ld.Component,
+  instance: components.Component,
   prevProps: Props,
   nextProps: Props,
 ) => {
   if (isType('button', type, prevProps) && isType('button', type, nextProps)) {
-    if (instance instanceof ld.Button) {
+    if (instance instanceof components.Button) {
       updateListener('click', 'onClick', instance, prevProps, nextProps);
     }
   } else if (
     isType('group', type, prevProps) &&
     isType('group', type, nextProps)
   ) {
-    if (instance instanceof ld.Group) {
+    if (instance instanceof components.Group) {
       updateListener(
         'title-changed',
         'onTitleChanged',
@@ -101,21 +101,21 @@ const updateListeners = (
     isType('slider-button', type, prevProps) &&
     isType('slider-button', type, nextProps)
   ) {
-    if (instance instanceof ld.SliderButton) {
+    if (instance instanceof components.SliderButton) {
       updateListener('change', 'onChange', instance, prevProps, nextProps);
     }
   } else if (
     isType('switch', type, prevProps) &&
     isType('switch', type, nextProps)
   ) {
-    if (instance instanceof ld.Switch) {
+    if (instance instanceof components.Switch) {
       updateListener('change', 'onChange', instance, prevProps, nextProps);
     }
   } else if (
     isType('text-input', type, prevProps) &&
     isType('text-input', type, nextProps)
   ) {
-    if (instance instanceof ld.TextInput) {
+    if (instance instanceof components.TextInput) {
       updateListener('change', 'onChange', instance, prevProps, nextProps);
     }
   }
@@ -130,14 +130,14 @@ const hostConfig: LightDeskHostConfig = {
 
   afterActiveInstanceBlur: () => null,
   appendChild: (parentInstance, child) => {
-    if (parentInstance instanceof BaseParent) {
+    if (parentInstance instanceof components.BaseParent) {
       parentInstance.appendChild(child);
     } else {
       throw new Error(`Unexpected Parent: ${parentInstance}`);
     }
   },
   appendInitialChild: (parentInstance, child) => {
-    if (parentInstance instanceof BaseParent) {
+    if (parentInstance instanceof components.BaseParent) {
       parentInstance.appendChild(child);
     } else {
       throw new Error(`Unexpected Parent: ${parentInstance}`);
@@ -170,29 +170,29 @@ const hostConfig: LightDeskHostConfig = {
   commitTextUpdate: (textInstance, _oldText, newText) =>
     textInstance.setText(newText),
   createInstance: (type, props) => {
-    let instance: ld.Component | null = null;
+    let instance: components.Component | null = null;
     if (isType('button', type, props)) {
-      instance = new ld.Button(props);
+      instance = new components.Button(props);
     } else if (isType('group', type, props)) {
-      instance = new ld.Group(props);
+      instance = new components.Group(props);
     } else if (isType('group-header', type, props)) {
-      instance = new ld.GroupHeader(props);
+      instance = new components.GroupHeader(props);
     } else if (isType('label', type, props)) {
-      instance = new ld.Label(props);
+      instance = new components.Label(props);
     } else if (isType('rect', type, props)) {
-      instance = new ld.Rect(props);
+      instance = new components.Rect(props);
     } else if (isType('slider-button', type, props)) {
-      instance = new ld.SliderButton(props);
+      instance = new components.SliderButton(props);
     } else if (isType('switch', type, props)) {
-      instance = new ld.Switch(props);
+      instance = new components.Switch(props);
     } else if (isType('tab', type, props)) {
-      instance = new ld.Tab(props);
+      instance = new components.Tab(props);
     } else if (isType('tabs', type, props)) {
-      instance = new ld.Tabs(props);
+      instance = new components.Tabs(props);
     } else if (isType('text-input', type, props)) {
-      instance = new ld.TextInput(props);
+      instance = new components.TextInput(props);
     } else if (isType('timeline', type, props)) {
-      instance = new ld.Timeline(props);
+      instance = new components.Timeline(props);
     }
     if (instance) {
       updateListeners(type, instance, {}, props);
@@ -201,7 +201,7 @@ const hostConfig: LightDeskHostConfig = {
       throw new Error(`Not implemented type: ${type}`);
     }
   },
-  createTextInstance: (text) => new ld.Label({ text }),
+  createTextInstance: (text) => new components.Label({ text }),
   detachDeletedInstance: () => null,
   getChildHostContext: (parentHostContext) => parentHostContext,
   getCurrentEventPriority: () => DefaultEventPriority,
@@ -214,7 +214,7 @@ const hostConfig: LightDeskHostConfig = {
   getPublicInstance: (instance) => instance,
   getRootHostContext: () => null,
   insertBefore: (parentInstance, child, beforeChild) => {
-    if (parentInstance instanceof BaseParent) {
+    if (parentInstance instanceof components.BaseParent) {
       parentInstance.insertBefore(child, beforeChild);
     } else {
       throw new Error(`Unexpected Parent: ${parentInstance}`);
@@ -248,7 +248,7 @@ const hostConfig: LightDeskHostConfig = {
     }
   },
   removeChild(parentInstance, child) {
-    if (parentInstance instanceof BaseParent) {
+    if (parentInstance instanceof components.BaseParent) {
       parentInstance.removeChild(child);
     } else {
       throw new Error(`Unexpected Parent: ${parentInstance}`);
@@ -284,16 +284,16 @@ const hostConfig: LightDeskHostConfig = {
 const reconciler = Reconciler(hostConfig as LightDeskHostConfig);
 
 export const ToolkitRenderer = {
-  renderGroup: (component: JSX.Element, container: ld.Group) => {
+  renderGroup: (component: JSX.Element, container: components.Group) => {
     const root = (reconciler as any).createContainer(container, 0, false, null);
     reconciler.updateContainer(component, root, null);
   },
   render: (
     component: JSX.Element,
-    container: ld.Toolkit,
+    container: Toolkit,
     rootGroupProps?: GroupProps,
   ) => {
-    const group = new ld.Group(rootGroupProps);
+    const group = new components.Group(rootGroupProps);
     container.setRoot(group);
     ToolkitRenderer.renderGroup(component, group);
   },

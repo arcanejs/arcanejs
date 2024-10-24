@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useEffect, useMemo, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { GroupComponent } from '@arcanejs/protocol';
@@ -15,10 +15,11 @@ import {
 import { Group } from '@arcanejs/toolkit/components/group';
 import { IDMap } from '@arcanejs/toolkit/util';
 import { Component, Parent } from '@arcanejs/toolkit/components/base';
-import { Switch } from '@arcanejs/toolkit/components/switch';
+import { ToolkitRenderer } from '@arcanejs/react-toolkit';
 
 type ToolkitSimulatorProps = {
   children?: React.ReactNode;
+  root: JSX.Element;
 };
 
 const ToolkitSimulatorContext = React.createContext<{
@@ -41,6 +42,7 @@ export const ToolkitDisplay: FC = () => {
 
 export const ToolkitSimulatorProvider: React.FC<ToolkitSimulatorProps> = ({
   children,
+  root,
 }) => {
   const [tree, setTree] = React.useState<GroupComponent | null>(null);
 
@@ -59,20 +61,16 @@ export const ToolkitSimulatorProvider: React.FC<ToolkitSimulatorProps> = ({
   useEffect(() => {
     // Initialise tree
 
-    const g = new Group({
-      title: 'Hello World',
-    });
+    if (rootGroup.current) {
+      rootGroup.current.setParent(null);
+    }
 
-    const b = g.appendChild(new Switch({ state: 'off' }));
+    rootGroup.current = new Group();
+    rootGroup.current.setParent(parent.current);
 
-    b.addListener('change', (state) => {
-      b.setValue(state);
-    });
+    // ToolkitRenderer.renderGroup(root, rootGroup.current);
 
-    rootGroup.current = g;
-    g.setParent(parent.current);
-    parent.current.updateTree();
-  }, []);
+  }, [root]);
 
   return (
     <StageContext.Provider

@@ -23,6 +23,12 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./components": {
+      "@arcanejs/source": "./src/backend/components/index.ts",
+      "import": "./dist/backend/components/index.mjs",
+      "require": "./dist/backend/components/index.js",
+      "types": "./dist/backend/components/index.d.ts"
+    },
     "./components/base": {
       "@arcanejs/source": "./src/backend/components/base.ts",
       "import": "./dist/backend/components/base.mjs",

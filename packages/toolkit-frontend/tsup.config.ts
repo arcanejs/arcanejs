@@ -9,4 +9,5 @@ export default defineConfig({
   ],
   format: ['cjs', 'esm'],
   dts: true,
+  external: ['react', 'react-dom', 'styled-components'],
 });

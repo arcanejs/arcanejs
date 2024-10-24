@@ -6,6 +6,7 @@ export default defineConfig({
     'src/backend/components/base.ts',
     'src/backend/components/button.ts',
     'src/backend/components/group.ts',
+    'src/backend/components/index.ts',
     'src/backend/components/label.ts',
     'src/backend/components/rect.ts',
     'src/backend/components/slider-button.ts',
@@ -17,5 +18,5 @@ export default defineConfig({
   ],
   format: ['cjs', 'esm'],
   dts: true,
-  external: ['http', 'express', 'ws'],
+  external: ['http', 'express', 'lodash', 'material-symbols', 'ws'],
 });
