@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -59,7 +59,7 @@ const Subtitle = styled.div`
   margin-bottom: 0.5em;
 `;
 
-const Timeline: FunctionComponent<Props> = (props) => {
+const Timeline: FC<Props> = (props) => {
   const { className, info } = props;
 
   const frameState = React.useRef<{

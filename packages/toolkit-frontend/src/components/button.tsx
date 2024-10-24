@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -39,7 +39,7 @@ const ButtonLabel = styled.span`
   padding: 0 4px;
 `;
 
-const Button: React.FunctionComponent<Props> = (props) => {
+const Button: FC<Props> = (props) => {
   const { sendMessage } = React.useContext(StageContext);
   const { touching, handlers } = usePressable(() =>
     sendMessage?.({
@@ -69,7 +69,7 @@ const Button: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-const StyledButton = styled(Button)`
+const StyledButton: FC<Props> = styled(Button)`
   ${rectButton}
   outline: none;
   height: 30px;

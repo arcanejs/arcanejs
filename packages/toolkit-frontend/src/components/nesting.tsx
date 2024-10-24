@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import { calculateClass } from '../util';
@@ -25,10 +25,7 @@ type NestContentProps = {
   children?: JSX.Element | JSX.Element[];
 };
 
-const NestedContent: React.FunctionComponent<NestContentProps> = ({
-  className,
-  children,
-}) => {
+const NestedContent: FC<NestContentProps> = ({ className, children }) => {
   const color = React.useContext(LastNestedColor);
 
   return (
@@ -42,7 +39,7 @@ const NestedContent: React.FunctionComponent<NestContentProps> = ({
 
 NestedContent.displayName = 'NestedContent';
 
-const StyledNestedContent = styled(NestedContent)`
+const StyledNestedContent: FC<NestContentProps> = styled(NestedContent)`
   padding: ${THEME.sizingPx.spacing / 2}px;
   box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
 

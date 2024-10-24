@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -60,7 +60,7 @@ const getRelativeCursorPosition = (elem: Element, pageX: number) => {
   return pageX - rect.left;
 };
 
-const SliderButton: React.FunctionComponent<Props> = (props) => {
+const SliderButton: FC<Props> = (props) => {
   const [state, setState] = React.useState<State>({ state: 'closed' });
   const input = React.useRef<HTMLInputElement | null>(null);
 
@@ -201,7 +201,7 @@ const SliderButton: React.FunctionComponent<Props> = (props) => {
   );
 };
 
-const StyledSliderButton = styled(SliderButton)`
+const StyledSliderButton: FC<Props> = styled(SliderButton)`
   position: relative;
   width: 100px;
   height: 30px;
