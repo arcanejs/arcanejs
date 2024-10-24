@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
-import { calculateClass } from './core/utils';
 
 import * as proto from '@arcanejs/protocol';
 
+import { THEME } from '../styling';
+import { calculateClass } from '../util';
+
 import { StageContext } from './context';
 import { NestedContent } from './nesting';
-import { THEME } from '../styling';
 
 interface Props {
   info: proto.TabsComponent;

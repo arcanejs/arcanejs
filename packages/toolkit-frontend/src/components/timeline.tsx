@@ -1,8 +1,10 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import { Icon } from './core/icon';
 
 import * as proto from '@arcanejs/protocol';
+
+import { Icon } from './core';
+
 import { THEME } from '../styling';
 
 interface Props {
