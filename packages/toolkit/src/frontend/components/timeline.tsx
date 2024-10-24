@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 import { Icon } from './core/icon';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 import { THEME } from '../styling';
 
 interface Props {

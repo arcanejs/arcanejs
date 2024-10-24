@@ -115,6 +115,7 @@
   },
   "dependencies": {
     "@arcanejs/diff": "workspace:^",
+    "@arcanejs/protocol": "workspace:^",
     "express": "^4.21.1",
     "lodash": "^4.17.21",
     "material-symbols": "^0.25.0",

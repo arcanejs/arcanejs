@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
+import * as proto from '@arcanejs/protocol';
+
 import { Icon } from './core/icon';
 import { calculateClass } from './core/utils';
 import {
@@ -9,8 +11,6 @@ import {
   touchIndicatorTouching,
   THEME,
 } from '../styling';
-
-import * as proto from '../../shared/proto.js';
 
 import { StageContext } from './context.js';
 import { usePressable } from '../util/touch.js';

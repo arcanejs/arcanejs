@@ -193,6 +193,30 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  packages/protocol:
+    devDependencies:
+      '@arcanejs/diff':
+        specifier: workspace:^
+        version: link:../diff
+      '@arcanejs/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@arcanejs/typescript-config':
+        specifier: workspace:^
+        version: link:../typescript-config
+      '@types/eslint':
+        specifier: ^8.56.5
+        version: 8.56.5
+      '@types/jest':
+        specifier: ^29.5.12
+        version: 29.5.12
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.4.5
+
   packages/react-toolkit:
     dependencies:
       '@arcanejs/toolkit':
@@ -238,6 +262,9 @@ importers:
       '@arcanejs/diff':
         specifier: workspace:^
         version: link:../diff
+      '@arcanejs/protocol':
+        specifier: workspace:^
+        version: link:../protocol
       express:
         specifier: ^4.21.1
         version: 4.21.1

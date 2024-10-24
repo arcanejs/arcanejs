@@ -2,7 +2,7 @@ import { patchJson } from '@arcanejs/diff';
 import * as React from 'react';
 import { styled, ThemeProvider } from 'styled-components';
 
-import * as proto from '../shared/proto';
+import * as proto from '@arcanejs/protocol';
 
 import { BaseStyle, GlobalStyle, THEME } from './styling';
 import { Group, GroupStateWrapper } from './components/group';

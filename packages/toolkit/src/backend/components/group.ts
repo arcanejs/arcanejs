@@ -1,9 +1,13 @@
-import * as proto from '../../shared/proto';
-import { GROUP_DEFAULT_STYLE, GroupComponentStyle } from '../../shared/styles';
+import * as proto from '@arcanejs/protocol';
+import { GroupComponentStyle } from '@arcanejs/protocol/styles';
 import { IDMap } from '../util/id-map';
 
 import { BaseParent, EventEmitter, Listenable } from './base';
 import { Button } from './button';
+
+const GROUP_DEFAULT_STYLE: GroupComponentStyle = {
+  direction: 'horizontal',
+};
 
 type Label = (proto.GroupComponent['labels'] & Array<unknown>)[number];
 

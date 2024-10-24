@@ -7,7 +7,7 @@ import {
   buttonStateNormalHover,
 } from '../styling';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 import { trackTouch } from '../util/touch';
 
 import { StageContext } from './context';

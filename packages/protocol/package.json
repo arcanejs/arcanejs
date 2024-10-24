@@ -1,0 +1,44 @@
+{
+  "name": "@arcanejs/protocol",
+  "version": "0.1.0",
+  "private": false,
+  "description": "The JSON protocol types for the @arcanejs Toolkit",
+  "license": "MIT",
+  "author": {
+    "name": "Sam Lanning",
+    "url": "https://samlanning.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcanejs/arcanejs.git"
+  },
+  "exports": {
+    ".": {
+      "@arcanejs/source": "./src/index.ts",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": {
+      "@arcanejs/source": "./src/styles.ts",
+      "types": "./dist/styles.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "build": "rm -rf dist && tsc"
+  },
+  "devDependencies": {
+    "@arcanejs/diff": "workspace:^",
+    "@arcanejs/eslint-config": "workspace:^",
+    "@arcanejs/typescript-config": "workspace:^",
+    "@types/eslint": "^8.56.5",
+    "@types/jest": "^29.5.12",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

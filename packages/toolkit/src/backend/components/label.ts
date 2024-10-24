@@ -1,5 +1,5 @@
-import * as proto from '../../shared/proto';
-import { LabelComponentStyle } from '../../shared/styles';
+import * as proto from '@arcanejs/protocol';
+import { LabelComponentStyle } from '@arcanejs/protocol/styles';
 import { IDMap } from '../util/id-map';
 
 import { Base } from './base';

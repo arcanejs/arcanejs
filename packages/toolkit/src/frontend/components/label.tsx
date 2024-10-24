@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '../../shared/proto.js';
+import * as proto from '@arcanejs/protocol';
 
 interface Props {
   className?: string;

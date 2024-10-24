@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 import { StageContext } from './context';
 import { THEME } from '../styling';
 

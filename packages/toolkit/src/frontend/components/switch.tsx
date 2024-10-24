@@ -6,7 +6,7 @@ import {
   touchIndicatorTouching,
 } from '../styling';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 
 import { StageContext } from './context';
 import { calculateClass } from './core/utils';

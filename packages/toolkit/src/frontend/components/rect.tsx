@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from 'styled-components';
-
-import * as proto from '../../shared/proto.js';
+import * as proto from '@arcanejs/protocol';
 
 const TRANSPARENCY_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">

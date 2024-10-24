@@ -2,7 +2,7 @@ import * as React from 'react';
 import { styled } from 'styled-components';
 import { calculateClass } from './core/utils';
 
-import * as proto from '../../shared/proto';
+import * as proto from '@arcanejs/protocol';
 
 import { StageContext } from './context';
 import { NestedContent } from './nesting';
