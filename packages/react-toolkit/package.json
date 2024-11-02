@@ -24,6 +24,12 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./data": {
+      "@arcanejs/source": "./src/data.tsx",
+      "import": "./dist/data.mjs",
+      "require": "./dist/data.js",
+      "types": "./dist/data.d.ts"
     }
   },
   "scripts": {
@@ -35,17 +41,28 @@
     "@arcanejs/eslint-config": "workspace:^",
     "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",
+    "@types/lodash": "^4.17.10",
     "@types/node": "^20.11.24",
     "@types/react": "^18",
     "@types/react-reconciler": "^0.28.8",
     "eslint": "^8.57.0",
     "react-reconciler": "^0.28.0",
     "tsup": "^8.1.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "zod": "^3.23.8"
   },
   "dependencies": {
     "@arcanejs/toolkit": "workspace:^",
+    "lodash": "^4.17.21",
     "react": "^18"
+  },
+  "peerDependencies": {
+    "zod": "^3.23.8"
+  },
+  "peerDependenciesMeta": {
+    "zod": {
+      "optional": true
+    }
   },
   "files": [
     "dist"
