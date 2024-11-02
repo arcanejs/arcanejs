@@ -17,5 +17,13 @@ export default defineConfig({
   ],
   format: ['cjs', 'esm'],
   dts: true,
-  external: ['http', 'express', 'ws'],
+  external: [
+    '@arcanejs/diff',
+    '@arcanejs/protocol',
+    'express',
+    'http',
+    'lodash',
+    'material-symbols',
+    'ws',
+  ],
 });
