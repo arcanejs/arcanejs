@@ -1,46 +1,98 @@
 import * as React from 'react';
 import { LightDeskIntrinsicElements } from './types.js';
+import type { Button as ButtonComponent } from '@arcanejs/toolkit/components/button';
+import type {
+  Group as GroupComponent,
+  GroupHeader as GroupHeaderComponent,
+} from '@arcanejs/toolkit/components/group';
+import type { Label as LabelComponent } from '@arcanejs/toolkit/components/label';
+import type { Rect as RectComponent } from '@arcanejs/toolkit/components/rect';
+import type { SliderButton as SliderButtonComponent } from '@arcanejs/toolkit/components/slider-button';
+import type { Switch as SwitchComponent } from '@arcanejs/toolkit/components/switch';
+import type {
+  Tab as TabComponent,
+  Tabs as TabsComponent,
+} from '@arcanejs/toolkit/components/tabs';
+import type { Timeline as TimelineComponent } from '@arcanejs/toolkit/components/timeline';
+import type { TextInput as TextInputComponent } from '@arcanejs/toolkit/components/text-input';
 
-export const Button: React.FunctionComponent<
+type ComponentWithRef<T, P> = React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<P> & React.RefAttributes<T>
+>;
+
+export const Button: ComponentWithRef<
+  ButtonComponent,
   LightDeskIntrinsicElements['button']
-> = (props) => React.createElement('button', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('button', { ...props, ref }, props.children),
+);
 
-export const Group: React.FunctionComponent<
+export const Group: ComponentWithRef<
+  GroupComponent,
   LightDeskIntrinsicElements['group']
-> = (props) => React.createElement('group', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('group', { ...props, ref }, props.children),
+);
 
-export const GroupHeader: React.FunctionComponent<
+export const GroupHeader: ComponentWithRef<
+  GroupHeaderComponent,
   LightDeskIntrinsicElements['group-header']
-> = (props) => React.createElement('group-header', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('group-header', { ...props, ref }, props.children),
+);
 
-export const Label: React.FunctionComponent<
+export const Label: ComponentWithRef<
+  LabelComponent,
   LightDeskIntrinsicElements['label']
-> = (props) => React.createElement('label', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('label', { ...props, ref }, props.children),
+);
 
-export const Rect: React.FunctionComponent<
+export const Rect: ComponentWithRef<
+  RectComponent,
   LightDeskIntrinsicElements['rect']
-> = (props) => React.createElement('rect', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('rect', { ...props, ref }, props.children),
+);
 
-export const SliderButton: React.FunctionComponent<
+export const SliderButton: ComponentWithRef<
+  SliderButtonComponent,
   LightDeskIntrinsicElements['slider-button']
-> = (props) => React.createElement('slider-button', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('slider-button', { ...props, ref }, props.children),
+);
 
-export const Switch: React.FunctionComponent<
+export const Switch: ComponentWithRef<
+  SwitchComponent,
   LightDeskIntrinsicElements['switch']
-> = (props) => React.createElement('switch', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('switch', { ...props, ref }, props.children),
+);
 
-export const Tab: React.FunctionComponent<LightDeskIntrinsicElements['tab']> = (
-  props,
-) => React.createElement('tab', props, props.children);
+export const Tab: ComponentWithRef<
+  TabComponent,
+  LightDeskIntrinsicElements['tab']
+> = React.forwardRef((props, ref) =>
+  React.createElement('tab', { ...props, ref }, props.children),
+);
 
-export const Tabs: React.FunctionComponent<
+export const Tabs: ComponentWithRef<
+  TabsComponent,
   LightDeskIntrinsicElements['tabs']
-> = (props) => React.createElement('tabs', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('tabs', { ...props, ref }, props.children),
+);
 
-export const TextInput: React.FunctionComponent<
+export const TextInput: ComponentWithRef<
+  TextInputComponent,
   LightDeskIntrinsicElements['text-input']
-> = (props) => React.createElement('text-input', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('text-input', { ...props, ref }, props.children),
+);
 
-export const Timeline: React.FunctionComponent<
+export const Timeline: ComponentWithRef<
+  TimelineComponent,
   LightDeskIntrinsicElements['timeline']
-> = (props) => React.createElement('timeline', props, props.children);
+> = React.forwardRef((props, ref) =>
+  React.createElement('timeline', { ...props, ref }, props.children),
+);
