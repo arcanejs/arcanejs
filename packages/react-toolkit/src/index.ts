@@ -2,8 +2,8 @@ import Reconciler from 'react-reconciler';
 import { DefaultEventPriority } from 'react-reconciler/constants';
 import * as ld from '@arcanejs/toolkit';
 import { Base, BaseParent } from '@arcanejs/toolkit/components/base';
-import { Props as GroupProps } from '@arcanejs/toolkit/components/group';
-import { LightDeskIntrinsicElements } from './types';
+import type { Props as GroupProps } from '@arcanejs/toolkit/components/group';
+import type { LightDeskIntrinsicElements } from './types';
 
 export type { LightDeskIntrinsicElements };
 export * from './components.js';
