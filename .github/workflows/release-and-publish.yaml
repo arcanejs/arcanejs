@@ -43,4 +43,4 @@ jobs:
         with:
           publish: pnpm changeset publish
           createGithubReleases: true
-          # commitUsingApi: true
+          commitUsingApi: true
