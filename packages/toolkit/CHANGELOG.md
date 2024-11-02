@@ -1,5 +1,13 @@
 # @arcanejs/toolkit
 
+## 0.2.1
+
+### Patch Changes
+
+- df70fb5: Ensure 3rd party deps are not bundled
+- Updated dependencies [d99b44e]
+  - @arcanejs/protocol@0.1.1
+
 ## 0.2.0
 
 ### Minor Changes
