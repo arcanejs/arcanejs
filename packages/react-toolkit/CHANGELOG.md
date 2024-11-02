@@ -1,5 +1,23 @@
 # @arcanejs/react-toolkit
 
+## 0.2.0
+
+### Minor Changes
+
+- df70fb5: Introduce a new module, hooks and components for storing data as json files
+
+  Introduce `createDataFileSpec` alongside hooks `useDataFile`, `useDataFileData`
+  and `useDataFileUpdater`, which allows for easily composing applications that
+  need to persist data across one or more files.
+
+- df70fb5: Allow using ref for all components
+
+### Patch Changes
+
+- df70fb5: Ensure 3rd party deps are not bundled
+- Updated dependencies [df70fb5]
+  - @arcanejs/toolkit@0.2.1
+
 ## 0.1.5
 
 ### Patch Changes

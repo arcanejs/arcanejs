@@ -1,5 +1,18 @@
 # docs
 
+## 0.1.8
+
+### Patch Changes
+
+- 49b8b50: Testing changeset action
+- Updated dependencies [2598016]
+- Updated dependencies [d99b44e]
+- Updated dependencies [d99b44e]
+- Updated dependencies [df70fb5]
+  - @arcanejs/toolkit-frontend@0.0.2
+  - @arcanejs/protocol@0.1.1
+  - @arcanejs/toolkit@0.2.1
+
 ## 0.1.7
 
 ### Patch Changes
