@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -14,10 +14,20 @@ interface Props {
 }
 
 const TextInput: FC<Props> = ({ className, info, sendMessage }) => {
+  const ref = React.useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // Manually update value of text input if it doesn't match
+    if (ref.current && ref.current.value !== info.value) {
+      ref.current.value = info.value;
+    }
+  }, [info.value]);
+
   return (
     <input
       className={className}
-      value={info.value}
+      defaultValue={info.value}
+      ref={ref}
       onChange={(ev) =>
         sendMessage?.({
           type: 'component-message',
