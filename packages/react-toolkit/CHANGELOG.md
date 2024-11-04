@@ -1,5 +1,15 @@
 # @arcanejs/react-toolkit
 
+## 0.3.0
+
+### Minor Changes
+
+- 390ace0: **BREAKING:** Refactor the data file interface for easier direct use with hooks
+
+  `createDataFileSpec` has been renamed to `createDataFileDefinition`
+  `useDataFile` has been renamed to `useDataFileContext`,
+  and `useDataFile` is now used to directly use the hooks without a provider.
+
 ## 0.2.0
 
 ### Minor Changes
