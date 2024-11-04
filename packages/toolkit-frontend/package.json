@@ -14,7 +14,7 @@
     "url": "https://github.com/arcanejs/arcanejs.git"
   },
   "exports": {
-    "./components": {
+    ".": {
       "@arcanejs/source": "./src/components/index.tsx",
       "import": "./dist/components/index.mjs",
       "require": "./dist/components/index.js",
@@ -37,11 +37,12 @@
       "import": "./dist/styling.mjs",
       "require": "./dist/styling.js",
       "types": "./dist/styling.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "tsup"
+    "build": "rm -rf dist && tsup && check-export-map"
   },
   "devDependencies": {
     "@arcanejs/eslint-config": "workspace:^",
@@ -50,6 +51,7 @@
     "@types/node": "^20.11.24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "check-export-map": "^1.3.1",
     "eslint": "^8.57.0",
     "tsup": "^8.1.0",
     "typescript": "^5.3.3"
