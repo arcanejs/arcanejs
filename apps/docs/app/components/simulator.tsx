@@ -6,7 +6,7 @@ import { GroupComponent } from '@arcanejs/protocol';
 import {
   renderStandardComponent,
   StageContext,
-} from '@arcanejs/toolkit-frontend/components';
+} from '@arcanejs/toolkit-frontend';
 import {
   BaseStyle,
   GlobalStyle,

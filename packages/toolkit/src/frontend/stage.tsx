@@ -14,7 +14,7 @@ import {
   GroupStateWrapper,
   StageContext,
   renderStandardComponent,
-} from '@arcanejs/toolkit-frontend/components';
+} from '@arcanejs/toolkit-frontend';
 
 import { MaterialFontStyle } from './styling';
 

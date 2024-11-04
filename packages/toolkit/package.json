@@ -88,11 +88,12 @@
       "import": "./dist/backend/util/index.mjs",
       "require": "./dist/backend/util/index.js",
       "types": "./dist/backend/util/index.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "pnpm build:backend && pnpm type-check:frontend && pnpm build:frontend",
+    "build": "rm -rf dist && pnpm build:backend && pnpm type-check:frontend && pnpm build:frontend && check-export-map",
     "build:backend": "tsup",
     "build:frontend": "esbuild src/frontend/frontend.ts --bundle --sourcemap --outfile=dist/frontend.js",
     "dev": "pnpm dev:backend & pnpm dev:frontend",
@@ -112,6 +113,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/ws": "^8.5.12",
+    "check-export-map": "^1.3.1",
     "esbuild": "^0.24.0",
     "eslint": "^8.57.0",
     "react": "^18",
