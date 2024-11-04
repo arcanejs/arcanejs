@@ -1,5 +1,14 @@
 # @arcanejs/toolkit
 
+## 0.2.2
+
+### Patch Changes
+
+- bc83786: Fix imports by ensuring we split all bundles
+- Updated dependencies [bc83786]
+  - @arcanejs/diff@0.3.2
+  - @arcanejs/protocol@0.1.1
+
 ## 0.2.1
 
 ### Patch Changes

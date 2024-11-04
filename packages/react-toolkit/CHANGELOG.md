@@ -1,5 +1,13 @@
 # @arcanejs/react-toolkit
 
+## 0.3.2
+
+### Patch Changes
+
+- bc83786: Fix imports by ensuring we split all bundles
+- Updated dependencies [bc83786]
+  - @arcanejs/toolkit@0.2.2
+
 ## 0.3.1
 
 ### Patch Changes

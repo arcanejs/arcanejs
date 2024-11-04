@@ -1,5 +1,12 @@
 # @toolkit-frontend
 
+## 0.0.3
+
+### Patch Changes
+
+- bc83786: Fix imports by ensuring we split all bundles
+  - @arcanejs/protocol@0.1.1
+
 ## 0.0.2
 
 ### Patch Changes
