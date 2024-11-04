@@ -90,7 +90,7 @@ const ControlPanel = () => {
       <Group>
         {`Switch State: ${switchState}`}
         <Switch
-            state={switchState}
+            value={switchState}
             onChange={setSwitchState}
           />
       </Group>

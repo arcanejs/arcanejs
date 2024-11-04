@@ -22,12 +22,20 @@ export abstract class Base<Props> implements Component {
   /** @hidden */
   private _props: Props;
 
-  public constructor(defaultProps: Props, props?: Partial<Props>) {
+  /** @hidden */
+  private _onPropsUpdated: (() => void) | null = null;
+
+  public constructor(
+    defaultProps: Props,
+    props?: Partial<Props>,
+    options?: { onPropsUpdated?: () => void },
+  ) {
     this.defaultProps = defaultProps;
     this._props = Object.freeze({
       ...defaultProps,
       ...props,
     });
+    this._onPropsUpdated = options?.onPropsUpdated ?? null;
   }
 
   public log = (): Logger | null => {
@@ -47,6 +55,7 @@ export abstract class Base<Props> implements Component {
       ...this.defaultProps,
       ...props,
     });
+    this._onPropsUpdated?.();
     this.updateTree();
   };
 
@@ -55,6 +64,7 @@ export abstract class Base<Props> implements Component {
       ...this._props,
       ...updates,
     });
+    this._onPropsUpdated?.();
     this.updateTree();
   };
 

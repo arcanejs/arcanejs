@@ -11,7 +11,9 @@ import {
   Timeline,
 } from '@arcanejs/toolkit';
 
-const toolkit = new Toolkit();
+const toolkit = new Toolkit({
+  log: console,
+});
 
 toolkit.start({
   mode: 'automatic',
@@ -105,7 +107,7 @@ rectGroup.appendChild(new Rect({ color: 'rgba(255,0,0,0.5)' }));
 
 const switchGroup = tabs.addTab('Switch', new Group());
 
-const sw = switchGroup.appendChild(new Switch({ state: 'on' }));
+const sw = switchGroup.appendChild(new Switch({ defaultValue: 'on' }));
 
 const swLabel = switchGroup.appendChild(new Label({ text: 'Switch is ON' }));
 

@@ -8,21 +8,29 @@ export type Events = {
 };
 
 type InternalProps = {
-  state: 'on' | 'off';
+  value?: 'on' | 'off';
+  defaultValue?: 'on' | 'off';
 };
 
 export type Props = Partial<InternalProps>;
 
-const DEFAULT_PROPS: InternalProps = {
-  state: 'off',
-};
+const DEFAULT_PROPS: InternalProps = {};
 
 export class Switch extends Base<InternalProps> implements Listenable<Events> {
   /** @hidden */
   private readonly events = new EventEmitter<Events>();
 
+  /**
+   * Manually manage the state of the switch,
+   * to support both controlled and uncontrolled inputs.
+   */
+  private _value: null | 'on' | 'off' = null;
+
   public constructor(props?: Props) {
-    super(DEFAULT_PROPS, props);
+    super(DEFAULT_PROPS, props, {
+      onPropsUpdated: () => this.onPropsUpdated(),
+    });
+    this.onPropsUpdated();
   }
 
   addListener = this.events.addListener;
@@ -33,7 +41,7 @@ export class Switch extends Base<InternalProps> implements Listenable<Events> {
     return {
       component: 'switch',
       key: idMap.getId(this),
-      state: this.props.state,
+      state: this._value ?? 'off',
     };
   }
 
@@ -41,14 +49,31 @@ export class Switch extends Base<InternalProps> implements Listenable<Events> {
   public handleMessage(message: proto.ClientComponentMessage) {
     if (message.component === 'switch') {
       // Toggle state value
-      const state = this.props.state === 'on' ? 'off' : 'on';
-      this.updateProps({ state });
+      const state = this._value === 'on' ? 'off' : 'on';
+      if (this.props.value === undefined) {
+        // Uncontrolled mode, update state
+        this._value = state;
+        // Tree update has to be manual as we're not updating props
+        this.updateTree();
+      }
       this.events.emit('change', state);
     }
   }
 
   public setValue(state: 'on' | 'off') {
-    if (state === this.props.state) return;
-    this.updateProps({ state });
+    if (this.props.value) {
+      throw new Error('Cannot set value on controlled input');
+    }
+    this._value = state;
+    // Tree update has to be manual as we're not updating props
+    this.updateTree();
   }
+
+  private onPropsUpdated = () => {
+    if (this.props.value !== undefined) {
+      this._value = this.props.value;
+    } else if (this._value === null && this.props.defaultValue) {
+      this._value = this.props.defaultValue;
+    }
+  };
 }
