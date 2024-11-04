@@ -300,7 +300,7 @@ export const ToolkitRenderer = {
     container: ld.Toolkit,
     rootGroupProps?: GroupProps,
   ) => {
-    const group = new ld.Group(rootGroupProps);
+    const group = new ld.Group({ direction: 'vertical', ...rootGroupProps });
     container.setRoot(group);
     ToolkitRenderer.renderGroup(component, group);
   },
