@@ -2,7 +2,8 @@ import * as http from 'http';
 import { WebSocket } from 'ws';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ClientMessage, ServerMessage } from '@arcanejs/protocol';
+import type { ClientMessage, ServerMessage } from '@arcanejs/protocol';
+import type { Logger } from '@arcanejs/protocol/logging';
 
 import { LightDeskOptions } from './options.js';
 import { FONTS } from '../shared/static.js';
@@ -40,8 +41,6 @@ const STATIC_FILES: { [id: string]: { path: string; contentType: string } } = {
   },
 };
 
-console.log('STATIC_FILES', STATIC_FILES);
-
 export interface Connection {
   sendMessage(msg: ServerMessage): void;
 }
@@ -55,13 +54,16 @@ export class Server {
       connection: Connection,
       message: ClientMessage,
     ) => void,
-  ) {}
+    private readonly log?: Logger,
+  ) {
+    log?.debug('Static Assets: %o', STATIC_FILES);
+  }
 
   public handleHttpRequest = async (
     req: http.IncomingMessage,
     res: http.ServerResponse,
   ): Promise<void> => {
-    console.log('handleHttpRequest', req.url);
+    this.log?.debug('handleHttpRequest %s', req.url);
     if (req.url === this.options.path) {
       const content = `
           <html>
@@ -87,7 +89,7 @@ export class Server {
             this.sendStaticFile(f.path, res, f.contentType);
           },
           (err) => {
-            console.error(err);
+            this.log?.error(err);
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Expected static file not found', 'utf-8');
           },
@@ -104,7 +106,7 @@ export class Server {
     response: http.ServerResponse,
     contentType: string,
   ) => {
-    fs.readFile(file, function (error, content) {
+    fs.readFile(file, (error, content) => {
       if (error) {
         if (error.code === 'ENOENT') {
           response.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -112,7 +114,7 @@ export class Server {
         } else {
           response.writeHead(500, { 'Content-Type': 'text/plain' });
           response.end('Error', 'utf-8');
-          console.error(error);
+          this.log?.error(`Error reading static file: %s`, error);
         }
       } else {
         response.writeHead(200, { 'Content-Type': contentType });
@@ -126,7 +128,7 @@ export class Server {
       sendMessage: (msg) => ws.send(JSON.stringify(msg)),
     };
     this.onNewConnection(connection);
-    console.log('new connection');
+    this.log?.debug('new connection');
     ws.on('message', (msg) =>
       this.onMessage(connection, JSON.parse(msg.toString())),
     );

@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/protocol",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": false,
   "description": "The JSON protocol types for the @arcanejs Toolkit",
   "license": "MIT",
@@ -16,6 +16,10 @@
     ".": {
       "@arcanejs/source": "./src/index.ts",
       "types": "./dist/index.d.ts"
+    },
+    "./logging": {
+      "@arcanejs/source": "./src/logging.ts",
+      "types": "./dist/logging.d.ts"
     },
     "./styles": {
       "@arcanejs/source": "./src/styles.ts",

@@ -10,16 +10,14 @@ import { IDMap } from './util/id-map';
 import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Group } from './components/group';
-import { Component } from './components/base';
+import { Component, Parent } from './components/base';
 import { ClientMessage, GroupComponent } from '@arcanejs/protocol';
-
-console.log(diffJson);
 
 type ConnectionMetadata = {
   lastTreeSent: GroupComponent | undefined;
 };
 
-export class Toolkit {
+export class Toolkit implements Parent {
   private readonly options: LightDeskOptions;
   /**
    * Mapping from components to unique IDs that identify them
@@ -49,6 +47,7 @@ export class Toolkit {
       this.onNewConnection,
       this.onClosedConnection,
       this.onMessage,
+      this.options.log,
     );
     if (opts.mode === 'automatic') {
       const httpServer = createServer(server.handleHttpRequest);
@@ -56,11 +55,10 @@ export class Toolkit {
         server: httpServer,
       });
       wss.on('connection', server.handleWsConnection);
-
+      const url = `http://localhost:${opts.port}${this.options.path}`;
       httpServer.listen(opts.port, () => {
-        console.log(
-          `Light Desk Started: http://localhost:${opts.port}${this.options.path}`,
-        );
+        opts.onReady?.(url);
+        this.options.log?.info(`Light Desk Started: ${url}`);
       });
     } else if (opts.mode === 'express') {
       const wss = new WebSocketServer({
@@ -83,6 +81,10 @@ export class Toolkit {
     this.rootGroup = group;
     this.rootGroup.setParent(this);
   };
+
+  public log() {
+    return this.options.log ?? null;
+  }
 
   public updateTree = _.throttle(
     () => {
@@ -123,12 +125,12 @@ export class Toolkit {
   };
 
   private onClosedConnection = (connection: Connection) => {
-    console.log('removing connection');
+    this.options.log?.debug('removing connection');
     this.connections.delete(connection);
   };
 
   private onMessage = (_connection: Connection, message: ClientMessage) => {
-    console.log('got message', message);
+    this.options.log?.debug('got message: %o', message);
     switch (message.type) {
       case 'component-message':
         if (this.rootGroup)

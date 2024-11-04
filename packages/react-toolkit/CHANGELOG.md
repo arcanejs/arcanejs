@@ -1,5 +1,17 @@
 # @arcanejs/react-toolkit
 
+## 0.4.0
+
+### Minor Changes
+
+- 9247670: Remove console.log and introduce unified logging interface
+
+### Patch Changes
+
+- Updated dependencies [9247670]
+  - @arcanejs/protocol@0.2.0
+  - @arcanejs/toolkit@0.3.0
+
 ## 0.3.2
 
 ### Patch Changes

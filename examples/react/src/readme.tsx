@@ -19,6 +19,9 @@ const toolkit = new Toolkit();
 toolkit.start({
   mode: 'automatic',
   port: 3000,
+  onReady: (url) => {
+    console.log(`Toolkit is ready: ${url}`);
+  },
 });
 
 const ControlPanel = () => {

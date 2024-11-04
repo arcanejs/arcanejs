@@ -1,5 +1,11 @@
 # @arcanejs/protocol
 
+## 0.2.0
+
+### Minor Changes
+
+- 9247670: Remove console.log and introduce unified logging interface
+
 ## 0.1.1
 
 ### Patch Changes

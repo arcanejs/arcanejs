@@ -38,7 +38,6 @@ const Stage: React.FC<Props> = ({ className }) => {
       `ws://${window.location.hostname}:${window.location.port}${window.location.pathname}`,
     );
     ws.onmessage = (event) => {
-      console.log('message', event.data);
       handleMessage(JSON.parse(event.data));
     };
     ws.onclose = () => {
@@ -62,7 +61,6 @@ const Stage: React.FC<Props> = ({ className }) => {
   };
 
   const handleMessage = (msg: proto.ServerMessage) => {
-    console.log('handleMessage', msg);
     switch (msg.type) {
       case 'tree-full':
         setRoot(msg.root);
