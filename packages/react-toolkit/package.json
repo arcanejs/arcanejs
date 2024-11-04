@@ -46,7 +46,6 @@
     "@types/react": "^18",
     "@types/react-reconciler": "^0.28.8",
     "eslint": "^8.57.0",
-    "react-reconciler": "^0.28.0",
     "tsup": "^8.1.0",
     "typescript": "^5.3.3",
     "zod": "^3.23.8"
@@ -54,7 +53,8 @@
   "dependencies": {
     "@arcanejs/toolkit": "workspace:^",
     "lodash": "^4.17.21",
-    "react": "^18"
+    "react": "^18",
+    "react-reconciler": "0.28.0"
   },
   "peerDependencies": {
     "zod": "^3.23.8"
