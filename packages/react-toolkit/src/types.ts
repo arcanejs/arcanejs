@@ -44,7 +44,7 @@ import type {
 } from '@arcanejs/toolkit/components/timeline';
 import type { Ref } from 'react';
 
-type Child = JSX.Element | string | null | undefined;
+type Child = JSX.Element | string | null | undefined | boolean;
 type Children = Child | Child[];
 
 export interface LightDeskIntrinsicElements {
