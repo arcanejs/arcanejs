@@ -39,11 +39,11 @@ const App = () => {
         <Group>
           {`Switch State: ${switchState}`}
           <Switch
-            state={switchState}
+            value={switchState}
             onChange={(value) => setSwitchState(value)}
           />
           <Switch
-            state={switchState === 'on' ? 'off' : 'on'}
+            value={switchState === 'on' ? 'off' : 'on'}
             onChange={(value) => setSwitchState(value === 'on' ? 'off' : 'on')}
           />
         </Group>

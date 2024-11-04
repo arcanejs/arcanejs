@@ -32,7 +32,7 @@ const ControlPanel = () => {
     <Group direction="vertical">
       <Group>
         {`Switch State: ${switchState}`}
-        <Switch state={switchState} onChange={setSwitchState} />
+        <Switch value={switchState} onChange={setSwitchState} />
       </Group>
       <Group>
         {`Slider Value: ${sliderValue}`}

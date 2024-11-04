@@ -7,14 +7,12 @@ export type Events = {
   change: (value: number) => void | Promise<void>;
 };
 
-export type SliderMode = 'writeThrough' | 'writeBack';
-
 type InternalProps = {
   min: number;
   max: number;
   step: number;
-  value: number | null;
-  mode: SliderMode;
+  value?: number;
+  defaultValue?: number;
 };
 
 type RequiredProps = 'value';
@@ -23,11 +21,9 @@ export type Props = Pick<InternalProps, RequiredProps> &
   Partial<Omit<InternalProps, RequiredProps>>;
 
 const DEFAULT_PROPS: InternalProps = {
-  value: null,
   min: 0,
   max: 255,
   step: 5,
-  mode: 'writeBack',
 };
 
 export class SliderButton
@@ -37,8 +33,17 @@ export class SliderButton
   /** @hidden */
   private readonly events = new EventEmitter<Events>();
 
+  /**
+   * Manually manage the state of the slider,
+   * to support both controlled and uncontrolled inputs.
+   */
+  private _value: null | number = null;
+
   public constructor(props?: Props) {
-    super(DEFAULT_PROPS, props);
+    super(DEFAULT_PROPS, props, {
+      onPropsUpdated: () => this.onPropsUpdated(),
+    });
+    this.onPropsUpdated();
   }
 
   addListener = this.events.addListener;
@@ -52,7 +57,7 @@ export class SliderButton
       min: this.props.min,
       max: this.props.max,
       step: this.props.step,
-      value: this.props.value,
+      value: this._value,
     };
   }
 
@@ -60,17 +65,23 @@ export class SliderButton
   public handleMessage(message: proto.ClientComponentMessage) {
     if (message.component !== 'slider_button') return;
     const newValue = this.sanitizeNumber(message.value);
-    if (this.props.value === newValue) return;
-    if (this.props.mode === 'writeBack') {
-      this.updateProps({ value: newValue });
+    if (this._value === newValue) return;
+    if (this.props.value === undefined) {
+      // Uncontrolled mode, update state
+      this._value = newValue;
+      // Tree update has to be manual as we're not updating props
+      this.updateTree();
     }
     this.events.emit('change', newValue);
   }
 
   public setValue(value: number) {
+    if (this.props.value) {
+      throw new Error('Cannot set value on controlled input');
+    }
     const newValue = this.sanitizeNumber(value);
-    if (newValue === this.props.value) return;
-    this.updateProps({ value });
+    if (this._value === newValue) return;
+    this._value = newValue;
     this.updateTree();
   }
 
@@ -83,4 +94,12 @@ export class SliderButton
     const clampedValue = Math.max(this.props.min, Math.min(this.props.max, v));
     return clampedValue;
   }
+
+  private onPropsUpdated = () => {
+    if (this.props.value !== undefined) {
+      this._value = this.props.value;
+    } else if (this._value === null && this.props.defaultValue) {
+      this._value = this.props.defaultValue;
+    }
+  };
 }

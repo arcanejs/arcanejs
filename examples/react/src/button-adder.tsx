@@ -31,14 +31,7 @@ const App = () => {
   const buttons: JSX.Element[] = [];
 
   for (let i = 0; i < count; i++) {
-    buttons.push(
-      <SliderButton
-        key={i}
-        value={val}
-        mode="writeThrough"
-        onChange={setVal}
-      />,
-    );
+    buttons.push(<SliderButton key={i} value={val} onChange={setVal} />);
   }
 
   return (

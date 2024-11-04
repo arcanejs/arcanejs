@@ -64,11 +64,7 @@ export const ToolkitSimulatorProvider: React.FC<ToolkitSimulatorProps> = ({
       title: 'Hello World',
     });
 
-    const b = g.appendChild(new Switch({ state: 'off' }));
-
-    b.addListener('change', (state) => {
-      b.setValue(state);
-    });
+    const b = g.appendChild(new Switch({ defaultValue: 'off' }));
 
     rootGroup.current = g;
     g.setParent(parent.current);
