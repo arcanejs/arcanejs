@@ -11,8 +11,9 @@ import {
   Tab,
 } from '@arcanejs/react-toolkit';
 import {
-  createDataFileSpec,
+  createDataFileDefinition,
   useDataFile,
+  useDataFileContext,
   useDataFileUpdater,
 } from '@arcanejs/react-toolkit/data';
 import { z } from 'zod';
@@ -27,19 +28,18 @@ toolkit.start({
   port: 1335,
 });
 
-const ConfiguredFiles = createDataFileSpec({
+const ConfiguredFiles = createDataFileDefinition({
   schema: z.string().array(),
   defaultValue: [],
 });
 
-const IndividualFile = createDataFileSpec({
+const IndividualFile = createDataFileDefinition({
   schema: z.object({
     text: z.string(),
   }),
   defaultValue: {
     text: 'Hello World',
   },
-  onPathChange: 'transfer',
 });
 
 const NAME_REGEX = /^[a-zA-Z0-9_-]+$/;
@@ -50,57 +50,54 @@ const validateName = (name: string) => {
   }
 };
 
-const FileDetails = () => {
-  const { error, data, updateData } = useDataFile(IndividualFile);
-  return (
-    <Group direction="vertical">
-      {error ? <>{`${error}`}</> : null}
-      <Group>
-        Data:
-        <TextInput
-          value={data.text}
-          onChange={(text) => updateData((current) => ({ ...current, text }))}
-        />
-      </Group>
-    </Group>
-  );
-};
-
 const File = ({ index, filename }: { index: number; filename: string }) => {
   const updateFiles = useDataFileUpdater(ConfiguredFiles);
+  const { data, updateData } = useDataFile(IndividualFile, {
+    path: path.join(DATA_DIR, 'files', `${filename}.json`),
+    onPathChange: 'transfer',
+  });
   const fileInputRef = useRef<TextInputType | null>(null);
 
   return (
     <Tab name={filename}>
-      <IndividualFile.Provider
-        path={path.join(DATA_DIR, 'files', `${filename}.json`)}
-      >
-        <Group direction="vertical">
-          <Group>
-            File Path:
-            <TextInput value={filename} ref={fileInputRef} />
-            <Button
-              text="Update file"
-              onClick={() => {
-                const name = fileInputRef.current?.getValue() ?? '';
-                validateName(name);
-                updateFiles((current) => {
-                  const updated = [...current];
-                  updated[index] = name;
-                  return updated;
-                });
-              }}
-            />
-          </Group>
-          <FileDetails />
+      <Group direction="vertical">
+        <Group>
+          File Path:
+          <TextInput value={filename} ref={fileInputRef} />
+          <Button
+            text="Update file"
+            onClick={() => {
+              const name = fileInputRef.current?.getValue() ?? '';
+              validateName(name);
+              updateFiles((current) => {
+                const updated = [...current];
+                updated[index] = name;
+                return updated;
+              });
+            }}
+          />
         </Group>
-      </IndividualFile.Provider>
+        <Group direction="vertical">
+          {data.status === 'error' ? <>{`${data.error}`}</> : null}
+          {data.data && (
+            <Group>
+              Data:
+              <TextInput
+                value={data.data.text}
+                onChange={(text) =>
+                  updateData((current) => ({ ...current, text }))
+                }
+              />
+            </Group>
+          )}
+        </Group>
+      </Group>
     </Tab>
   );
 };
 
 const Files = () => {
-  const { data, updateData, error } = useDataFile(ConfiguredFiles);
+  const { data, updateData, error } = useDataFileContext(ConfiguredFiles);
   const fileInputRef = useRef<TextInputType | null>(null);
 
   return (

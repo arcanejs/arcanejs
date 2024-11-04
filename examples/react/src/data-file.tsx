@@ -8,7 +8,10 @@ import {
   TextInput,
   Button,
 } from '@arcanejs/react-toolkit';
-import { createDataFileSpec, useDataFile } from '@arcanejs/react-toolkit/data';
+import {
+  createDataFileDefinition,
+  useDataFileContext,
+} from '@arcanejs/react-toolkit/data';
 import { z } from 'zod';
 import path from 'path';
 
@@ -21,14 +24,13 @@ toolkit.start({
   port: 1336,
 });
 
-const DataSpec = createDataFileSpec({
+const DataSpec = createDataFileDefinition({
   schema: z.object({
     text: z.string(),
   }),
   defaultValue: {
     text: 'Hello World',
   },
-  onPathChange: 'transfer',
 });
 
 const NAME_REGEX = /^[a-zA-Z0-9_-]+\.json$/;
@@ -40,7 +42,7 @@ const validateName = (name: string) => {
 };
 
 const FileDetails = () => {
-  const { data, updateData } = useDataFile(DataSpec);
+  const { data, updateData } = useDataFileContext(DataSpec);
   return (
     <Group direction="vertical">
       <Group>
@@ -74,7 +76,10 @@ const App = () => {
         />
       </Group>
       {filename && (
-        <DataSpec.Provider path={path.join(DATA_DIR, filename)}>
+        <DataSpec.Provider
+          path={path.join(DATA_DIR, filename)}
+          onPathChange="transfer"
+        >
           <FileDetails />
         </DataSpec.Provider>
       )}
