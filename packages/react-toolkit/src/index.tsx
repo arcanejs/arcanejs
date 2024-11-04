@@ -1,9 +1,11 @@
 import Reconciler from 'react-reconciler';
+import React from 'react';
 import { DefaultEventPriority } from 'react-reconciler/constants';
 import * as ld from '@arcanejs/toolkit';
 import { Base, BaseParent } from '@arcanejs/toolkit/components/base';
 import type { Props as GroupProps } from '@arcanejs/toolkit/components/group';
 import type { LightDeskIntrinsicElements } from './types';
+import { LoggerContext } from './logging';
 
 export type { LightDeskIntrinsicElements };
 export * from './components.js';
@@ -286,7 +288,12 @@ const reconciler = Reconciler(hostConfig as LightDeskHostConfig);
 export const ToolkitRenderer = {
   renderGroup: (component: JSX.Element, container: ld.Group) => {
     const root = (reconciler as any).createContainer(container, 0, false, null);
-    reconciler.updateContainer(component, root, null);
+    const componentWithContexts = (
+      <LoggerContext.Provider value={container.log}>
+        {component}
+      </LoggerContext.Provider>
+    );
+    reconciler.updateContainer(componentWithContexts, root, null);
   },
   render: (
     component: JSX.Element,

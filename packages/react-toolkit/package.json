@@ -20,7 +20,7 @@
   },
   "exports": {
     ".": {
-      "@arcanejs/source": "./src/index.ts",
+      "@arcanejs/source": "./src/index.tsx",
       "import": "./dist/index.mjs",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
@@ -30,6 +30,12 @@
       "import": "./dist/data.mjs",
       "require": "./dist/data.js",
       "types": "./dist/data.d.ts"
+    },
+    "./logging": {
+      "@arcanejs/source": "./src/logging.ts",
+      "import": "./dist/logging.mjs",
+      "require": "./dist/logging.js",
+      "types": "./dist/logging.d.ts"
     }
   },
   "scripts": {
@@ -51,6 +57,7 @@
     "zod": "^3.23.8"
   },
   "dependencies": {
+    "@arcanejs/protocol": "workspace:^",
     "@arcanejs/toolkit": "workspace:^",
     "lodash": "^4.17.21",
     "react": "^18",

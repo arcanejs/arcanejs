@@ -1,3 +1,4 @@
+import pino from 'pino';
 import React, { useRef } from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
 
@@ -21,7 +22,14 @@ import path from 'path';
 
 const DATA_DIR = path.join(path.dirname(__dirname), 'data', 'data-files');
 
-const toolkit = new Toolkit();
+const toolkit = new Toolkit({
+  log: pino({
+    level: 'debug',
+    transport: {
+      target: 'pino-pretty',
+    },
+  }),
+});
 
 toolkit.start({
   mode: 'automatic',

@@ -1,3 +1,4 @@
+import pino from 'pino';
 import * as React from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
 
@@ -9,7 +10,14 @@ import {
   Button,
 } from '@arcanejs/react-toolkit';
 
-const toolkit = new Toolkit();
+const toolkit = new Toolkit({
+  log: pino({
+    level: 'info',
+    transport: {
+      target: 'pino-pretty',
+    },
+  }),
+});
 
 toolkit.start({
   mode: 'automatic',

@@ -13,6 +13,7 @@ import React, {
 import type { ZodType } from 'zod';
 import { throttle } from 'lodash';
 import { dirname } from 'path';
+import { useLogger } from './logging';
 
 type WithPathChange = {
   /**
@@ -140,6 +141,8 @@ export function useDataFileCore<T>({
   path,
   onPathChange = 'defaultValue',
 }: UseDataFileCoreProps<T>): DataFileCore<T> {
+  const log = useLogger();
+
   /**
    * Maintain all data in a ref so that we can dynamically throttle the
    * writes to disk in a memoized function.
@@ -278,7 +281,6 @@ export function useDataFileCore<T>({
           return;
         }
         if (error.code === 'ENOENT') {
-          console.log('Creating new file');
           // Initialise the state, and then write it to disk
           const initialData =
             onPathChange === 'transfer' &&
@@ -287,6 +289,11 @@ export function useDataFileCore<T>({
               : defaultValue;
           state.current.data = initialData;
           state.current.state = { state: 'dirty' };
+          log?.info(
+            'Creating a new file at %s with initial data %o',
+            path,
+            initialData,
+          );
           saveData();
           updateDataFromState();
           return;

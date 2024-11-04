@@ -27,7 +27,6 @@ const Switch: FC<Props> = ({ className, info, sendMessage }) => {
   const onClick = useMemo(
     () => () => {
       if (!sendMessage) return;
-      console.log('sending message');
       sendMessage({
         type: 'component-message',
         componentKey: info.key,

@@ -1,5 +1,6 @@
 import * as proto from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
+import { Logger } from '@arcanejs/protocol/logging';
 
 export interface Component {
   getProtoInfo(idMap: IDMap): proto.Component;
@@ -28,6 +29,10 @@ export abstract class Base<Props> implements Component {
       ...props,
     });
   }
+
+  public log = (): Logger | null => {
+    return this.parent?.log() || null;
+  };
 
   public get props(): Props {
     return this._props;
@@ -70,9 +75,7 @@ export abstract class Base<Props> implements Component {
   public abstract getProtoInfo(idMap: IDMap): proto.Component;
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage): void {
-    console.log('Component Received Message:', message);
-  }
+  public handleMessage(_message: proto.ClientComponentMessage): void {}
 
   public routeMessage(
     _idMap: IDMap,
@@ -86,6 +89,7 @@ export abstract class Base<Props> implements Component {
 export interface Parent {
   updateTree(): void;
   removeChild(component: Component): void;
+  log(): Logger | null;
 }
 
 export abstract class BaseParent<T> extends Base<T> implements Parent {
@@ -161,7 +165,6 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
     const filteredChildren = this.children.filter((c) => c !== child);
     // Find position of beforeChild
     let match = filteredChildren.findIndex((c) => c === beforeChild);
-    console.log('match', match);
     if (match === -1) {
       // If beforeChild is not found, insert at the end
       match = filteredChildren.length;

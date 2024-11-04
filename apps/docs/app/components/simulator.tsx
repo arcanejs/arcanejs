@@ -54,6 +54,7 @@ export const ToolkitSimulatorProvider: React.FC<ToolkitSimulatorProps> = ({
     updateTree: () => {
       setTree(rootGroup.current?.getProtoInfo(componentIDMap.current) ?? null);
     },
+    log: () => console,
   });
 
   useEffect(() => {

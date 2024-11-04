@@ -17,6 +17,10 @@
       "@arcanejs/source": "./src/index.ts",
       "types": "./dist/index.d.ts"
     },
+    "./logging": {
+      "@arcanejs/source": "./src/logging.ts",
+      "types": "./dist/logging.d.ts"
+    },
     "./styles": {
       "@arcanejs/source": "./src/styles.ts",
       "types": "./dist/styles.d.ts"

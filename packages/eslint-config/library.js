@@ -33,6 +33,7 @@ module.exports = {
       "varsIgnorePattern": "^_",
       "argsIgnorePattern": "^_",
     }],
+    "no-console": "error",
   },
   overrides: [
     {
