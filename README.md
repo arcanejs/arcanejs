@@ -103,6 +103,12 @@ but I intend to open-source it in the future.
 For a comprehensive list of examples,
 please see the [react example directory](./examples/react/).
 
+### [Example Philips Hue App](https://github.com/arcanejs/hue-example)
+
+Check out this example repository that uses `@arcanejs/react-toolkit`
+to create an app that can be used to control a Philips Hue Bridge
+on your local network.
+
 ## Status / Suitability / Security Disclaimer
 
 This project is **experimental**,
