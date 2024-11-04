@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.4.0
+
+### Minor Changes
+
+- 9247670: Remove console.log and introduce unified logging interface
+
 ## 0.3.2
 
 ### Patch Changes
