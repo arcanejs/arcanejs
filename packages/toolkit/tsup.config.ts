@@ -16,6 +16,7 @@ export default defineConfig({
     'src/backend/util/index.ts',
   ],
   format: ['cjs', 'esm'],
+  splitting: true,
   dts: true,
   external: [
     '@arcanejs/diff',
