@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.3.1
+
+### Patch Changes
+
+- 41cbac3: Fix dependency definition for react-reconciler
+
 ## 0.3.0
 
 ### Minor Changes
