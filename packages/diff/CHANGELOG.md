@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.3.2
+
+### Patch Changes
+
+- bc83786: Fix imports by ensuring we split all bundles
+
 ## 0.3.1
 
 ### Patch Changes
