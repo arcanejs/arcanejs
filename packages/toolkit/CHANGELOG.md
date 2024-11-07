@@ -1,5 +1,19 @@
 # @arcanejs/toolkit
 
+## 0.5.0
+
+### Minor Changes
+
+- 7c4379d: Allow Rect and SliderButtons to grow
+- 7c4379d: Introduce gradients on SliderButton
+
+### Patch Changes
+
+- 7c4379d: Improve display of SliderButton and Rect when vertical
+- Updated dependencies [7c4379d]
+- Updated dependencies [7c4379d]
+  - @arcanejs/protocol@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

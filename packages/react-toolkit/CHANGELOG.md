@@ -1,5 +1,22 @@
 # @arcanejs/react-toolkit
 
+## 0.6.0
+
+### Minor Changes
+
+- 7c4379d: Introduce new `HslColorPicker` composite component
+
+  Introduce a new component that can be used to select different colors,
+  build from `Group`, `Rect` and `SliderButton` components.
+
+### Patch Changes
+
+- Updated dependencies [7c4379d]
+- Updated dependencies [7c4379d]
+- Updated dependencies [7c4379d]
+  - @arcanejs/toolkit@0.5.0
+  - @arcanejs/protocol@0.3.0
+
 ## 0.5.0
 
 ### Minor Changes
