@@ -249,7 +249,7 @@
       <text x="300" y="80" text-anchor="start" fill="#aaa" class="text-off">&#47;&#47; state &#61;&#61; &#39;off&#39;</text>
       <text x="300" y="80" text-anchor="start" fill="#aaa" class="text-on">&#47;&#47; state &#61;&#61; &#39;on&#39;</text>
       <text x="300" y="110" text-anchor="start" fill="#f5f5f5">&lt;Switch</text>
-      <text x="300" y="130" text-anchor="start" fill="#f5f5f5">&#160;&#160;state&#61;&#123;state&#125;</text>
+      <text x="300" y="130" text-anchor="start" fill="#f5f5f5">&#160;&#160;value&#61;&#123;state&#125;</text>
       <text x="300" y="150" text-anchor="start" fill="#f5f5f5">&#160;&#160;onChange&#61;&#123;setState&#125; &#47;&#62;</text>
     </g>
   </g>
