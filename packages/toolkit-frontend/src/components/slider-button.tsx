@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -18,6 +18,7 @@ import { TRANSPARENCY_SVG_URI } from './core';
 const CLASS_SLIDER_DISPLAY = 'slider-display';
 const CLASS_SLIDER_VALUE = 'slider-value';
 const CLASS_GRADIENT = 'gradient';
+const CLASS_GROW = 'grow';
 
 const OPEN_SLIDER_WIDTH = 400;
 const SLIDER_PADDING = 15;
@@ -65,44 +66,56 @@ const getRelativeCursorPosition = (elem: Element, pageX: number) => {
   return pageX - rect.left;
 };
 
-const SliderButton: FC<Props> = (props) => {
+const SliderButton: FC<Props> = ({ info, sendMessage, className }) => {
   const [state, setState] = React.useState<State>({ state: 'closed' });
   const input = React.useRef<HTMLInputElement | null>(null);
 
   const displayValue = (value: number) => {
-    if (props.info.max === 1 && props.info.min === 0) {
+    if (info.max === 1 && info.min === 0) {
       return `${Math.round(value * 100)}%`;
     }
     return NUMBER_FORMATTER.format(value);
   };
 
-  const sendValue = (value: number) =>
-    props.sendMessage?.({
-      type: 'component-message',
-      componentKey: props.info.key,
-      component: 'slider_button',
-      value: value,
-    });
+  const sendValue = useCallback(
+    (value: number) =>
+      sendMessage?.({
+        type: 'component-message',
+        componentKey: info.key,
+        component: 'slider_button',
+        value: value,
+      }),
+    [sendMessage, info.key],
+  );
 
-  const getNewValue = (startValue: null | number, diff: number) => {
-    return sanitizeValue((startValue || 0) + diff);
-  };
+  const sanitizeValue = useCallback(
+    (value: number) => {
+      const i = Math.round((value - info.min) / info.step);
+      const v = i * info.step + info.min;
+      return Math.max(info.min, Math.min(info.max, v));
+    },
+    [info.min, info.max, info.step],
+  );
 
-  const sanitizeValue = (value: number) => {
-    const i = Math.round((value - props.info.min) / props.info.step);
-    const v = i * props.info.step + props.info.min;
-    return Math.max(props.info.min, Math.min(props.info.max, v));
-  };
+  const getNewValue = useCallback(
+    (startValue: null | number, diff: number) => {
+      return sanitizeValue((startValue || 0) + diff);
+    },
+    [sanitizeValue],
+  );
 
-  const getCurrentInputValue = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const float = parseFloat(e.currentTarget.value);
-    return sanitizeValue(isNaN(float) ? props.info.value || 0 : float);
-  };
+  const getCurrentInputValue = useCallback(
+    (e: React.SyntheticEvent<HTMLInputElement>) => {
+      const float = parseFloat(e.currentTarget.value);
+      return sanitizeValue(isNaN(float) ? info.value || 0 : float);
+    },
+    [info.value, sanitizeValue],
+  );
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === KEYS.ArrowDown || e.key === KEYS.ArrowUp) {
       const currentValue = getCurrentInputValue(e);
-      const diff = e.key === KEYS.ArrowUp ? props.info.step : -props.info.step;
+      const diff = e.key === KEYS.ArrowUp ? info.step : -info.step;
       const newValue = sanitizeValue(currentValue + diff);
       e.currentTarget.value = NUMBER_FORMATTER.format(newValue);
       sendValue(newValue);
@@ -117,7 +130,7 @@ const SliderButton: FC<Props> = (props) => {
 
   const onFocus = (e: React.SyntheticEvent<HTMLInputElement>) => {
     setState({ state: 'focused' });
-    e.currentTarget.value = `${props.info.value || 0}`;
+    e.currentTarget.value = `${info.value || 0}`;
   };
 
   const onBlur = () => {
@@ -136,13 +149,13 @@ const SliderButton: FC<Props> = (props) => {
         touch,
         (p) => {
           const amntDiff = (p.pageX - originalPageX) / OPEN_SLIDER_INNER_WIDTH;
-          const newValueDiff = (props.info.max - props.info.min) * amntDiff;
+          const newValueDiff = (info.max - info.min) * amntDiff;
           sendValue(getNewValue(start.startValue, newValueDiff));
           setState({ ...start, diff: newValueDiff });
         },
         (p) => {
           const amntDiff = (p.pageX - originalPageX) / OPEN_SLIDER_INNER_WIDTH;
-          const newValueDiff = (props.info.max - props.info.min) * amntDiff;
+          const newValueDiff = (info.max - info.min) * amntDiff;
           sendValue(getNewValue(start.startValue, newValueDiff));
           setState({ state: 'closed' });
         },
@@ -152,9 +165,9 @@ const SliderButton: FC<Props> = (props) => {
   };
 
   const onDown = (cursorStartPosition: number) => {
-    const value = props.info.value === null ? 0 : props.info.value;
+    const value = info.value === null ? 0 : info.value;
     /** Value between 0 - 1 representing where between min - max the value is */
-    const amnt = (value - props.info.min) / (props.info.max - props.info.min);
+    const amnt = (value - info.min) / (info.max - info.min);
     const innerLeft =
       cursorStartPosition -
       amnt * OPEN_SLIDER_INNER_WIDTH -
@@ -163,7 +176,7 @@ const SliderButton: FC<Props> = (props) => {
       'px';
     const start: TouchingState = {
       state: 'touching',
-      startValue: props.info.value,
+      startValue: info.value,
       startX: cursorStartPosition,
       innerLeft,
       diff: 0,
@@ -175,15 +188,15 @@ const SliderButton: FC<Props> = (props) => {
   const value =
     state.state === 'touching'
       ? getNewValue(state.startValue, state.diff)
-      : props.info.value;
+      : info.value;
   const valueDisplay = value !== null ? displayValue(value) : '';
   const valueCSSPercent = value
-    ? ((value - props.info.min) / (props.info.max - props.info.min)) * 100 + '%'
+    ? ((value - info.min) / (info.max - info.min)) * 100 + '%'
     : '0';
 
   const gradientStops =
-    props.info.gradient &&
-    props.info.gradient.map((g) => `${g.color} ${g.position * 100}%`);
+    info.gradient &&
+    info.gradient.map((g) => `${g.color} ${g.position * 100}%`);
   const sliderGradient: DivStyle = gradientStops
     ? {
         background: `linear-gradient(90deg, ${gradientStops.join(', ')}), url(${TRANSPARENCY_SVG_URI})`,
@@ -191,7 +204,13 @@ const SliderButton: FC<Props> = (props) => {
     : undefined;
 
   return (
-    <div className={calculateClass(props.className, `state-${state.state}`)}>
+    <div
+      className={calculateClass(
+        className,
+        `state-${state.state}`,
+        info.grow && CLASS_GROW,
+      )}
+    >
       <div
         className="inner"
         onMouseDown={() => setState({ state: 'mouse-down' })}
@@ -227,8 +246,8 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
   min-width: 100px;
   min-height: 30px;
 
-  @media (max-width: 500px) {
-    flex-basis: 100%;
+  &.${CLASS_GROW} {
+    flex-grow: 1;
   }
 
   > .inner {

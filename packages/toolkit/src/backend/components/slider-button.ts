@@ -7,13 +7,12 @@ export type Events = {
   change: (value: number) => void | Promise<void>;
 };
 
-type InternalProps = {
-  min: number;
-  max: number;
-  step: number;
+type InternalProps = Pick<
+  proto.SliderButtonComponent,
+  'min' | 'max' | 'step' | 'gradient' | 'grow'
+> & {
   value?: number;
   defaultValue?: number;
-  gradient?: proto.Gradient;
 };
 
 type RequiredProps = 'value';
@@ -60,6 +59,7 @@ export class SliderButton
       step: this.props.step,
       value: this._value,
       gradient: this.props.gradient,
+      grow: this.props.grow,
     };
   }
 

@@ -4,11 +4,14 @@ import { styled } from 'styled-components';
 import * as proto from '@arcanejs/protocol';
 import { THEME } from '../styling';
 import { TRANSPARENCY_SVG_URI } from './core';
+import { calculateClass } from '../util';
 
 interface Props {
   className?: string;
   info: proto.RectComponent;
 }
+
+const CLS_GROW = 'grow';
 
 const Wrapper = styled.div`
   min-width: 30px;
@@ -19,6 +22,10 @@ const Wrapper = styled.div`
   background-repeat: repeat;
   background-size: 10px;
   border: 1px solid ${THEME.borderDark};
+
+  &.${CLS_GROW} {
+    flex-grow: 1;
+  }
 `;
 
 const Inner = styled.div`
@@ -27,7 +34,7 @@ const Inner = styled.div`
 `;
 
 const Rect: FC<Props> = ({ className, info }) => (
-  <Wrapper className={className}>
+  <Wrapper className={calculateClass(className, info.grow && CLS_GROW)}>
     <Inner style={{ backgroundColor: info.color }} />
   </Wrapper>
 );

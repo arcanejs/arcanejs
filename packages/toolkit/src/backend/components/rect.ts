@@ -3,9 +3,7 @@ import { IDMap } from '../util/id-map';
 
 import { Base } from './base';
 
-type InternalProps = {
-  color: string;
-};
+type InternalProps = Pick<proto.RectComponent, 'color' | 'grow'>;
 
 export type Props = Partial<InternalProps>;
 
@@ -28,7 +26,7 @@ export class Rect extends Base<InternalProps> {
     return {
       component: 'rect',
       key: idMap.getId(this),
-      color: this.props.color,
+      ...this.props,
     };
   }
 
