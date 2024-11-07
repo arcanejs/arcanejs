@@ -12,9 +12,12 @@ import {
 import { trackTouch } from '../util/touch';
 
 import { StageContext } from './context';
+import { calculateClass } from '../util';
+import { TRANSPARENCY_SVG_URI } from './core';
 
 const CLASS_SLIDER_DISPLAY = 'slider-display';
 const CLASS_SLIDER_VALUE = 'slider-value';
+const CLASS_GRADIENT = 'gradient';
 
 const OPEN_SLIDER_WIDTH = 400;
 const SLIDER_PADDING = 15;
@@ -48,6 +51,8 @@ type State =
       state: 'closed' | 'focused' | 'mouse-down';
     }
   | TouchingState;
+
+type DivStyle = React.HTMLAttributes<HTMLDivElement>['style'];
 
 const NUMBER_FORMATTER = new Intl.NumberFormat(undefined, {
   // A large enough value for most usecases,
@@ -175,8 +180,18 @@ const SliderButton: FC<Props> = (props) => {
   const valueCSSPercent = value
     ? ((value - props.info.min) / (props.info.max - props.info.min)) * 100 + '%'
     : '0';
+
+  const gradientStops =
+    props.info.gradient &&
+    props.info.gradient.map((g) => `${g.color} ${g.position * 100}%`);
+  const sliderGradient: DivStyle = gradientStops
+    ? {
+        background: `linear-gradient(90deg, ${gradientStops.join(', ')}), url(${TRANSPARENCY_SVG_URI})`,
+      }
+    : undefined;
+
   return (
-    <div className={[props.className, `state-${state.state}`].join(' ')}>
+    <div className={calculateClass(props.className, `state-${state.state}`)}>
       <div
         className="inner"
         onMouseDown={() => setState({ state: 'mouse-down' })}
@@ -192,7 +207,13 @@ const SliderButton: FC<Props> = (props) => {
           onKeyDown={onKeyDown}
         />
         <div className={CLASS_SLIDER_VALUE}>{valueDisplay}</div>
-        <div className={CLASS_SLIDER_DISPLAY}>
+        <div
+          className={calculateClass(
+            CLASS_SLIDER_DISPLAY,
+            sliderGradient && CLASS_GRADIENT,
+          )}
+          style={sliderGradient}
+        >
           <div className="inner" style={{ width: valueCSSPercent }} />
         </div>
         <div className={CLASS_SLIDER_VALUE}>{valueDisplay}</div>
@@ -250,6 +271,36 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
       > .inner {
         height: 100%;
         background: ${THEME.hint};
+      }
+
+      &.${CLASS_GRADIENT} {
+        height: 10px;
+
+        > .inner {
+          position: relative;
+          background: none;
+          border-right: 2px solid ${THEME.borderDark};
+
+          &::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            top: -5px;
+            bottom: -5px;
+            right: -3px;
+            background: ${THEME.borderDark};
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            top: -4px;
+            bottom: -4px;
+            right: -2px;
+            background: ${THEME.textNormal};
+          }
+        }
       }
     }
 

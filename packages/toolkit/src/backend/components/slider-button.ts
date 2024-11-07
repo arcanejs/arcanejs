@@ -13,6 +13,7 @@ type InternalProps = {
   step: number;
   value?: number;
   defaultValue?: number;
+  gradient?: proto.Gradient;
 };
 
 type RequiredProps = 'value';
@@ -58,6 +59,7 @@ export class SliderButton
       max: this.props.max,
       step: this.props.step,
       value: this._value,
+      gradient: this.props.gradient,
     };
   }
 
