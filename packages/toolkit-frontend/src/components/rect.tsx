@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
+import { THEME } from '../styling';
 
 const TRANSPARENCY_SVG = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
@@ -17,13 +18,14 @@ interface Props {
 }
 
 const Wrapper = styled.div`
-  width: 30px;
+  min-width: 30px;
   height: 30px;
   border-radius: 3px;
   overflow: hidden;
   background: url('data:image/svg+xml,${encodeURIComponent(TRANSPARENCY_SVG)}');
   background-repeat: repeat;
   background-size: 10px;
+  border: 1px solid ${THEME.borderDark};
 `;
 
 const Inner = styled.div`

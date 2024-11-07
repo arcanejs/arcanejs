@@ -203,8 +203,8 @@ const SliderButton: FC<Props> = (props) => {
 
 const StyledSliderButton: FC<Props> = styled(SliderButton)`
   position: relative;
-  width: 100px;
-  height: 30px;
+  min-width: 100px;
+  min-height: 30px;
 
   @media (max-width: 500px) {
     flex-basis: 100%;
