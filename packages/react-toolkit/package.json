@@ -25,6 +25,12 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./colors": {
+      "@arcanejs/source": "./src/colors.tsx",
+      "import": "./dist/colors.mjs",
+      "require": "./dist/colors.js",
+      "types": "./dist/colors.d.ts"
+    },
     "./data": {
       "@arcanejs/source": "./src/data.tsx",
       "import": "./dist/data.mjs",

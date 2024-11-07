@@ -5,6 +5,17 @@ type BaseComponent = {
   key: number;
 };
 
+export type Gradient = Array<{
+  /**
+   * CSS color value
+   */
+  color: string;
+  /**
+   * Position of the color in the gradient, between 0 and 1
+   */
+  position: number;
+}>;
+
 export type ButtonComponent = BaseComponent & {
   component: 'button';
   text: string;
@@ -54,6 +65,10 @@ export type LabelComponent = BaseComponent & {
 export type RectComponent = BaseComponent & {
   component: 'rect';
   color: string;
+  /**
+   * Set to true if the component should increase its size to fill the available space.
+   */
+  grow?: boolean;
 };
 
 export type SliderButtonComponent = BaseComponent & {
@@ -62,6 +77,11 @@ export type SliderButtonComponent = BaseComponent & {
   max: number;
   step: number;
   value: number | null;
+  gradient?: Gradient;
+  /**
+   * Set to true if the component should increase its size to fill the available space.
+   */
+  grow?: boolean;
 };
 
 export type SwitchComponent = BaseComponent & {

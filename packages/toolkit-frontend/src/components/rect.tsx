@@ -2,28 +2,30 @@ import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
-
-const TRANSPARENCY_SVG = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10">
-  <rect width="10px" height="10px" fill="#333" />
-  <rect width="5px" height="5px" fill="#ddd" y="5"/>
-  <rect width="5px" height="5px" fill="#ddd" x="5"/>
-</svg>
-`;
+import { THEME } from '../styling';
+import { TRANSPARENCY_SVG_URI } from './core';
+import { calculateClass } from '../util';
 
 interface Props {
   className?: string;
   info: proto.RectComponent;
 }
 
+const CLS_GROW = 'grow';
+
 const Wrapper = styled.div`
-  width: 30px;
+  min-width: 30px;
   height: 30px;
   border-radius: 3px;
   overflow: hidden;
-  background: url('data:image/svg+xml,${encodeURIComponent(TRANSPARENCY_SVG)}');
+  background: url('${TRANSPARENCY_SVG_URI}');
   background-repeat: repeat;
   background-size: 10px;
+  border: 1px solid ${THEME.borderDark};
+
+  &.${CLS_GROW} {
+    flex-grow: 1;
+  }
 `;
 
 const Inner = styled.div`
@@ -32,7 +34,7 @@ const Inner = styled.div`
 `;
 
 const Rect: FC<Props> = ({ className, info }) => (
-  <Wrapper className={className}>
+  <Wrapper className={calculateClass(className, info.grow && CLS_GROW)}>
     <Inner style={{ backgroundColor: info.color }} />
   </Wrapper>
 );

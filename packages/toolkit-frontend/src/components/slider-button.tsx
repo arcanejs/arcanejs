@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -12,9 +12,13 @@ import {
 import { trackTouch } from '../util/touch';
 
 import { StageContext } from './context';
+import { calculateClass } from '../util';
+import { TRANSPARENCY_SVG_URI } from './core';
 
 const CLASS_SLIDER_DISPLAY = 'slider-display';
 const CLASS_SLIDER_VALUE = 'slider-value';
+const CLASS_GRADIENT = 'gradient';
+const CLASS_GROW = 'grow';
 
 const OPEN_SLIDER_WIDTH = 400;
 const SLIDER_PADDING = 15;
@@ -49,6 +53,8 @@ type State =
     }
   | TouchingState;
 
+type DivStyle = React.HTMLAttributes<HTMLDivElement>['style'];
+
 const NUMBER_FORMATTER = new Intl.NumberFormat(undefined, {
   // A large enough value for most usecases,
   // but to avoid inaccuracies from floating-point maths
@@ -60,44 +66,56 @@ const getRelativeCursorPosition = (elem: Element, pageX: number) => {
   return pageX - rect.left;
 };
 
-const SliderButton: FC<Props> = (props) => {
+const SliderButton: FC<Props> = ({ info, sendMessage, className }) => {
   const [state, setState] = React.useState<State>({ state: 'closed' });
   const input = React.useRef<HTMLInputElement | null>(null);
 
   const displayValue = (value: number) => {
-    if (props.info.max === 1 && props.info.min === 0) {
+    if (info.max === 1 && info.min === 0) {
       return `${Math.round(value * 100)}%`;
     }
     return NUMBER_FORMATTER.format(value);
   };
 
-  const sendValue = (value: number) =>
-    props.sendMessage?.({
-      type: 'component-message',
-      componentKey: props.info.key,
-      component: 'slider_button',
-      value: value,
-    });
+  const sendValue = useCallback(
+    (value: number) =>
+      sendMessage?.({
+        type: 'component-message',
+        componentKey: info.key,
+        component: 'slider_button',
+        value: value,
+      }),
+    [sendMessage, info.key],
+  );
 
-  const getNewValue = (startValue: null | number, diff: number) => {
-    return sanitizeValue((startValue || 0) + diff);
-  };
+  const sanitizeValue = useCallback(
+    (value: number) => {
+      const i = Math.round((value - info.min) / info.step);
+      const v = i * info.step + info.min;
+      return Math.max(info.min, Math.min(info.max, v));
+    },
+    [info.min, info.max, info.step],
+  );
 
-  const sanitizeValue = (value: number) => {
-    const i = Math.round((value - props.info.min) / props.info.step);
-    const v = i * props.info.step + props.info.min;
-    return Math.max(props.info.min, Math.min(props.info.max, v));
-  };
+  const getNewValue = useCallback(
+    (startValue: null | number, diff: number) => {
+      return sanitizeValue((startValue || 0) + diff);
+    },
+    [sanitizeValue],
+  );
 
-  const getCurrentInputValue = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const float = parseFloat(e.currentTarget.value);
-    return sanitizeValue(isNaN(float) ? props.info.value || 0 : float);
-  };
+  const getCurrentInputValue = useCallback(
+    (e: React.SyntheticEvent<HTMLInputElement>) => {
+      const float = parseFloat(e.currentTarget.value);
+      return sanitizeValue(isNaN(float) ? info.value || 0 : float);
+    },
+    [info.value, sanitizeValue],
+  );
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === KEYS.ArrowDown || e.key === KEYS.ArrowUp) {
       const currentValue = getCurrentInputValue(e);
-      const diff = e.key === KEYS.ArrowUp ? props.info.step : -props.info.step;
+      const diff = e.key === KEYS.ArrowUp ? info.step : -info.step;
       const newValue = sanitizeValue(currentValue + diff);
       e.currentTarget.value = NUMBER_FORMATTER.format(newValue);
       sendValue(newValue);
@@ -112,7 +130,7 @@ const SliderButton: FC<Props> = (props) => {
 
   const onFocus = (e: React.SyntheticEvent<HTMLInputElement>) => {
     setState({ state: 'focused' });
-    e.currentTarget.value = `${props.info.value || 0}`;
+    e.currentTarget.value = `${info.value || 0}`;
   };
 
   const onBlur = () => {
@@ -131,13 +149,13 @@ const SliderButton: FC<Props> = (props) => {
         touch,
         (p) => {
           const amntDiff = (p.pageX - originalPageX) / OPEN_SLIDER_INNER_WIDTH;
-          const newValueDiff = (props.info.max - props.info.min) * amntDiff;
+          const newValueDiff = (info.max - info.min) * amntDiff;
           sendValue(getNewValue(start.startValue, newValueDiff));
           setState({ ...start, diff: newValueDiff });
         },
         (p) => {
           const amntDiff = (p.pageX - originalPageX) / OPEN_SLIDER_INNER_WIDTH;
-          const newValueDiff = (props.info.max - props.info.min) * amntDiff;
+          const newValueDiff = (info.max - info.min) * amntDiff;
           sendValue(getNewValue(start.startValue, newValueDiff));
           setState({ state: 'closed' });
         },
@@ -147,9 +165,9 @@ const SliderButton: FC<Props> = (props) => {
   };
 
   const onDown = (cursorStartPosition: number) => {
-    const value = props.info.value === null ? 0 : props.info.value;
+    const value = info.value === null ? 0 : info.value;
     /** Value between 0 - 1 representing where between min - max the value is */
-    const amnt = (value - props.info.min) / (props.info.max - props.info.min);
+    const amnt = (value - info.min) / (info.max - info.min);
     const innerLeft =
       cursorStartPosition -
       amnt * OPEN_SLIDER_INNER_WIDTH -
@@ -158,7 +176,7 @@ const SliderButton: FC<Props> = (props) => {
       'px';
     const start: TouchingState = {
       state: 'touching',
-      startValue: props.info.value,
+      startValue: info.value,
       startX: cursorStartPosition,
       innerLeft,
       diff: 0,
@@ -170,13 +188,29 @@ const SliderButton: FC<Props> = (props) => {
   const value =
     state.state === 'touching'
       ? getNewValue(state.startValue, state.diff)
-      : props.info.value;
+      : info.value;
   const valueDisplay = value !== null ? displayValue(value) : '';
   const valueCSSPercent = value
-    ? ((value - props.info.min) / (props.info.max - props.info.min)) * 100 + '%'
+    ? ((value - info.min) / (info.max - info.min)) * 100 + '%'
     : '0';
+
+  const gradientStops =
+    info.gradient &&
+    info.gradient.map((g) => `${g.color} ${g.position * 100}%`);
+  const sliderGradient: DivStyle = gradientStops
+    ? {
+        background: `linear-gradient(90deg, ${gradientStops.join(', ')}), url(${TRANSPARENCY_SVG_URI})`,
+      }
+    : undefined;
+
   return (
-    <div className={[props.className, `state-${state.state}`].join(' ')}>
+    <div
+      className={calculateClass(
+        className,
+        `state-${state.state}`,
+        info.grow && CLASS_GROW,
+      )}
+    >
       <div
         className="inner"
         onMouseDown={() => setState({ state: 'mouse-down' })}
@@ -192,7 +226,13 @@ const SliderButton: FC<Props> = (props) => {
           onKeyDown={onKeyDown}
         />
         <div className={CLASS_SLIDER_VALUE}>{valueDisplay}</div>
-        <div className={CLASS_SLIDER_DISPLAY}>
+        <div
+          className={calculateClass(
+            CLASS_SLIDER_DISPLAY,
+            sliderGradient && CLASS_GRADIENT,
+          )}
+          style={sliderGradient}
+        >
           <div className="inner" style={{ width: valueCSSPercent }} />
         </div>
         <div className={CLASS_SLIDER_VALUE}>{valueDisplay}</div>
@@ -203,11 +243,11 @@ const SliderButton: FC<Props> = (props) => {
 
 const StyledSliderButton: FC<Props> = styled(SliderButton)`
   position: relative;
-  width: 100px;
-  height: 30px;
+  min-width: 100px;
+  min-height: 30px;
 
-  @media (max-width: 500px) {
-    flex-basis: 100%;
+  &.${CLASS_GROW} {
+    flex-grow: 1;
   }
 
   > .inner {
@@ -250,6 +290,36 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
       > .inner {
         height: 100%;
         background: ${THEME.hint};
+      }
+
+      &.${CLASS_GRADIENT} {
+        height: 10px;
+
+        > .inner {
+          position: relative;
+          background: none;
+          border-right: 2px solid ${THEME.borderDark};
+
+          &::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            top: -5px;
+            bottom: -5px;
+            right: -3px;
+            background: ${THEME.borderDark};
+          }
+
+          &::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            top: -4px;
+            bottom: -4px;
+            right: -2px;
+            background: ${THEME.textNormal};
+          }
+        }
       }
     }
 
