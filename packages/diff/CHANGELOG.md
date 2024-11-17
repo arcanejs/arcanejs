@@ -1,5 +1,21 @@
 # @arcanejs/diff
 
+## 0.5.0
+
+### Minor Changes
+
+- a11d331: Allow diffing values of different types
+
+  Previously, when there were different types for a value, we weren't able to
+  compare then and provide a patch.
+  Now it simply includes the entire new value.
+
+- a11d331: Optimize value changes
+
+  Don't include the previous value in a calculated diff when its entire value
+  needs to be replaced, as this is not used to calculate the new value,
+  and only serves to bloat the diff sizes.
+
 ## 0.4.0
 
 ### Minor Changes

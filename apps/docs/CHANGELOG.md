@@ -1,5 +1,15 @@
 # docs
 
+## 0.1.13
+
+### Patch Changes
+
+- Updated dependencies [a11d331]
+- Updated dependencies [a11d331]
+  - @arcanejs/diff@0.5.0
+  - @arcanejs/protocol@0.3.0
+  - @arcanejs/toolkit@0.5.1
+
 ## 0.1.12
 
 ### Patch Changes
