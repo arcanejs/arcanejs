@@ -8,7 +8,7 @@ type PossibleRecursiveDiff<V extends JSONValue | undefined> =
 
 export type NestedDiff<V extends JSONValue> =
   // Primitives & Arrays may return `value`
-  | (V extends JSONPrimitive ? { type: 'value'; before: V; after: V } : never)
+  | (V extends JSONPrimitive ? { type: 'value'; after: V } : never)
   | (V extends JSONArray
       ? { type: 'splice'; start: number; count: number; items: V }
       : never)
@@ -46,7 +46,7 @@ export const diffJson = <V extends JSONValue>(
     return { type: 'match' };
   }
   if (!jsonTypeMatches(a, b)) {
-    throw new Error("Types don't match, unable to diff");
+    return { type: 'value', after: b } as Diff<V>;
   }
   if (Array.isArray(a) && Array.isArray(b)) {
     // If arrays are same length, do a pairwise comparison of each item,
@@ -98,10 +98,10 @@ export const diffJson = <V extends JSONValue>(
     }
   }
   if (a === null || b === null) {
-    return { type: 'value', before: a, after: b } as Diff<V>;
+    return { type: 'value', after: b } as Diff<V>;
   }
   if (Array.isArray(a) || Array.isArray(b)) {
-    return { type: 'value', before: a, after: b } as Diff<V>;
+    return { type: 'value', after: b } as Diff<V>;
   }
 
   if (typeof a === 'object' && typeof b === 'object') {
@@ -138,5 +138,5 @@ export const diffJson = <V extends JSONValue>(
   }
 
   // Type matches and not array / object, so value must be different
-  return { type: 'value', before: a, after: b } as Diff<V>;
+  return { type: 'value', after: b } as Diff<V>;
 };
