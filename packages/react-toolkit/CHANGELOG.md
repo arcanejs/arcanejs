@@ -1,5 +1,12 @@
 # @arcanejs/react-toolkit
 
+## 0.6.1
+
+### Patch Changes
+
+- @arcanejs/protocol@0.3.0
+- @arcanejs/toolkit@0.5.1
+
 ## 0.6.0
 
 ### Minor Changes
