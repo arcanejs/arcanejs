@@ -26,7 +26,7 @@ describe('diff', () => {
       [true, false],
     ]) {
       it(`${JSON.stringify(a)} and ${JSON.stringify(b)}`, () => {
-        expect(diffJson(a, b)).toEqual({ type: 'value', before: a, after: b });
+        expect(diffJson(a, b)).toEqual({ type: 'value', after: b });
       });
     }
   });
@@ -45,7 +45,7 @@ describe('diff', () => {
       [true, null],
     ]) {
       it(`${JSON.stringify(a)} and ${JSON.stringify(b)}`, () => {
-        expect(diffJson(a, b)).toEqual({ type: 'value', before: a, after: b });
+        expect(diffJson(a, b)).toEqual({ type: 'value', after: b });
       });
     }
   });
@@ -62,7 +62,7 @@ describe('diff', () => {
     it('should diff identify single item to replace', () => {
       expect(diffJson([1, 2, 3], [1, 2, 4])).toEqual({
         type: 'modified-a',
-        changes: [{ i: 2, diff: { type: 'value', before: 3, after: 4 } }],
+        changes: [{ i: 2, diff: { type: 'value', after: 4 } }],
       });
     });
 
@@ -189,7 +189,7 @@ describe('diff', () => {
     it('changes should be output', () => {
       expect(diffJson({ a: 1, b: 2, c: 3 }, { a: 1, b: 4, c: 3 })).toEqual({
         type: 'modified-o',
-        changes: { b: { type: 'value', before: 2, after: 4 } },
+        changes: { b: { type: 'value', after: 4 } },
       });
     });
 
@@ -198,7 +198,7 @@ describe('diff', () => {
         type: 'modified-o',
         additions: { d: null },
         deletions: { b: 2 },
-        changes: { c: { type: 'value', before: 3, after: 4 } },
+        changes: { c: { type: 'value', after: 4 } },
       });
     });
   });
@@ -224,11 +224,11 @@ describe('diff', () => {
         changes: {
           b: {
             type: 'modified-o',
-            changes: { d: { type: 'value', before: 3, after: 4 } },
+            changes: { d: { type: 'value', after: 4 } },
           },
           e: {
             type: 'modified-a',
-            changes: [{ i: 2, diff: { type: 'value', before: 6, after: 7 } }],
+            changes: [{ i: 2, diff: { type: 'value', after: 7 } }],
           },
         },
       });
