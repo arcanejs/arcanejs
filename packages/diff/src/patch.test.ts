@@ -22,6 +22,25 @@ describe('patchJson', () => {
     }
   });
 
+  describe('values of different types should be replaced', () => {
+    for (const [a, b] of [
+      [5, '5'],
+      [5, true],
+      [5, null],
+      [[], {}],
+      [null, []],
+      [null, {}],
+      [true, {}],
+      ['5', true],
+      ['5', null],
+      [true, null],
+    ]) {
+      it(`${JSON.stringify(a)} -> ${JSON.stringify(b)}`, () => {
+        expect(patchJson(a, diffJson(a, b))).toEqual(b);
+      });
+    }
+  });
+
   describe('arrays should be updated', () => {
     it('should splice arrays where possible', () => {
       const a = [[1], [2], [3], [6]];

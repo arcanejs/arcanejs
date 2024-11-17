@@ -46,7 +46,7 @@ export const diffJson = <V extends JSONValue>(
     return { type: 'match' };
   }
   if (!jsonTypeMatches(a, b)) {
-    throw new Error("Types don't match, unable to diff");
+    return { type: 'value', before: a, after: b } as Diff<V>;
   }
   if (Array.isArray(a) && Array.isArray(b)) {
     // If arrays are same length, do a pairwise comparison of each item,

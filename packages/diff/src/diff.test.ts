@@ -31,7 +31,7 @@ describe('diff', () => {
     }
   });
 
-  describe('different types should throw Exception', () => {
+  describe('different types should return a value replacement', () => {
     for (const [a, b] of [
       [5, '5'],
       [5, true],
@@ -45,7 +45,7 @@ describe('diff', () => {
       [true, null],
     ]) {
       it(`${JSON.stringify(a)} and ${JSON.stringify(b)}`, () => {
-        expect(() => diffJson(a, b)).toThrow();
+        expect(diffJson(a, b)).toEqual({ type: 'value', before: a, after: b });
       });
     }
   });
