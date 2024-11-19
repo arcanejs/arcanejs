@@ -50,9 +50,12 @@ const validateName = (name: string) => {
 };
 
 const FileDetails = () => {
-  const { data, updateData } = useDataFileContext(DataSpec);
+  const { data, lastUpdatedMillis, updateData } = useDataFileContext(DataSpec);
   return (
     <Group direction="vertical">
+      <Group>
+        Last Updated: {new Date(lastUpdatedMillis).toLocaleString()}
+      </Group>
       <Group>
         Data:
         <TextInput
