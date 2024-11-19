@@ -42,6 +42,20 @@ export type DataFileUpdater<T> = (update: (current: T) => T) => void;
 
 export type DataFileContext<T> = {
   data: T;
+  /**
+   * Last timestamp where {@link DataFileContext.data data} was updated
+   * in-memory.
+   *
+   * **Note: This is not the last time the data was saved to disk.**
+   * More specifically:
+   * - If the data has been loaded from disk and not changed,
+   *   then this will be the timestamp that it was loaded from disk.
+   * - If the data has been updated since first loaded into memory,
+   *   then this will be the timestamp of the last update.
+   *
+   * Uses the local timestamp in milliseconds, i.e. `Date.now()`.
+   */
+  lastUpdatedMillis: number;
   updateData: DataFileUpdater<T>;
   /**
    * Can be called to force an attempt to re-save the data to disk
@@ -92,7 +106,9 @@ export function useDataFile<T>(
   return dataFile.useDataFile(usage);
 }
 
-export type DataState<T> =
+export type DataState<T> = {
+  lastUpdatedMillis: number;
+} & (
   | {
       status: 'loading';
       /**
@@ -107,7 +123,8 @@ export type DataState<T> =
       data: undefined;
     }
   | { status: 'error'; data: T | undefined; error: unknown }
-  | { status: 'ready'; data: T };
+  | { status: 'ready'; data: T }
+);
 
 type InternalDataFileState<T> = {
   /**
@@ -117,6 +134,7 @@ type InternalDataFileState<T> = {
   path: string | null;
   data: T | undefined;
   previousData: T | undefined;
+  lastUpdatedMillis: number;
   state: { state: 'error'; error: unknown } | { state: 'saved' | 'dirty' };
 };
 
@@ -152,6 +170,7 @@ export function useDataFileCore<T>({
     path: null,
     data: undefined,
     previousData: undefined,
+    lastUpdatedMillis: Date.now(),
     state: {
       state: 'saved',
     },
@@ -174,6 +193,7 @@ export function useDataFileCore<T>({
    * but more often than file writes to disk.
    */
   const [data, setData] = useState<DataState<T>>({
+    lastUpdatedMillis: state.current.lastUpdatedMillis,
     status: 'loading',
     data: undefined,
   });
@@ -184,6 +204,7 @@ export function useDataFileCore<T>({
 
       if (state.current.state.state === 'error') {
         setData({
+          lastUpdatedMillis: state.current.lastUpdatedMillis,
           status: 'error',
           error: state.current.state.error,
           data,
@@ -193,6 +214,7 @@ export function useDataFileCore<T>({
 
       if (data === undefined) {
         setData({
+          lastUpdatedMillis: state.current.lastUpdatedMillis,
           status: 'loading',
           data: undefined,
         });
@@ -200,6 +222,7 @@ export function useDataFileCore<T>({
       }
 
       setData({
+        lastUpdatedMillis: state.current.lastUpdatedMillis,
         status: 'ready',
         data,
       });
@@ -270,6 +293,7 @@ export function useDataFileCore<T>({
         const parsedData = schema.parse(JSON.parse(data));
         if (state.current.path === path) {
           state.current.data = parsedData;
+          state.current.lastUpdatedMillis = Date.now();
           state.current.state = { state: 'saved' };
           updateDataFromState();
         }
@@ -288,6 +312,7 @@ export function useDataFileCore<T>({
               ? state.current.previousData
               : defaultValue;
           state.current.data = initialData;
+          state.current.lastUpdatedMillis = Date.now();
           state.current.state = { state: 'dirty' };
           log?.info(
             'Creating a new file at %s with initial data %o',
@@ -314,6 +339,7 @@ export function useDataFileCore<T>({
         throw new Error('Attempt to update data before it has been loaded');
       }
       state.current.data = update(state.current.data);
+      state.current.lastUpdatedMillis = Date.now();
       state.current.state = { state: 'dirty' };
       saveData();
       updateDataFromState();
@@ -339,6 +365,7 @@ export function createDataFileDefinition<T>({
 }: CreateDataFileDefinitionProps<T>): DataFileDefinition<T> {
   const context = createContext<DataFileContext<T>>({
     data: defaultValue,
+    lastUpdatedMillis: Date.now(),
     updateData: () => {
       throw new Error('Data file provider not used');
     },
@@ -376,6 +403,7 @@ export function createDataFileDefinition<T>({
           data.status !== 'loading' && data.data !== undefined
             ? data.data
             : defaultValue,
+        lastUpdatedMillis: data.lastUpdatedMillis,
         updateData,
         saveData,
         error: data.status === 'error' ? data.error : undefined,
