@@ -1,5 +1,14 @@
 # @arcanejs/react-toolkit
 
+## 0.7.0
+
+### Minor Changes
+
+- 52fb995: Introduce lastUpdatedMillis for data module
+
+  Expose the last time that a data file was updated in-memory as a property of the
+  context exposed in the API.
+
 ## 0.6.1
 
 ### Patch Changes
