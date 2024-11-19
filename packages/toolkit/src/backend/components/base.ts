@@ -1,6 +1,7 @@
 import * as proto from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
 import { Logger } from '@arcanejs/protocol/logging';
+import { JSONValue } from '@arcanejs/diff';
 
 export interface Component {
   getProtoInfo(idMap: IDMap): proto.Component;
@@ -294,4 +295,19 @@ export class EventEmitter<Map extends Record<string, (...args: any[]) => void>>
       }
     }
   };
+}
+
+export abstract class CustomComponent<
+  Props,
+  ProtoData extends JSONValue,
+> extends Base<Props> {
+  public getProtoInfo = (idMap: IDMap): proto.CustomComponent => {
+    return {
+      component: 'custom',
+      key: idMap.getId(this),
+      data: this.getProtoData(),
+    };
+  };
+
+  public abstract getProtoData(): ProtoData;
 }

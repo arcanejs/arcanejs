@@ -1,4 +1,4 @@
-import { Diff } from '@arcanejs/diff';
+import { Diff, JSONValue } from '@arcanejs/diff';
 import { GroupComponentStyle } from './styles';
 
 type BaseComponent = {
@@ -128,6 +128,11 @@ export type TimelineComponent = BaseComponent & {
   };
 };
 
+export type CustomComponent = BaseComponent & {
+  component: 'custom';
+  data: JSONValue;
+};
+
 export type Component =
   | ButtonComponent
   | GroupHeaderComponent
@@ -139,7 +144,8 @@ export type Component =
   | TabComponent
   | TabsComponent
   | TextInputComponent
-  | TimelineComponent;
+  | TimelineComponent
+  | CustomComponent;
 
 export type SendTreeMsg = {
   type: 'tree-full';

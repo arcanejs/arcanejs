@@ -44,6 +44,9 @@ import type {
 } from '@arcanejs/toolkit/components/timeline';
 import type { Ref } from 'react';
 
+// React Types
+
+export type Props = { [key: string]: any };
 type Child = JSX.Element | string | null | undefined | boolean;
 type Children = Child | Child[];
 

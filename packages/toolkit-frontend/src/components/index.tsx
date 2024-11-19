@@ -41,6 +41,7 @@ export const renderStandardComponent = (info: Component): JSX.Element => {
         `Cannot render ${info.component} outside of expected parents`,
       );
   }
+  throw new Error(`Unknown component ${info.component}`);
 };
 
 export {
