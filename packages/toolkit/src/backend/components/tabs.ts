@@ -1,11 +1,11 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
-import { BaseParent, Component } from './base';
+import { AnyComponent, BaseParent } from './base';
 
 type TabDefinition = {
   name: string;
-  component: Component;
+  component: AnyComponent;
 };
 
 type InternalTabProps = {
@@ -14,8 +14,12 @@ type InternalTabProps = {
 
 export type TabProps = InternalTabProps;
 
-export class Tab extends BaseParent<InternalTabProps> {
-  public validateChildren = (children: Component[]) => {
+export class Tab extends BaseParent<
+  proto.CoreNamespace,
+  proto.CoreComponent,
+  InternalTabProps
+> {
+  public validateChildren = (children: AnyComponent[]) => {
     if (children.length > 1) {
       throw new Error('Tab can only have one child');
     }
@@ -23,6 +27,7 @@ export class Tab extends BaseParent<InternalTabProps> {
 
   /** @hidden */
   public getProtoInfo = (idMap: IDMap): proto.TabComponent => ({
+    namespace: 'core',
     component: 'tab',
     key: idMap.getId(this),
     name: this.props.name,
@@ -36,8 +41,12 @@ type InternalTabsProps = Record<never, never>;
 
 export type TabsProps = InternalTabsProps;
 
-export class Tabs extends BaseParent<InternalTabsProps> {
-  public validateChildren = (children: Component[]) => {
+export class Tabs extends BaseParent<
+  proto.CoreNamespace,
+  proto.CoreComponent,
+  InternalTabsProps
+> {
+  public validateChildren = (children: AnyComponent[]) => {
     for (const child of children) {
       if (!(child instanceof Tab)) {
         throw new Error('Tabs can only have Tab children');
@@ -57,7 +66,7 @@ export class Tabs extends BaseParent<InternalTabsProps> {
     }
   }
 
-  public addTab<C extends Component>(name: string, component: C): C {
+  public addTab<C extends AnyComponent>(name: string, component: C): C {
     this.addTabs({ name, component });
     return component;
   }
@@ -65,6 +74,7 @@ export class Tabs extends BaseParent<InternalTabsProps> {
   /** @hidden */
   public getProtoInfo(idMap: IDMap): proto.TabsComponent {
     return {
+      namespace: 'core',
       component: 'tabs',
       key: idMap.getId(this),
       tabs: this.getChildren().map((c) => (c as Tab).getProtoInfo(idMap)),

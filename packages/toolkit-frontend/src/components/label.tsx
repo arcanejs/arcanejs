@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 interface Props {
   className?: string;

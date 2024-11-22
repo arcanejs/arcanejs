@@ -32,6 +32,12 @@
       "import": "./dist/styling.mjs",
       "require": "./dist/styling.js"
     },
+    "./types": {
+      "@arcanejs/source": "./src/types.ts",
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.mjs",
+      "require": "./dist/types.js"
+    },
     "./util": {
       "@arcanejs/source": "./src/util/index.ts",
       "types": "./dist/util/index.d.ts",

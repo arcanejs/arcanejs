@@ -31,12 +31,6 @@
       "import": "./dist/colors.mjs",
       "require": "./dist/colors.js"
     },
-    "./custom": {
-      "@arcanejs/source": "./src/custom.ts",
-      "types": "./dist/custom.d.ts",
-      "import": "./dist/custom.mjs",
-      "require": "./dist/custom.js"
-    },
     "./data": {
       "@arcanejs/source": "./src/data.tsx",
       "types": "./dist/data.d.ts",

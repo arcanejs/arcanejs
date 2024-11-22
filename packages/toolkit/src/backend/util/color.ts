@@ -1,4 +1,4 @@
-import { Gradient } from '@arcanejs/protocol';
+import { Gradient } from '@arcanejs/protocol/core';
 
 /**
  * Rainbow gradient used for hue slider values.

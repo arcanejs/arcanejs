@@ -95,7 +95,7 @@
     "lint": "eslint . --max-warnings 0",
     "build": "rm -rf dist && pnpm build:backend && pnpm type-check:frontend && pnpm build:frontend && check-export-map",
     "build:backend": "tsup",
-    "build:frontend": "esbuild src/frontend/frontend.ts --bundle --sourcemap --outfile=dist/frontend.js",
+    "build:frontend": "esbuild src/frontend/entrypoint-core.ts --bundle --sourcemap --outfile=dist/frontend.js",
     "dev": "pnpm dev:backend & pnpm dev:frontend",
     "dev:backend": "pnpm build:backend --watch",
     "dev:frontend": "pnpm type-check:frontend:watch & pnpm build:frontend --watch",

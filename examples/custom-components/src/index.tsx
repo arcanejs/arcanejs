@@ -1,10 +1,15 @@
 import pino from 'pino';
 import * as React from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
-import { prepareCustomComponents } from '@arcanejs/react-toolkit/custom';
 
-import { ToolkitRenderer, Group } from '@arcanejs/react-toolkit';
-import { CustomComponent } from '@arcanejs/toolkit/components/base';
+import {
+  Group,
+  ToolkitRenderer,
+  prepareComponents,
+} from '@arcanejs/react-toolkit';
+import { AnyComponent, Base } from '@arcanejs/toolkit/components/base';
+import { IDMap } from '@arcanejs/toolkit/util';
+import { CoreComponents } from '../../../packages/react-toolkit/src/core';
 
 const toolkit = new Toolkit({
   log: pino({
@@ -20,17 +25,33 @@ toolkit.start({
   port: 1330,
 });
 
-class Stopwatch extends CustomComponent<{ foo: string }, { foo: string }> {
-  public getProtoData = () => {
+type StopwatchProto = {
+  key: number;
+  namespace: 'custom';
+  component: 'stopwatch';
+  foo: string;
+};
+
+class Stopwatch extends Base<'custom', StopwatchProto, { foo: string }> {
+  public getProtoInfo(idMap: IDMap): StopwatchProto {
     return {
+      namespace: 'custom',
+      component: 'stopwatch',
+      key: idMap.getId(this),
       foo: this.props.foo,
     };
-  };
+  }
 }
 
-const C = prepareCustomComponents({
+const C = prepareComponents('custom', {
   Stopwatch,
 });
+
+export type ComponentRegister = {
+  [type: string]: {
+    create: (props: { [key: string]: any }) => AnyComponent;
+  };
+};
 
 const App = () => {
   const customRef = React.useRef<Stopwatch>(null);
@@ -53,6 +74,6 @@ ToolkitRenderer.render(
   toolkit,
   {},
   {
-    customComponents: C,
+    componentNamespaces: [CoreComponents, C],
   },
 );

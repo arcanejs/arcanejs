@@ -1,19 +1,17 @@
-import * as proto from '@arcanejs/protocol';
+import {
+  BaseComponentProto,
+  BaseClientComponentMessage,
+  AnyClientComponentMessage,
+} from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
 import { Logger } from '@arcanejs/protocol/logging';
-import { JSONValue } from '@arcanejs/diff';
+import { deprecate } from 'util';
 
-export interface Component {
-  getProtoInfo(idMap: IDMap): proto.Component;
-
-  handleMessage(message: proto.ClientComponentMessage): void;
-
-  routeMessage(idMap: IDMap, message: proto.ClientComponentMessage): void;
-
-  setParent(parent: Parent | null): void;
-}
-
-export abstract class Base<Props> implements Component {
+export abstract class Base<
+  Namespace extends string,
+  Proto extends BaseComponentProto<Namespace>,
+  Props,
+> {
   /** @hidden */
   private parent: Parent | null = null;
 
@@ -111,33 +109,42 @@ export abstract class Base<Props> implements Component {
   }
 
   /** @hidden */
-  public abstract getProtoInfo(idMap: IDMap): proto.Component;
+  public abstract getProtoInfo(idMap: IDMap): Proto;
 
   /** @hidden */
-  public handleMessage(_message: proto.ClientComponentMessage): void {}
+  public handleMessage(_message: AnyClientComponentMessage): void {}
 
   public routeMessage(
     _idMap: IDMap,
-    _message: proto.ClientComponentMessage,
+    _message: AnyClientComponentMessage,
   ): void {
     // Do nothing by default, only useful for Parent components
   }
 }
 
+export type AnyComponent = Base<string, BaseComponentProto<string>, any>;
+
 /** @hidden */
 export interface Parent {
   updateTree(): void;
-  removeChild(component: Component): void;
+  removeChild(component: AnyComponent): void;
   log(): Logger | null;
 }
 
-export abstract class BaseParent<T> extends Base<T> implements Parent {
+export abstract class BaseParent<
+    Namespace extends string,
+    Proto extends BaseComponentProto<Namespace>,
+    T,
+  >
+  extends Base<Namespace, Proto, T>
+  implements Parent
+{
   /** @hidden */
-  private children: readonly Component[] = [];
+  private children: readonly AnyComponent[] = [];
 
-  public abstract validateChildren(children: Component[]): void;
+  public abstract validateChildren(children: AnyComponent[]): void;
 
-  public appendChildren = <CS extends Component[]>(...children: CS): CS => {
+  public appendChildren = <CS extends AnyComponent[]>(...children: CS): CS => {
     for (const c of children) {
       const newChildren = [...this.children.filter((ch) => ch !== c), c];
       this.validateChildren(newChildren);
@@ -148,12 +155,12 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
     return children;
   };
 
-  public appendChild = <C extends Component>(child: C): C => {
+  public appendChild = <C extends AnyComponent>(child: C): C => {
     this.appendChildren(child);
     return child;
   };
 
-  public removeChild = (component: Component) => {
+  public removeChild = (component: AnyComponent) => {
     const match = this.children.findIndex((c) => c === component);
     if (match >= 0) {
       const removingChild = this.children[match];
@@ -177,7 +184,7 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
   /**
    * Return all children components that messages need to be routed to
    */
-  public getChildren = (): readonly Component[] => this.children;
+  public getChildren = (): readonly AnyComponent[] => this.children;
 
   /**
    * TODO: we can do this better, right now it broadcasts the message to all
@@ -185,7 +192,7 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
    *
    * @hidden
    */
-  public routeMessage(idMap: IDMap, message: proto.ClientComponentMessage) {
+  public routeMessage(idMap: IDMap, message: AnyClientComponentMessage) {
     if (idMap.getId(this) === message.componentKey) {
       this.handleMessage(message);
     } else {
@@ -199,7 +206,7 @@ export abstract class BaseParent<T> extends Base<T> implements Parent {
     }
   }
 
-  public insertBefore(child: Component, beforeChild: Component) {
+  public insertBefore(child: AnyComponent, beforeChild: AnyComponent) {
     // Remove child from current parent (if it exists)
     const filteredChildren = this.children.filter((c) => c !== child);
     // Find position of beforeChild
@@ -295,19 +302,4 @@ export class EventEmitter<Map extends Record<string, (...args: any[]) => void>>
       }
     }
   };
-}
-
-export abstract class CustomComponent<
-  Props,
-  ProtoData extends JSONValue,
-> extends Base<Props> {
-  public getProtoInfo = (idMap: IDMap): proto.CustomComponent => {
-    return {
-      component: 'custom',
-      key: idMap.getId(this),
-      data: this.getProtoData(),
-    };
-  };
-
-  public abstract getProtoData(): ProtoData;
 }

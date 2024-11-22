@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import {
   THEME,
@@ -42,8 +42,9 @@ const ButtonLabel = styled.span`
 const Button: FC<Props> = (props) => {
   const { sendMessage } = React.useContext(StageContext);
   const { touching, handlers } = usePressable(() =>
-    sendMessage?.({
+    sendMessage<proto.CoreComponentMessage>?.({
       type: 'component-message',
+      namespace: 'core',
       componentKey: props.info.key,
       component: 'button',
     }),

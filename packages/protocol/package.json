@@ -17,6 +17,12 @@
       "@arcanejs/source": "./src/index.ts",
       "types": "./dist/index.d.ts"
     },
+    "./core": {
+      "@arcanejs/source": "./src/core.ts",
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.mjs",
+      "require": "./dist/core.js"
+    },
     "./logging": {
       "@arcanejs/source": "./src/logging.ts",
       "types": "./dist/logging.d.ts"
@@ -29,7 +35,7 @@
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
-    "build": "rm -rf dist && tsc && check-export-map"
+    "build": "rm -rf dist && tsup && check-export-map"
   },
   "devDependencies": {
     "@arcanejs/diff": "workspace:^",
@@ -39,6 +45,7 @@
     "@types/jest": "^29.5.12",
     "check-export-map": "^1.3.1",
     "eslint": "^8.57.0",
+    "tsup": "^8.1.0",
     "typescript": "^5.3.3"
   },
   "files": [

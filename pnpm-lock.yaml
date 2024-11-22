@@ -289,6 +289,9 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
+      tsup:
+        specifier: ^8.1.0
+        version: 8.1.0(postcss@8.4.38)(ts-node@10.9.2(@types/node@20.11.24)(typescript@5.4.5))(typescript@5.4.5)
       typescript:
         specifier: ^5.3.3
         version: 5.4.5

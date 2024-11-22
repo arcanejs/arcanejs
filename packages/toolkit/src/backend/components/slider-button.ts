@@ -1,7 +1,8 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
+import { AnyClientComponentMessage } from '@arcanejs/protocol';
 
 export type Events = {
   change: (value: number) => void | Promise<void>;
@@ -28,7 +29,7 @@ const DEFAULT_PROPS: InternalProps = {
 };
 
 export class SliderButton
-  extends Base<InternalProps>
+  extends Base<proto.CoreNamespace, proto.CoreComponent, InternalProps>
   implements Listenable<Events>
 {
   /** @hidden */
@@ -60,8 +61,9 @@ export class SliderButton
   removeListener = this.events.removeListener;
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.Component {
+  public getProtoInfo(idMap: IDMap): proto.CoreComponent {
     return {
+      namespace: 'core',
       component: 'slider_button',
       key: idMap.getId(this),
       min: this.props.min,
@@ -74,8 +76,8 @@ export class SliderButton
   }
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage) {
-    if (message.component !== 'slider_button') return;
+  public handleMessage(message: AnyClientComponentMessage) {
+    if (!proto.isCoreComponentMessage(message, 'slider_button')) return;
     const newValue = this.sanitizeNumber(message.value);
     if (this._value === newValue) return;
     if (this.props.value === undefined) {

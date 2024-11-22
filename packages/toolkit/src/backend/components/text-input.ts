@@ -1,7 +1,8 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
+import { AnyClientComponentMessage } from '@arcanejs/protocol';
 
 export type Events = {
   change: (value: string) => void | Promise<void>;
@@ -19,7 +20,7 @@ const DEFAULT_PROPS: InternalProps = {
 };
 
 export class TextInput
-  extends Base<InternalProps>
+  extends Base<proto.CoreNamespace, proto.CoreComponent, InternalProps>
   implements Listenable<Events>
 {
   /** @hidden */
@@ -43,8 +44,9 @@ export class TextInput
   removeListener = this.events.removeListener;
 
   /** @hidden */
-  public getProtoInfo = (idMap: IDMap): proto.Component => {
+  public getProtoInfo = (idMap: IDMap): proto.CoreComponent => {
     return {
+      namespace: 'core',
       component: 'text-input',
       key: idMap.getId(this),
       value: this.props.value ?? '',
@@ -52,8 +54,8 @@ export class TextInput
   };
 
   /** @hidden */
-  public handleMessage = (message: proto.ClientComponentMessage) => {
-    if (message.component === 'text-input') {
+  public handleMessage = (message: AnyClientComponentMessage) => {
+    if (proto.isCoreComponentMessage(message, 'text-input')) {
       if (this.props.value !== message.value) {
         this.updateProps({ value: message.value });
         this.events.emit('change', message.value);

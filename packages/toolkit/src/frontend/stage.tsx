@@ -1,5 +1,11 @@
 import { patchJson } from '@arcanejs/diff';
-import * as React from 'react';
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import { styled, ThemeProvider } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
@@ -13,27 +19,54 @@ import {
   Group,
   GroupStateWrapper,
   StageContext,
-  renderStandardComponent,
 } from '@arcanejs/toolkit-frontend';
 
 import { MaterialFontStyle } from './styling';
+import {
+  FrontendComponentRenderer,
+  FrontendComponentRenderers,
+} from '@arcanejs/toolkit-frontend/types';
 
-type Props = {
+type Props<Namespaces extends string> = {
   className?: string;
+  renderers: FrontendComponentRenderers;
 };
 
-const Stage: React.FC<Props> = ({ className }) => {
-  const [root, setRoot] = React.useState<proto.GroupComponent | undefined>(
+const Stage: React.FC<Props<any>> = ({ className, renderers }) => {
+  const [root, setRoot] = useState<proto.AnyComponentProto | undefined>(
     undefined,
   );
-  const socket = React.useRef<Promise<WebSocket> | null>(null);
+  const socket = useRef<Promise<WebSocket> | null>(null);
 
-  React.useEffect(() => {
+  const preparedRenderers = useMemo(() => {
+    const prepared: Record<string, FrontendComponentRenderer> = {};
+
+    for (const renderer of renderers) {
+      prepared[renderer.namespace] = renderer;
+    }
+
+    return prepared;
+  }, [renderers]);
+
+  const renderComponent = useCallback(
+    (info: proto.AnyComponentProto): JSX.Element => {
+      const renderer = preparedRenderers[info.namespace];
+      if (!renderer) {
+        throw new Error(`no renderer for namespace ${info.namespace}`);
+      }
+      return renderer.render(info);
+    },
+    [preparedRenderers],
+  );
+
+  useEffect(() => {
     initializeWebsocket();
   }, []);
 
   const initializeWebsocket = async () => {
     console.log('initializing websocket');
+    const wsUrl = new URL(window.location.href);
+    wsUrl.protocol = wsUrl.protocol === 'https:' ? 'wss:' : 'ws:';
     const ws = new WebSocket(
       `ws://${window.location.hostname}:${window.location.port}${window.location.pathname}`,
     );
@@ -75,13 +108,13 @@ const Stage: React.FC<Props> = ({ className }) => {
     <StageContext.Provider
       value={{
         sendMessage,
-        renderComponent: renderStandardComponent,
+        renderComponent,
       }}
     >
       <GroupStateWrapper openByDefault={false}>
         <div className={className}>
           {root ? (
-            <Group info={root} />
+            renderComponent(root)
           ) : (
             <div className="no-root">
               No root has been added to the light desk
@@ -101,14 +134,16 @@ const StyledStage = styled(Stage)`
   padding: ${THEME.sizingPx.spacing}px;
 `;
 
-export function rootComponent() {
+export function rootComponent<Namespaces extends string>(
+  props: Props<Namespaces>,
+) {
   return (
     <>
       <BaseStyle />
       <GlobalStyle />
       <MaterialFontStyle />
       <ThemeProvider theme={THEME}>
-        <StyledStage />
+        <StyledStage {...props} />
       </ThemeProvider>
     </>
   );
