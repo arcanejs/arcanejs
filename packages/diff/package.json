@@ -23,21 +23,21 @@
   "exports": {
     ".": {
       "@arcanejs/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./diff": {
       "@arcanejs/source": "./src/diff.ts",
+      "types": "./dist/diff.d.ts",
       "import": "./dist/diff.mjs",
-      "require": "./dist/diff.js",
-      "types": "./dist/diff.d.ts"
+      "require": "./dist/diff.js"
     },
     "./patch": {
       "@arcanejs/source": "./src/patch.ts",
+      "types": "./dist/patch.d.ts",
       "import": "./dist/patch.mjs",
-      "require": "./dist/patch.js",
-      "types": "./dist/patch.d.ts"
+      "require": "./dist/patch.js"
     },
     "./package.json": "./package.json"
   },

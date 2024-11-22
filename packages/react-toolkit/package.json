@@ -21,27 +21,27 @@
   "exports": {
     ".": {
       "@arcanejs/source": "./src/index.tsx",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./colors": {
       "@arcanejs/source": "./src/colors.tsx",
+      "types": "./dist/colors.d.ts",
       "import": "./dist/colors.mjs",
-      "require": "./dist/colors.js",
-      "types": "./dist/colors.d.ts"
+      "require": "./dist/colors.js"
     },
     "./data": {
       "@arcanejs/source": "./src/data.tsx",
+      "types": "./dist/data.d.ts",
       "import": "./dist/data.mjs",
-      "require": "./dist/data.js",
-      "types": "./dist/data.d.ts"
+      "require": "./dist/data.js"
     },
     "./logging": {
       "@arcanejs/source": "./src/logging.ts",
+      "types": "./dist/logging.d.ts",
       "import": "./dist/logging.mjs",
-      "require": "./dist/logging.js",
-      "types": "./dist/logging.d.ts"
+      "require": "./dist/logging.js"
     },
     "./package.json": "./package.json"
   },
