@@ -14,6 +14,7 @@ export type InternalProps = {
   icon: string | null;
   mode: ButtonMode;
   error: string | null;
+  onClick?: Events['click'] | null;
 };
 
 export type Props = Partial<InternalProps>;
@@ -23,6 +24,7 @@ const DEFAULT_PROPS: InternalProps = {
   icon: null,
   mode: 'normal',
   error: null,
+  onClick: null,
 };
 
 export class Button extends Base<InternalProps> implements Listenable<Events> {
@@ -30,7 +32,17 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
   private readonly events = new EventEmitter<Events>();
 
   public constructor(props?: Props) {
-    super(DEFAULT_PROPS, props);
+    super(DEFAULT_PROPS, props, {
+      onPropsUpdated: (oldProps) =>
+        this.events.processPropChanges(
+          {
+            onClick: 'click',
+          },
+          oldProps,
+          this.props,
+        ),
+    });
+    this.triggerInitialPropsUpdate();
   }
 
   addListener = this.events.addListener;

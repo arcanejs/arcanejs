@@ -24,6 +24,7 @@ export type InternalProps = GroupComponentStyle &
   GroupOptions & {
     title: string | null;
     labels: Label[] | null;
+    onTitleChanged?: Events['title-changed'];
   };
 
 export type Props = Partial<InternalProps>;
@@ -62,7 +63,17 @@ export class Group
   private readonly events = new EventEmitter<Events>();
 
   public constructor(props?: Props) {
-    super(DEFAULT_PROPS, props);
+    super(DEFAULT_PROPS, props, {
+      onPropsUpdated: (oldProps) =>
+        this.events.processPropChanges(
+          {
+            onTitleChanged: 'title-changed',
+          },
+          oldProps,
+          this.props,
+        ),
+    });
+    this.triggerInitialPropsUpdate();
   }
 
   addListener = this.events.addListener;

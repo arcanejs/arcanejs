@@ -50,79 +50,6 @@ const isType = <T extends keyof LightDeskIntrinsicElements>(
 const canSetProps = (instance: ld.Component): instance is Base<unknown> =>
   instance instanceof Base;
 
-const updateListener = <
-  EventName extends string,
-  Property extends string,
-  Listener,
->(
-  eventName: EventName,
-  property: Property,
-  instance: {
-    removeListener: (e: EventName, l: Listener) => void;
-    addListener: (e: EventName, l: Listener) => void;
-  },
-  prevProps: {
-    [key in Property]?: Listener;
-  },
-  nextProps: {
-    [key in Property]?: Listener;
-  },
-) => {
-  const prev = prevProps[property];
-  const next = nextProps[property];
-  if (prev !== next) {
-    prev && instance.removeListener(eventName, prev);
-    next && instance.addListener(eventName, next);
-  }
-};
-
-const updateListeners = (
-  type: Type,
-  instance: ld.Component,
-  prevProps: Props,
-  nextProps: Props,
-) => {
-  if (isType('button', type, prevProps) && isType('button', type, nextProps)) {
-    if (instance instanceof ld.Button) {
-      updateListener('click', 'onClick', instance, prevProps, nextProps);
-    }
-  } else if (
-    isType('group', type, prevProps) &&
-    isType('group', type, nextProps)
-  ) {
-    if (instance instanceof ld.Group) {
-      updateListener(
-        'title-changed',
-        'onTitleChanged',
-        instance,
-        prevProps,
-        nextProps,
-      );
-    }
-  } else if (
-    isType('slider-button', type, prevProps) &&
-    isType('slider-button', type, nextProps)
-  ) {
-    if (instance instanceof ld.SliderButton) {
-      updateListener('change', 'onChange', instance, prevProps, nextProps);
-    }
-  } else if (
-    isType('switch', type, prevProps) &&
-    isType('switch', type, nextProps)
-  ) {
-    if (instance instanceof ld.Switch) {
-      updateListener('change', 'onChange', instance, prevProps, nextProps);
-    }
-  } else if (
-    isType('text-input', type, prevProps) &&
-    isType('text-input', type, nextProps)
-  ) {
-    if (instance instanceof ld.TextInput) {
-      updateListener('change', 'onChange', instance, prevProps, nextProps);
-    }
-  }
-};
-
 const hostConfig: LightDeskHostConfig = {
   supportsMutation: true,
   supportsPersistence: false,
@@ -157,14 +84,13 @@ const hostConfig: LightDeskHostConfig = {
   commitUpdate(
     instance,
     updatePayload,
-    type,
-    prevProps,
-    nextProps,
+    _type,
+    _prevProps,
+    _nextProps,
     _internalHandle,
   ) {
     if (canSetProps(instance)) {
       instance.setProps(updatePayload);
-      updateListeners(type, instance, prevProps, nextProps);
     } else {
       throw new Error(`Unexpected Instance: ${instance}`);
     }
@@ -197,7 +123,6 @@ const hostConfig: LightDeskHostConfig = {
       instance = new ld.Timeline(props);
     }
     if (instance) {
-      updateListeners(type, instance, {}, props);
       return instance;
     } else {
       throw new Error(`Not implemented type: ${type}`);

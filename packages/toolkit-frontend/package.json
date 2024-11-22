@@ -16,27 +16,27 @@
   "exports": {
     ".": {
       "@arcanejs/source": "./src/components/index.tsx",
+      "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.mjs",
-      "require": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
+      "require": "./dist/components/index.js"
     },
     "./components/core": {
       "@arcanejs/source": "./src/components/core/index.ts",
+      "types": "./dist/components/core/index.d.ts",
       "import": "./dist/components/core/index.mjs",
-      "require": "./dist/components/core/index.js",
-      "types": "./dist/components/core/index.d.ts"
-    },
-    "./util": {
-      "@arcanejs/source": "./src/util/index.ts",
-      "import": "./dist/util/index.mjs",
-      "require": "./dist/util/index.js",
-      "types": "./dist/util/index.d.ts"
+      "require": "./dist/components/core/index.js"
     },
     "./styling": {
       "@arcanejs/source": "./src/styling.ts",
+      "types": "./dist/styling.d.ts",
       "import": "./dist/styling.mjs",
-      "require": "./dist/styling.js",
-      "types": "./dist/styling.d.ts"
+      "require": "./dist/styling.js"
+    },
+    "./util": {
+      "@arcanejs/source": "./src/util/index.ts",
+      "types": "./dist/util/index.d.ts",
+      "import": "./dist/util/index.mjs",
+      "require": "./dist/util/index.js"
     },
     "./package.json": "./package.json"
   },

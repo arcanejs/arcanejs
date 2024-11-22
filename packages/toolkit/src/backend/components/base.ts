@@ -23,20 +23,46 @@ export abstract class Base<Props> implements Component {
   private _props: Props;
 
   /** @hidden */
-  private _onPropsUpdated: (() => void) | null = null;
+  private _onPropsUpdated: {
+    listener: (oldProps: Props) => void;
+    /**
+     * True if it's safe to call triggerInitialPropsUpdate()
+     * with the default props.
+     *
+     * This will not be possible if the props have changed between initial
+     * construction and the call to this function.
+     */
+    canSendInitialPropsUpdate: () => boolean;
+  } | null = null;
 
   public constructor(
     defaultProps: Props,
     props?: Partial<Props>,
-    options?: { onPropsUpdated?: () => void },
+    options?: { onPropsUpdated?: (oldProps: Props) => void },
   ) {
     this.defaultProps = defaultProps;
     this._props = Object.freeze({
       ...defaultProps,
       ...props,
     });
-    this._onPropsUpdated = options?.onPropsUpdated ?? null;
+    if (options?.onPropsUpdated) {
+      const initialProps = this._props;
+      this._onPropsUpdated = {
+        listener: options.onPropsUpdated,
+        canSendInitialPropsUpdate: () => this._props === initialProps,
+      };
+    }
   }
+
+  /**
+   * Call if
+   */
+  public triggerInitialPropsUpdate = () => {
+    if (!this._onPropsUpdated?.canSendInitialPropsUpdate()) {
+      throw new Error('Cannot call triggerInitialPropsUpdate()');
+    }
+    this._onPropsUpdated.listener(this.defaultProps);
+  };
 
   public log = (): Logger | null => {
     return this.parent?.log() || null;
@@ -51,20 +77,22 @@ export abstract class Base<Props> implements Component {
   }
 
   public setProps = (props: Partial<Props>) => {
+    const oldProps = this._props;
     this._props = Object.freeze({
       ...this.defaultProps,
       ...props,
     });
-    this._onPropsUpdated?.();
+    this._onPropsUpdated?.listener?.(oldProps);
     this.updateTree();
   };
 
   public updateProps = (updates: Partial<Props>) => {
+    const oldProps = this._props;
     this._props = Object.freeze({
       ...this._props,
       ...updates,
     });
-    this._onPropsUpdated?.();
+    this._onPropsUpdated?.listener?.(oldProps);
     this.updateTree();
   };
 
@@ -238,5 +266,32 @@ export class EventEmitter<Map extends Record<string, (...args: any[]) => void>>
           }),
       ),
     );
+  };
+
+  /**
+   * Process prop changes to update listeners
+   */
+  processPropChanges = <
+    Mapping extends Record<string, keyof Map>,
+    Props extends {
+      [key in keyof Mapping]?: Map[Mapping[key]] | null | undefined;
+    },
+  >(
+    /**
+     * Mapping from prop key to event name
+     */
+    mapping: Mapping,
+    oldProps: Props,
+    newProps: Props,
+  ) => {
+    for (const key of Object.keys(mapping) as (keyof Mapping)[]) {
+      const prev = oldProps[key] as unknown as Map[Mapping[keyof Mapping]];
+      const next = newProps[key] as unknown as Map[Mapping[keyof Mapping]];
+      if (prev !== next) {
+        const eventName = mapping[key];
+        prev && this.removeListener(eventName, prev);
+        next && this.addListener(eventName, next);
+      }
+    }
   };
 }
