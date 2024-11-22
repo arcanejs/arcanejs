@@ -9,6 +9,7 @@ export type Events = {
 
 type InternalProps = {
   value: string | null;
+  onChange?: Events['change'];
 };
 
 export type Props = Partial<InternalProps>;
@@ -25,7 +26,17 @@ export class TextInput
   private readonly events = new EventEmitter<Events>();
 
   public constructor(props?: Props) {
-    super(DEFAULT_PROPS, props);
+    super(DEFAULT_PROPS, props, {
+      onPropsUpdated: (oldProps) =>
+        this.events.processPropChanges(
+          {
+            onChange: 'change',
+          },
+          oldProps,
+          this.props,
+        ),
+    });
+    this.triggerInitialPropsUpdate();
   }
 
   addListener = this.events.addListener;

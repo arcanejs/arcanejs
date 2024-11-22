@@ -13,6 +13,7 @@ type InternalProps = Pick<
 > & {
   value?: number;
   defaultValue?: number;
+  onChange?: Events['change'];
 };
 
 type RequiredProps = 'value';
@@ -41,9 +42,18 @@ export class SliderButton
 
   public constructor(props?: Props) {
     super(DEFAULT_PROPS, props, {
-      onPropsUpdated: () => this.onPropsUpdated(),
+      onPropsUpdated: (oldProps) => {
+        this.events.processPropChanges(
+          {
+            onChange: 'change',
+          },
+          oldProps,
+          this.props,
+        ),
+          this.onPropsUpdated();
+      },
     });
-    this.onPropsUpdated();
+    this.triggerInitialPropsUpdate();
   }
 
   addListener = this.events.addListener;

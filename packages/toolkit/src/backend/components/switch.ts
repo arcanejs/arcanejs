@@ -10,6 +10,7 @@ export type Events = {
 type InternalProps = {
   value?: 'on' | 'off';
   defaultValue?: 'on' | 'off';
+  onChange?: Events['change'];
 };
 
 export type Props = Partial<InternalProps>;
@@ -28,9 +29,18 @@ export class Switch extends Base<InternalProps> implements Listenable<Events> {
 
   public constructor(props?: Props) {
     super(DEFAULT_PROPS, props, {
-      onPropsUpdated: () => this.onPropsUpdated(),
+      onPropsUpdated: (oldProps) => {
+        this.events.processPropChanges(
+          {
+            onChange: 'change',
+          },
+          oldProps,
+          this.props,
+        ),
+          this.onPropsUpdated();
+      },
     });
-    this.onPropsUpdated();
+    this.triggerInitialPropsUpdate();
   }
 
   addListener = this.events.addListener;
