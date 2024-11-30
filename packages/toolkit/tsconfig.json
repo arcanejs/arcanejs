@@ -7,7 +7,7 @@
   "exclude": ["node_modules", "dist", "src/frontend"],
   "references": [
     {
-      "path": "./tsconfig.frontend.json"
+      "path": "./tsconfig.frontend.composite.json"
     }
   ]
 }

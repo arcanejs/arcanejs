@@ -1,4 +1,4 @@
-import { CoreNamespace, isCoreComponent } from '@arcanejs/protocol/core';
+import { isCoreComponent } from '@arcanejs/protocol/core';
 
 export * as code from './core';
 

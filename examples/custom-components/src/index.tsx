@@ -1,23 +1,32 @@
+import path from 'path';
 import pino from 'pino';
-import * as React from 'react';
+import { useState, useRef } from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
 
 import {
+  Button,
   Group,
+  GroupHeader,
   ToolkitRenderer,
   prepareComponents,
 } from '@arcanejs/react-toolkit';
-import { AnyComponent, Base } from '@arcanejs/toolkit/components/base';
+import { AnyComponent, BaseParent } from '@arcanejs/toolkit/components/base';
 import { IDMap } from '@arcanejs/toolkit/util';
 import { CoreComponents } from '../../../packages/react-toolkit/src/core';
+import {
+  isCustomComponentMessage,
+  StopwatchComponentProto,
+} from './custom-proto';
+import { AnyClientComponentMessage } from '@arcanejs/protocol';
 
 const toolkit = new Toolkit({
   log: pino({
-    level: 'info',
+    level: 'debug',
     transport: {
       target: 'pino-pretty',
     },
   }),
+  entrypointJsFile: path.resolve(__dirname, '../dist/custom-entrypoint.js'),
 });
 
 toolkit.start({
@@ -25,46 +34,103 @@ toolkit.start({
   port: 1330,
 });
 
-type StopwatchProto = {
-  key: number;
-  namespace: 'custom';
-  component: 'stopwatch';
-  foo: string;
+type StopwatchProps = {
+  timeOffsetSeconds: number;
 };
 
-class Stopwatch extends Base<'custom', StopwatchProto, { foo: string }> {
-  public getProtoInfo(idMap: IDMap): StopwatchProto {
+class Stopwatch extends BaseParent<
+  'custom',
+  StopwatchComponentProto,
+  StopwatchProps
+> {
+  private state: StopwatchComponentProto['state'] = {
+    type: 'stopped',
+    timeMillis: 0,
+  };
+
+  public getProtoInfo(idMap: IDMap): StopwatchComponentProto {
     return {
       namespace: 'custom',
       component: 'stopwatch',
       key: idMap.getId(this),
-      foo: this.props.foo,
+      state:
+        this.state.type === 'started'
+          ? {
+              type: 'started',
+              startedAt:
+                this.state.startedAt - this.props.timeOffsetSeconds * 1000,
+            }
+          : {
+              type: 'stopped',
+              timeMillis:
+                this.state.timeMillis + this.props.timeOffsetSeconds * 1000,
+            },
+      child:
+        this.getChildren()
+          .slice(0, 1)
+          .map((c) => c.getProtoInfo(idMap))[0] ?? null,
     };
   }
+
+  /** @hidden */
+  public handleMessage = (message: AnyClientComponentMessage) => {
+    if (isCustomComponentMessage(message, 'stopwatch')) {
+      if (message.button === 'start-stop') {
+        if (this.state.type === 'stopped') {
+          this.state = {
+            type: 'started',
+            startedAt: Date.now() - this.state.timeMillis,
+          };
+        } else {
+          this.state = {
+            type: 'stopped',
+            timeMillis: Date.now() - this.state.startedAt,
+          };
+        }
+        this.updateTree();
+      }
+    }
+  };
+
+  public validateChildren = (children: AnyComponent[]) => {
+    if (children.length > 1) {
+      throw new Error('Tab can only have one child');
+    }
+  };
+
+  public reset = () => {
+    this.state = {
+      type: 'stopped',
+      timeMillis: 0,
+    };
+    this.updateTree();
+  };
 }
 
 const C = prepareComponents('custom', {
   Stopwatch,
 });
 
-export type ComponentRegister = {
-  [type: string]: {
-    create: (props: { [key: string]: any }) => AnyComponent;
-  };
-};
-
 const App = () => {
-  const customRef = React.useRef<Stopwatch>(null);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      console.log('CustomComponent', customRef.current);
-    }, 500);
-  }, [customRef]);
+  const [offset, setOffset] = useState(0);
+  const stopwatchRef = useRef<Stopwatch>(null);
 
   return (
-    <Group>
-      <C.Stopwatch foo="bar" ref={customRef} />
+    <Group title="Some custom component is in here">
+      <GroupHeader>
+        <Button
+          text="Add time"
+          onClick={() => setOffset((current) => current + 1)}
+        />
+        <Button
+          text="Remove time"
+          onClick={() => setOffset((current) => current - 1)}
+        />
+      </GroupHeader>
+      {`Time Offset: ${offset} seconds`}
+      <C.Stopwatch ref={stopwatchRef} timeOffsetSeconds={offset}>
+        <Button text="Reset" onClick={() => stopwatchRef.current?.reset()} />
+      </C.Stopwatch>
     </Group>
   );
 };

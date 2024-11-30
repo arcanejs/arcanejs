@@ -1,11 +1,9 @@
 import {
   BaseComponentProto,
-  BaseClientComponentMessage,
   AnyClientComponentMessage,
 } from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
 import { Logger } from '@arcanejs/protocol/logging';
-import { deprecate } from 'util';
 
 export abstract class Base<
   Namespace extends string,
@@ -122,6 +120,7 @@ export abstract class Base<
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyComponent = Base<string, BaseComponentProto<string>, any>;
 
 /** @hidden */

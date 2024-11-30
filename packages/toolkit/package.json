@@ -83,6 +83,12 @@
       "import": "./dist/backend/components/timeline.mjs",
       "require": "./dist/backend/components/timeline.js"
     },
+    "./frontend": {
+      "@arcanejs/source": "./src/frontend/index.ts",
+      "types": "./dist/frontend/index.d.ts",
+      "import": "./dist/frontend/index.mjs",
+      "require": "./dist/frontend/index.js"
+    },
     "./util": {
       "@arcanejs/source": "./src/backend/util/index.ts",
       "types": "./dist/backend/util/index.d.ts",
@@ -95,7 +101,7 @@
     "lint": "eslint . --max-warnings 0",
     "build": "rm -rf dist && pnpm build:backend && pnpm type-check:frontend && pnpm build:frontend && check-export-map",
     "build:backend": "tsup",
-    "build:frontend": "esbuild src/frontend/entrypoint-core.ts --bundle --sourcemap --outfile=dist/frontend.js",
+    "build:frontend": "esbuild src/frontend/entrypoint-core.ts --bundle --sourcemap --outfile=dist/frontend/entrypoint.js",
     "dev": "pnpm dev:backend & pnpm dev:frontend",
     "dev:backend": "pnpm build:backend --watch",
     "dev:frontend": "pnpm type-check:frontend:watch & pnpm build:frontend --watch",
@@ -129,6 +135,26 @@
     "lodash": "^4.17.21",
     "material-symbols": "^0.25.0",
     "ws": "^8.18.0"
+  },
+  "peerDependencies": {
+    "@arcanejs/toolkit-frontend": "workspace:^",
+    "react": "^18",
+    "react-dom": "18.3.1",
+    "styled-components": "^6.1.13"
+  },
+  "peerDependenciesMeta": {
+    "@arcanejs/toolkit-frontend": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "styled-components": {
+      "optional": true
+    }
   },
   "files": [
     "dist"

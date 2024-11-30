@@ -15,11 +15,7 @@ import {
   THEME,
 } from '@arcanejs/toolkit-frontend/styling';
 
-import {
-  Group,
-  GroupStateWrapper,
-  StageContext,
-} from '@arcanejs/toolkit-frontend';
+import { GroupStateWrapper, StageContext } from '@arcanejs/toolkit-frontend';
 
 import { MaterialFontStyle } from './styling';
 import {
@@ -27,12 +23,12 @@ import {
   FrontendComponentRenderers,
 } from '@arcanejs/toolkit-frontend/types';
 
-type Props<Namespaces extends string> = {
+export type Props = {
   className?: string;
   renderers: FrontendComponentRenderers;
 };
 
-const Stage: React.FC<Props<any>> = ({ className, renderers }) => {
+const Stage: React.FC<Props> = ({ className, renderers }) => {
   const [root, setRoot] = useState<proto.AnyComponentProto | undefined>(
     undefined,
   );
@@ -134,9 +130,7 @@ const StyledStage = styled(Stage)`
   padding: ${THEME.sizingPx.spacing}px;
 `;
 
-export function rootComponent<Namespaces extends string>(
-  props: Props<Namespaces>,
-) {
+export function rootComponent(props: Props) {
   return (
     <>
       <BaseStyle />
