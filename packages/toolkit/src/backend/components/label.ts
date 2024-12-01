@@ -1,4 +1,4 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { LabelComponentStyle } from '@arcanejs/protocol/styles';
 import { IDMap } from '../util/id-map';
 
@@ -16,14 +16,19 @@ export type Props = InternalProps;
  *
  * ![](media://images/label_screenshot.png)
  */
-export class Label extends Base<InternalProps> {
+export class Label extends Base<
+  proto.CoreNamespace,
+  proto.LabelComponent,
+  InternalProps
+> {
   public constructor(props?: Props) {
     super({ text: null }, props);
   }
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.Component {
+  public getProtoInfo(idMap: IDMap): proto.LabelComponent {
     return {
+      namespace: 'core',
       component: 'label',
       key: idMap.getId(this),
       bold: this.props.bold,

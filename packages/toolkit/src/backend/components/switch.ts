@@ -1,7 +1,8 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
+import { AnyClientComponentMessage } from '@arcanejs/protocol';
 
 export type Events = {
   change: (state: 'on' | 'off') => void | Promise<void>;
@@ -17,7 +18,10 @@ export type Props = Partial<InternalProps>;
 
 const DEFAULT_PROPS: InternalProps = {};
 
-export class Switch extends Base<InternalProps> implements Listenable<Events> {
+export class Switch
+  extends Base<proto.CoreNamespace, proto.CoreComponent, InternalProps>
+  implements Listenable<Events>
+{
   /** @hidden */
   private readonly events = new EventEmitter<Events>();
 
@@ -47,8 +51,9 @@ export class Switch extends Base<InternalProps> implements Listenable<Events> {
   removeListener = this.events.removeListener;
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.Component {
+  public getProtoInfo(idMap: IDMap): proto.CoreComponent {
     return {
+      namespace: 'core',
       component: 'switch',
       key: idMap.getId(this),
       state: this._value ?? 'off',
@@ -56,8 +61,8 @@ export class Switch extends Base<InternalProps> implements Listenable<Events> {
   }
 
   /** @hidden */
-  public handleMessage(message: proto.ClientComponentMessage) {
-    if (message.component === 'switch') {
+  public handleMessage(message: AnyClientComponentMessage) {
+    if (proto.isCoreComponentMessage(message, 'switch')) {
       // Toggle state value
       const state = this._value === 'on' ? 'off' : 'on';
       if (this.props.value === undefined) {

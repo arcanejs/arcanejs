@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { THEME } from '../styling';
 import { TRANSPARENCY_SVG_URI } from './core';
 import { calculateClass } from '../util';

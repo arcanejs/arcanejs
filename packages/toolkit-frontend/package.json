@@ -1,7 +1,7 @@
 {
   "name": "@arcanejs/toolkit-frontend",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
   "description": "Library of the frontend react components used to render the @arcanejs Toolkit",
   "keywords": [],
   "license": "MIT",
@@ -31,6 +31,12 @@
       "types": "./dist/styling.d.ts",
       "import": "./dist/styling.mjs",
       "require": "./dist/styling.js"
+    },
+    "./types": {
+      "@arcanejs/source": "./src/types.ts",
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.mjs",
+      "require": "./dist/types.js"
     },
     "./util": {
       "@arcanejs/source": "./src/util/index.ts",

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { HUE_GRADIENT } from '@arcanejs/toolkit/util';
 
-import { Group, Rect, SliderButton } from './components';
+import { Group, Rect, SliderButton } from '.';
 import { LightDeskIntrinsicElements } from './types';
 
 export type HslColor = {

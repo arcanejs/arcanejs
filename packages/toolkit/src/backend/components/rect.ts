@@ -1,4 +1,4 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base } from './base';
@@ -16,14 +16,19 @@ const DEFAULT_PROPS: InternalProps = {
  * certain states, or represent the color of certain lights or fixtures,
  * or perhaps colors used in a chase.
  */
-export class Rect extends Base<InternalProps> {
+export class Rect extends Base<
+  proto.CoreNamespace,
+  proto.CoreComponent,
+  InternalProps
+> {
   public constructor(props?: Props) {
     super(DEFAULT_PROPS, props);
   }
 
   /** @hidden */
-  public getProtoInfo(idMap: IDMap): proto.Component {
+  public getProtoInfo(idMap: IDMap): proto.CoreComponent {
     return {
+      namespace: 'core',
       component: 'rect',
       key: idMap.getId(this),
       ...this.props,

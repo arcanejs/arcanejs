@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import { Icon } from './core';
 

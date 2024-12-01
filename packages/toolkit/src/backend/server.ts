@@ -23,18 +23,18 @@ const DIST_DIR = (() => {
 })();
 
 /**
+ * Prepare all available static files at startup,
+ * to avoid any risk of directory traversal attacks.
+ */
+type PreparedStaticFiles = {
+  [id: string]: { path: string; contentType: string };
+};
+
+/**
  * Hard-code all available static files,
  * to avoid any risk of directory traversal attacks.
  */
-const STATIC_FILES: { [id: string]: { path: string; contentType: string } } = {
-  '/frontend.js': {
-    path: path.join(DIST_DIR, 'frontend.js'),
-    contentType: 'text/javascript',
-  },
-  '/frontend.js.map': {
-    path: path.join(DIST_DIR, 'frontend.js.map'),
-    contentType: 'text/plain',
-  },
+const STATIC_FILES: PreparedStaticFiles = {
   [`/${FONTS.materialSymbolsOutlined}`]: {
     path: require.resolve('material-symbols/material-symbols-outlined.woff2'),
     contentType: 'font/woff2',
@@ -46,6 +46,9 @@ export interface Connection {
 }
 
 export class Server {
+  private readonly staticFiles: PreparedStaticFiles;
+  private readonly entrypointFilename: string;
+
   public constructor(
     private readonly options: LightDeskOptions,
     private readonly onNewConnection: (connection: Connection) => void,
@@ -56,7 +59,28 @@ export class Server {
     ) => void,
     private readonly log?: Logger,
   ) {
-    log?.debug('Static Assets: %o', STATIC_FILES);
+    const entrypoint =
+      this.options.entrypointJsFile ??
+      path.join(DIST_DIR, 'frontend', 'entrypoint.js');
+    if (!entrypoint.endsWith('.js')) {
+      throw new Error('Entrypoint file must be a .js file');
+    }
+    const entrypointMap = entrypoint + '.map';
+    this.entrypointFilename = path.basename(entrypoint);
+
+    this.staticFiles = {
+      ...STATIC_FILES,
+      [`/${this.entrypointFilename}`]: {
+        path: entrypoint,
+        contentType: 'text/javascript',
+      },
+      [`/${path.basename(entrypointMap)}`]: {
+        path: entrypointMap,
+        contentType: 'text/plain',
+      },
+    };
+
+    log?.debug('Static Assets: %o', this.staticFiles);
   }
 
   public handleHttpRequest = async (
@@ -73,7 +97,7 @@ export class Server {
             </head>
             <body>
               <div id="root"></div>
-              <script type="text/javascript" src="${this.options.path}frontend.js"></script>
+              <script type="text/javascript" src="${this.options.path}${this.entrypointFilename}"></script>
             </body>
           </html>`;
       res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -82,7 +106,7 @@ export class Server {
     }
     if (req.url && req.url.startsWith(this.options.path)) {
       const relativePath = req.url.substr(this.options.path.length - 1);
-      const f = STATIC_FILES[relativePath];
+      const f = this.staticFiles[relativePath];
       if (f) {
         return fs.promises.stat(f.path).then(
           () => {

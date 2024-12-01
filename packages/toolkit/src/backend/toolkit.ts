@@ -10,11 +10,11 @@ import { IDMap } from './util/id-map';
 import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
 import { Group } from './components/group';
-import { Component, Parent } from './components/base';
-import { ClientMessage, GroupComponent } from '@arcanejs/protocol';
+import { AnyComponent, Parent } from './components/base';
+import { ClientMessage, AnyComponentProto } from '@arcanejs/protocol';
 
 type ConnectionMetadata = {
-  lastTreeSent: GroupComponent | undefined;
+  lastTreeSent: AnyComponentProto | undefined;
 };
 
 export class Toolkit implements Parent {
@@ -104,7 +104,7 @@ export class Toolkit implements Parent {
     { leading: true, trailing: true },
   );
 
-  public removeChild = (component: Component) => {
+  public removeChild = (component: AnyComponent) => {
     if (this.rootGroup === component) {
       this.rootGroup = null;
       component.setParent(null);

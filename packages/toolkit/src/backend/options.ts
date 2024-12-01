@@ -20,6 +20,16 @@ export interface LightDeskOptions {
    * but this will be quite verbose.
    */
   log?: Logger;
+  /**
+   * The entrypoint file that should be used to serve the light desk.
+   *
+   * This is only needed if you have defined custom extensions,
+   * and need to load custom frontend code that includes your extensions.
+   *
+   * This will allow access to both the js file and the `.map.js` file,
+   * that matches this name.
+   */
+  entrypointJsFile?: string;
 }
 
 export const DEFAULT_LIGHT_DESK_OPTIONS: LightDeskOptions = {

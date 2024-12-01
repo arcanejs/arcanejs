@@ -1,7 +1,8 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
+import { AnyClientComponentMessage } from '@arcanejs/protocol';
 
 export type Events = {
   click: () => void | Promise<void>;
@@ -27,7 +28,10 @@ const DEFAULT_PROPS: InternalProps = {
   onClick: null,
 };
 
-export class Button extends Base<InternalProps> implements Listenable<Events> {
+export class Button
+  extends Base<proto.CoreNamespace, proto.CoreComponent, InternalProps>
+  implements Listenable<Events>
+{
   /** @hidden */
   private readonly events = new EventEmitter<Events>();
 
@@ -69,6 +73,7 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
   /** @hidden */
   public getProtoInfo = (idMap: IDMap): proto.ButtonComponent => {
     return {
+      namespace: 'core',
       component: 'button',
       key: idMap.getId(this),
       text: this.props.text || '',
@@ -80,8 +85,8 @@ export class Button extends Base<InternalProps> implements Listenable<Events> {
   };
 
   /** @hidden */
-  public handleMessage = (message: proto.ClientComponentMessage) => {
-    if (message.component === 'button') {
+  public handleMessage = (message: AnyClientComponentMessage) => {
+    if (proto.isCoreComponentMessage(message, 'button')) {
       this.events
         .emit('click')
         .then(() => {

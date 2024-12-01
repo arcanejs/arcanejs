@@ -1,7 +1,7 @@
 import React, { FC, TouchEvent, useMemo, useState } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import {
   THEME,
@@ -18,17 +18,17 @@ const TOUCH_INDICATOR_CLASS = 'touch-indicator';
 interface Props {
   className?: string;
   info: proto.SwitchComponent;
-  sendMessage: ((msg: proto.ClientMessage) => void) | null;
 }
 
-const Switch: FC<Props> = ({ className, info, sendMessage }) => {
+const Switch: FC<Props> = ({ className, info }) => {
+  const { sendMessage } = React.useContext(StageContext);
   const [touching, setTouching] = useState(false);
 
   const onClick = useMemo(
     () => () => {
-      if (!sendMessage) return;
-      sendMessage({
+      sendMessage<proto.CoreComponentMessage>?.({
         type: 'component-message',
+        namespace: 'core',
         componentKey: info.key,
         component: 'switch',
       });
@@ -161,10 +161,4 @@ const StyledSwitch: FC<Props> = styled(Switch)`
   }
 `;
 
-const SwitchWrapper: FC<Omit<Props, 'sendMessage'>> = (props) => (
-  <StageContext.Consumer>
-    {({ sendMessage }) => <StyledSwitch {...props} sendMessage={sendMessage} />}
-  </StageContext.Consumer>
-);
-
-export { SwitchWrapper as Switch };
+export { StyledSwitch as Switch };

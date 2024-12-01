@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import { THEME } from '../styling';
 import { calculateClass, usePressable } from '../util';
@@ -194,8 +194,9 @@ const Group: FC<Props> = ({ className, info }) => {
   ].some((v) => v);
 
   const updateTitle: EventHandler<SyntheticEvent<HTMLInputElement>> = (e) => {
-    sendMessage?.({
+    sendMessage<proto.CoreComponentMessage>?.({
       type: 'component-message',
+      namespace: 'core',
       componentKey: info.key,
       component: 'group',
       title: e.currentTarget.value,

@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import {
   THEME,
@@ -36,7 +36,6 @@ const KEYS = {
 interface Props {
   className?: string;
   info: proto.SliderButtonComponent;
-  sendMessage: ((msg: proto.ClientMessage) => void) | null;
 }
 
 type TouchingState = {
@@ -66,7 +65,8 @@ const getRelativeCursorPosition = (elem: Element, pageX: number) => {
   return pageX - rect.left;
 };
 
-const SliderButton: FC<Props> = ({ info, sendMessage, className }) => {
+const SliderButton: FC<Props> = ({ info, className }) => {
+  const { sendMessage } = React.useContext(StageContext);
   const [state, setState] = React.useState<State>({ state: 'closed' });
   const input = React.useRef<HTMLInputElement | null>(null);
 
@@ -79,8 +79,9 @@ const SliderButton: FC<Props> = ({ info, sendMessage, className }) => {
 
   const sendValue = useCallback(
     (value: number) =>
-      sendMessage?.({
+      sendMessage<proto.CoreComponentMessage>?.({
         type: 'component-message',
+        namespace: 'core',
         componentKey: info.key,
         component: 'slider_button',
         value: value,
@@ -368,14 +369,4 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
   }
 `;
 
-const SliderButtonWrapper: React.FunctionComponent<
-  Omit<Props, 'sendMessage'>
-> = (props) => (
-  <StageContext.Consumer>
-    {({ sendMessage }) => (
-      <StyledSliderButton {...props} sendMessage={sendMessage} />
-    )}
-  </StageContext.Consumer>
-);
-
-export { SliderButtonWrapper as SliderButton };
+export { StyledSliderButton as SliderButton };

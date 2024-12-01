@@ -1,9 +1,13 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { GroupComponentStyle } from '@arcanejs/protocol/styles';
 import { IDMap } from '../util/id-map';
 
 import { BaseParent, EventEmitter, Listenable } from './base';
 import { Button } from './button';
+import {
+  AnyClientComponentMessage,
+  AnyComponentProto,
+} from '@arcanejs/protocol';
 
 const GROUP_DEFAULT_STYLE: GroupComponentStyle = {
   direction: 'horizontal',
@@ -35,13 +39,18 @@ const DEFAULT_PROPS: InternalProps = {
   labels: null,
 };
 
-export class GroupHeader extends BaseParent<Record<never, never>> {
+export class GroupHeader extends BaseParent<
+  proto.CoreNamespace,
+  proto.CoreComponent,
+  Record<never, never>
+> {
   public validateChildren = () => {
     // All children are valid
   };
 
   /** @hidden */
   public getProtoInfo = (idMap: IDMap): proto.GroupHeaderComponent => ({
+    namespace: 'core',
     component: 'group-header',
     key: idMap.getId(this),
     children: this.getChildren().map((c) => c.getProtoInfo(idMap)),
@@ -56,7 +65,7 @@ export class GroupHeader extends BaseParent<Record<never, never>> {
  * ![](media://images/group_screenshot.png)
  */
 export class Group
-  extends BaseParent<InternalProps>
+  extends BaseParent<proto.CoreNamespace, proto.GroupComponent, Props>
   implements Listenable<Events>
 {
   /** @hidden */
@@ -124,21 +133,25 @@ export class Group
 
   /** @hidden */
   public getProtoInfo = (idMap: IDMap): proto.GroupComponent => {
-    const children: proto.Component[] = [];
+    const children: AnyComponentProto[] = [];
     const headers: proto.GroupHeaderComponent[] = [];
     for (const c of this.getChildren()) {
       const childProto = c.getProtoInfo(idMap);
-      if (childProto.component === 'group-header') {
+      if (
+        proto.isCoreComponent(childProto) &&
+        childProto.component === 'group-header'
+      ) {
         headers.push(childProto);
       } else {
         children.push(childProto);
       }
     }
     return {
+      namespace: 'core',
       component: 'group',
       key: idMap.getId(this),
       title: this.props.title ?? undefined,
-      direction: this.props.direction,
+      direction: this.props.direction ?? DEFAULT_PROPS.direction,
       border: this.props.border,
       wrap: this.props.wrap,
       children,
@@ -150,8 +163,8 @@ export class Group
   };
 
   /** @hidden */
-  public handleMessage = (message: proto.ClientComponentMessage) => {
-    if (message.component === 'group') {
+  public handleMessage = (message: AnyClientComponentMessage) => {
+    if (proto.isCoreComponentMessage(message, 'group')) {
       this.events.emit('title-changed', message.title);
     }
   };

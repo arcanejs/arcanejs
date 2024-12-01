@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { styled } from 'styled-components';
 
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 
 import { StageContext } from './context';
 
@@ -10,10 +10,10 @@ import { THEME } from '../styling';
 interface Props {
   className?: string;
   info: proto.TextInputComponent;
-  sendMessage: ((msg: proto.ClientMessage) => void) | null;
 }
 
-const TextInput: FC<Props> = ({ className, info, sendMessage }) => {
+const TextInput: FC<Props> = ({ className, info }) => {
+  const { sendMessage } = React.useContext(StageContext);
   const ref = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -29,8 +29,9 @@ const TextInput: FC<Props> = ({ className, info, sendMessage }) => {
       defaultValue={info.value}
       ref={ref}
       onChange={(ev) =>
-        sendMessage?.({
+        sendMessage<proto.CoreComponentMessage>?.({
           type: 'component-message',
+          namespace: 'core',
           componentKey: info.key,
           component: 'text-input',
           value: ev.target.value,
@@ -57,12 +58,4 @@ const StyledTextInput: FC<Props> = styled(TextInput)`
   }
 `;
 
-const TextInputWrapper: FC<Omit<Props, 'sendMessage'>> = (props) => (
-  <StageContext.Consumer>
-    {({ sendMessage }) => (
-      <StyledTextInput {...props} sendMessage={sendMessage} />
-    )}
-  </StageContext.Consumer>
-);
-
-export { TextInputWrapper as TextInput };
+export { StyledTextInput as TextInput };

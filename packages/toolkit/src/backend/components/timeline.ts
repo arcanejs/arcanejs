@@ -1,4 +1,4 @@
-import * as proto from '@arcanejs/protocol';
+import * as proto from '@arcanejs/protocol/core';
 import { IDMap } from '../util/id-map';
 
 import { Base } from './base';
@@ -23,13 +23,18 @@ const DEFAULT_PROPS: InternalProps = {
   source: null,
 };
 
-export class Timeline extends Base<InternalProps> {
+export class Timeline extends Base<
+  proto.CoreNamespace,
+  proto.CoreComponent,
+  InternalProps
+> {
   public constructor(props?: Props) {
     super(DEFAULT_PROPS, props);
   }
 
   /** @hidden */
-  public getProtoInfo = (idMap: IDMap): proto.Component => ({
+  public getProtoInfo = (idMap: IDMap): proto.CoreComponent => ({
+    namespace: 'core',
     component: 'timeline',
     key: idMap.getId(this),
     state: this.props.state,
