@@ -238,7 +238,7 @@ export const ToolkitRenderer = {
   },
 };
 
-export { prepareComponents };
+export { CoreComponents, prepareComponents };
 
 // Export core components
 

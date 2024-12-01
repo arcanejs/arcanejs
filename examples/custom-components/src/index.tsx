@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Toolkit } from '@arcanejs/toolkit';
 
 import {
+  CoreComponents,
   Button,
   Group,
   GroupHeader,
@@ -12,7 +13,6 @@ import {
 } from '@arcanejs/react-toolkit';
 import { AnyComponent, BaseParent } from '@arcanejs/toolkit/components/base';
 import { IDMap } from '@arcanejs/toolkit/util';
-import { CoreComponents } from '../../../packages/react-toolkit/src/core';
 import {
   isCustomComponentMessage,
   StopwatchComponentProto,
