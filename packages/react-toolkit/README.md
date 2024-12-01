@@ -134,12 +134,11 @@ Please note:
   that is loaded in the browser,
   and then used to render the JSON representation of the `@arcanejs` tree.
 
-- There is currently no ability to introduce custom components with your
-  own JSON definition and `react-dom` rendering in the browser.
-  Apps can only be composed of the below supported components,
-  or composite components directly built by these components.
+- It's possible to define your own custom components,
+  however this functionality is not documented.
 
-  _(This is something that is planned for the future)._
+  You can see code examples of this functionality here in the
+  [custom components example app](https://github.com/arcanejs/arcanejs/tree/main/examples/custom-components).
 
 ## Components
 
