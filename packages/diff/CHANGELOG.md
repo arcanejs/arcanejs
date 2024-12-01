@@ -1,5 +1,11 @@
 # @arcanejs/diff
 
+## 0.5.1
+
+### Patch Changes
+
+- f50dc39: Reorder package exports to remove esbuild warnings
+
 ## 0.5.0
 
 ### Minor Changes
