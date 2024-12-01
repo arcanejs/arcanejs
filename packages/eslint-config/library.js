@@ -1,4 +1,5 @@
 const { resolve } = require("node:path");
+const { SHARED_RULES } = require("./shared-rules");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
@@ -28,13 +29,7 @@ module.exports = {
     "dist/",
     "coverage/",
   ],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": ["warn", {
-      "varsIgnorePattern": "^_",
-      "argsIgnorePattern": "^_",
-    }],
-    "no-console": "error",
-  },
+  "rules": SHARED_RULES,
   overrides: [
     {
       files: ["*.js?(x)", "*.ts?(x)"],

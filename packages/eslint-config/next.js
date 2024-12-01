@@ -1,4 +1,5 @@
 const { resolve } = require("node:path");
+const { SHARED_RULES } = require("./shared-rules");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
@@ -34,5 +35,6 @@ module.exports = {
     "node_modules/",
     "coverage/",
   ],
+  "rules": SHARED_RULES,
   overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
 };

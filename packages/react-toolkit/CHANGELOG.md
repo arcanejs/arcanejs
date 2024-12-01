@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.8.1
+
+### Patch Changes
+
+- 14ef843: Export CoreComponents
+
 ## 0.8.0
 
 ### Minor Changes

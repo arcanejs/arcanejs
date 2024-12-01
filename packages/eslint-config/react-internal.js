@@ -1,4 +1,5 @@
 const { resolve } = require("node:path");
+const { SHARED_RULES } = require("./shared-rules");
 
 const project = resolve(process.cwd(), "tsconfig.json");
 
@@ -34,9 +35,7 @@ module.exports = {
     "dist/",
     "coverage/",
   ],
-  rules: {
-    "no-console": "error",
-  },
+  rules: SHARED_RULES,
   overrides: [
     // Force ESLint to detect .tsx files
     { files: ["*.js?(x)", "*.ts?(x)"] },
