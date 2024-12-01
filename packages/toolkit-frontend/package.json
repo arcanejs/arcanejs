@@ -1,7 +1,7 @@
 {
   "name": "@arcanejs/toolkit-frontend",
   "version": "0.2.0",
-  "private": true,
+  "private": false,
   "description": "Library of the frontend react components used to render the @arcanejs Toolkit",
   "keywords": [],
   "license": "MIT",
