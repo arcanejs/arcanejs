@@ -10,7 +10,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import type { ZodType } from 'zod';
+import z, { ZodType } from 'zod';
 import { throttle } from 'lodash';
 import { dirname } from 'path';
 import { useLogger } from './logging';
@@ -354,15 +354,15 @@ export function useDataFileCore<T>({
   };
 }
 
-export type CreateDataFileDefinitionProps<T> = {
-  schema: ZodType<T>;
-  defaultValue: T;
+export type CreateDataFileDefinitionProps<T extends ZodType> = {
+  schema: T;
+  defaultValue: z.infer<T>;
 };
 
-export function createDataFileDefinition<T>({
+export function createDataFileDefinition<T extends ZodType>({
   schema,
   defaultValue,
-}: CreateDataFileDefinitionProps<T>): DataFileDefinition<T> {
+}: CreateDataFileDefinitionProps<T>): DataFileDefinition<z.infer<T>> {
   const context = createContext<DataFileContext<T>>({
     data: defaultValue,
     lastUpdatedMillis: Date.now(),
