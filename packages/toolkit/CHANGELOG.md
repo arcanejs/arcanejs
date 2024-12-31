@@ -1,5 +1,17 @@
 # @arcanejs/toolkit
 
+## 1.0.1
+
+### Patch Changes
+
+- 94d6467: Fix issue with fonts being re-downloaded
+
+  Custom fonts used for the material icons would be re-downloaded every
+  time styled-components updated the styling for anything.
+
+  As a result, there's a flash-of-unstyled-content during this time,
+  which causes the whole layout to shift.
+
 ## 1.0.0
 
 ### Minor Changes

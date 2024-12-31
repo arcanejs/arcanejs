@@ -17,7 +17,6 @@ import {
 
 import { GroupStateWrapper, StageContext } from '@arcanejs/toolkit-frontend';
 
-import { MaterialFontStyle } from './styling';
 import {
   FrontendComponentRenderer,
   FrontendComponentRenderers,
@@ -135,7 +134,6 @@ export function rootComponent(props: Props) {
     <>
       <BaseStyle />
       <GlobalStyle />
-      <MaterialFontStyle />
       <ThemeProvider theme={THEME}>
         <StyledStage {...props} />
       </ThemeProvider>
