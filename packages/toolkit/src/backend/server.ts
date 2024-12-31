@@ -94,6 +94,13 @@ export class Server {
             <head>
               <title>Light Desk</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
+              <style type="text/css">
+                @font-face {
+                  font-family: 'Material Symbols Outlined';
+                  font-style: normal;
+                  src: url(${FONTS.materialSymbolsOutlined}) format('woff');
+                }
+              </style>
             </head>
             <body>
               <div id="root"></div>
