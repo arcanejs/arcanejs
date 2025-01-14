@@ -30,6 +30,13 @@ export interface LightDeskOptions {
    * that matches this name.
    */
   entrypointJsFile?: string;
+  /**
+   * If it's not possible to automatically resolve and import the
+   * material-symbols package in node_modules
+   * (for example when bundling an electron app),
+   * you can provide the path to the material-symbols-outlined.woff2 file here.
+   */
+  materialIconsFontFile?: string;
 }
 
 export const DEFAULT_LIGHT_DESK_OPTIONS: LightDeskOptions = {

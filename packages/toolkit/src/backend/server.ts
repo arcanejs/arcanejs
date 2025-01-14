@@ -11,7 +11,7 @@ import { FONTS } from '../shared/static.js';
 // Get the module resolution custom conditions
 const parentDir = path.basename(__dirname);
 
-const DIST_DIR = (() => {
+const distDir = () => {
   switch (parentDir) {
     case 'backend':
       return path.resolve(__dirname, '../../dist');
@@ -20,7 +20,7 @@ const DIST_DIR = (() => {
     default:
       throw new Error(`Server running from unknown location: ${__dirname}`);
   }
-})();
+};
 
 /**
  * Prepare all available static files at startup,
@@ -28,17 +28,6 @@ const DIST_DIR = (() => {
  */
 type PreparedStaticFiles = {
   [id: string]: { path: string; contentType: string };
-};
-
-/**
- * Hard-code all available static files,
- * to avoid any risk of directory traversal attacks.
- */
-const STATIC_FILES: PreparedStaticFiles = {
-  [`/${FONTS.materialSymbolsOutlined}`]: {
-    path: require.resolve('material-symbols/material-symbols-outlined.woff2'),
-    contentType: 'font/woff2',
-  },
 };
 
 export interface Connection {
@@ -61,7 +50,7 @@ export class Server {
   ) {
     const entrypoint =
       this.options.entrypointJsFile ??
-      path.join(DIST_DIR, 'frontend', 'entrypoint.js');
+      path.join(distDir(), 'frontend', 'entrypoint.js');
     if (!entrypoint.endsWith('.js')) {
       throw new Error('Entrypoint file must be a .js file');
     }
@@ -69,7 +58,12 @@ export class Server {
     this.entrypointFilename = path.basename(entrypoint);
 
     this.staticFiles = {
-      ...STATIC_FILES,
+      [`/${FONTS.materialSymbolsOutlined}`]: {
+        path:
+          this.options.materialIconsFontFile ??
+          require.resolve('material-symbols/material-symbols-outlined.woff2'),
+        contentType: 'font/woff2',
+      },
       [`/${this.entrypointFilename}`]: {
         path: entrypoint,
         contentType: 'text/javascript',
