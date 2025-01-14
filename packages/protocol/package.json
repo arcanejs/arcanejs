@@ -37,8 +37,10 @@
     "lint": "eslint . --max-warnings 0",
     "build": "rm -rf dist && tsup && check-export-map"
   },
+  "dependencies": {
+    "@arcanejs/diff": "workspace:^"
+  },
   "devDependencies": {
-    "@arcanejs/diff": "workspace:^",
     "@arcanejs/eslint-config": "workspace:^",
     "@arcanejs/typescript-config": "workspace:^",
     "@types/eslint": "^8.56.5",

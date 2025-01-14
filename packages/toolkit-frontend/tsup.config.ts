@@ -11,5 +11,4 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   splitting: true,
   dts: true,
-  external: ['@arcanejs/protocol', 'react', 'react-dom', 'styled-components'],
 });
