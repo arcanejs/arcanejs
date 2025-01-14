@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type { ClientMessage, ServerMessage } from '@arcanejs/protocol';
 import type { Logger } from '@arcanejs/protocol/logging';
+import escapeHTML from 'escape-html';
 
 import { LightDeskOptions } from './options.js';
 import { FONTS } from '../shared/static.js';
@@ -37,6 +38,7 @@ export interface Connection {
 export class Server {
   private readonly staticFiles: PreparedStaticFiles;
   private readonly entrypointFilename: string;
+  private title: string;
 
   public constructor(
     private readonly options: LightDeskOptions,
@@ -56,6 +58,7 @@ export class Server {
     }
     const entrypointMap = entrypoint + '.map';
     this.entrypointFilename = path.basename(entrypoint);
+    this.title = escapeHTML(options.title ?? '@arcanejs');
 
     this.staticFiles = {
       [`/${FONTS.materialSymbolsOutlined}`]: {
@@ -86,7 +89,7 @@ export class Server {
       const content = `
           <html>
             <head>
-              <title>Light Desk</title>
+              <title>${this.title}</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <style type="text/css">
                 @font-face {

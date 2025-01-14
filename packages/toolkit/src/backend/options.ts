@@ -6,6 +6,10 @@ import { Logger } from '@arcanejs/protocol/logging';
 
 export interface LightDeskOptions {
   /**
+   * What window title should the toolkit be initialized with?
+   */
+  title?: string;
+  /**
    * What path should be used to serve the light desk.
    *
    * This is important if a express server will be used that serves other paths.
