@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import type { ClientMessage, ServerMessage } from '@arcanejs/protocol';
 import type { Logger } from '@arcanejs/protocol/logging';
+import escapeHTML from 'escape-html';
 
 import { LightDeskOptions } from './options.js';
 import { FONTS } from '../shared/static.js';
@@ -11,7 +12,7 @@ import { FONTS } from '../shared/static.js';
 // Get the module resolution custom conditions
 const parentDir = path.basename(__dirname);
 
-const DIST_DIR = (() => {
+const distDir = () => {
   switch (parentDir) {
     case 'backend':
       return path.resolve(__dirname, '../../dist');
@@ -20,7 +21,7 @@ const DIST_DIR = (() => {
     default:
       throw new Error(`Server running from unknown location: ${__dirname}`);
   }
-})();
+};
 
 /**
  * Prepare all available static files at startup,
@@ -30,17 +31,6 @@ type PreparedStaticFiles = {
   [id: string]: { path: string; contentType: string };
 };
 
-/**
- * Hard-code all available static files,
- * to avoid any risk of directory traversal attacks.
- */
-const STATIC_FILES: PreparedStaticFiles = {
-  [`/${FONTS.materialSymbolsOutlined}`]: {
-    path: require.resolve('material-symbols/material-symbols-outlined.woff2'),
-    contentType: 'font/woff2',
-  },
-};
-
 export interface Connection {
   sendMessage(msg: ServerMessage): void;
 }
@@ -48,6 +38,7 @@ export interface Connection {
 export class Server {
   private readonly staticFiles: PreparedStaticFiles;
   private readonly entrypointFilename: string;
+  private title: string;
 
   public constructor(
     private readonly options: LightDeskOptions,
@@ -61,15 +52,21 @@ export class Server {
   ) {
     const entrypoint =
       this.options.entrypointJsFile ??
-      path.join(DIST_DIR, 'frontend', 'entrypoint.js');
+      path.join(distDir(), 'frontend', 'entrypoint.js');
     if (!entrypoint.endsWith('.js')) {
       throw new Error('Entrypoint file must be a .js file');
     }
     const entrypointMap = entrypoint + '.map';
     this.entrypointFilename = path.basename(entrypoint);
+    this.title = escapeHTML(options.title ?? '@arcanejs');
 
     this.staticFiles = {
-      ...STATIC_FILES,
+      [`/${FONTS.materialSymbolsOutlined}`]: {
+        path:
+          this.options.materialIconsFontFile ??
+          require.resolve('material-symbols/material-symbols-outlined.woff2'),
+        contentType: 'font/woff2',
+      },
       [`/${this.entrypointFilename}`]: {
         path: entrypoint,
         contentType: 'text/javascript',
@@ -92,7 +89,7 @@ export class Server {
       const content = `
           <html>
             <head>
-              <title>Light Desk</title>
+              <title>${this.title}</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <style type="text/css">
                 @font-face {

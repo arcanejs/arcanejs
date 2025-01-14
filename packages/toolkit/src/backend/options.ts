@@ -6,6 +6,10 @@ import { Logger } from '@arcanejs/protocol/logging';
 
 export interface LightDeskOptions {
   /**
+   * What window title should the toolkit be initialized with?
+   */
+  title?: string;
+  /**
    * What path should be used to serve the light desk.
    *
    * This is important if a express server will be used that serves other paths.
@@ -30,6 +34,13 @@ export interface LightDeskOptions {
    * that matches this name.
    */
   entrypointJsFile?: string;
+  /**
+   * If it's not possible to automatically resolve and import the
+   * material-symbols package in node_modules
+   * (for example when bundling an electron app),
+   * you can provide the path to the material-symbols-outlined.woff2 file here.
+   */
+  materialIconsFontFile?: string;
 }
 
 export const DEFAULT_LIGHT_DESK_OPTIONS: LightDeskOptions = {

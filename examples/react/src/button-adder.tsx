@@ -17,6 +17,7 @@ const toolkit = new Toolkit({
       target: 'pino-pretty',
     },
   }),
+  title: '@arcanejs example',
 });
 
 toolkit.start({

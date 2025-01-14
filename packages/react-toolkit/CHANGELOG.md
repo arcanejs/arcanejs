@@ -1,5 +1,16 @@
 # @arcanejs/react-toolkit
 
+## 0.8.4
+
+### Patch Changes
+
+- 30aea22: Fix dependencies, and remove unnecessary external config in tsup
+- Updated dependencies [3f71c86]
+- Updated dependencies [8038521]
+- Updated dependencies [30aea22]
+  - @arcanejs/toolkit@1.1.0
+  - @arcanejs/protocol@0.4.1
+
 ## 0.8.3
 
 ### Patch Changes

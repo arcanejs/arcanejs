@@ -1,5 +1,11 @@
 # @arcanejs/protocol
 
+## 0.4.1
+
+### Patch Changes
+
+- 30aea22: Fix dependencies, and remove unnecessary external config in tsup
+
 ## 0.4.0
 
 ### Minor Changes

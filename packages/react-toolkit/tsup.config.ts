@@ -11,12 +11,4 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   splitting: true,
   dts: true,
-  external: [
-    '@arcanejs/protocol',
-    '@arcanejs/toolkit',
-    'lodash',
-    'react',
-    'react-reconciler',
-    'zod',
-  ],
 });

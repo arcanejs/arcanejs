@@ -19,15 +19,6 @@ export default defineConfig([
     format: ['cjs', 'esm'],
     splitting: true,
     dts: true,
-    external: [
-      '@arcanejs/diff',
-      '@arcanejs/protocol',
-      'express',
-      'http',
-      'lodash',
-      'material-symbols',
-      'ws',
-    ],
   },
   {
     tsconfig: 'tsconfig.frontend.json',
