@@ -1,5 +1,11 @@
 # @arcanejs/toolkit
 
+## 1.1.1
+
+### Patch Changes
+
+- 541d8f1: Export ToolkitOptions type
+
 ## 1.1.0
 
 ### Minor Changes
