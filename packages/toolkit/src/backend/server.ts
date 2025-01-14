@@ -6,7 +6,7 @@ import type { ClientMessage, ServerMessage } from '@arcanejs/protocol';
 import type { Logger } from '@arcanejs/protocol/logging';
 import escapeHTML from 'escape-html';
 
-import { LightDeskOptions } from './options.js';
+import { ToolkitOptions } from './options.js';
 import { FONTS } from '../shared/static.js';
 
 // Get the module resolution custom conditions
@@ -41,7 +41,7 @@ export class Server {
   private title: string;
 
   public constructor(
-    private readonly options: LightDeskOptions,
+    private readonly options: ToolkitOptions,
     private readonly onNewConnection: (connection: Connection) => void,
     private readonly onClosedConnection: (connection: Connection) => void,
     private readonly onMessage: (
