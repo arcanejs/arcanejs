@@ -1,5 +1,13 @@
 # @toolkit-frontend
 
+## 0.3.1
+
+### Patch Changes
+
+- 30aea22: Fix dependencies, and remove unnecessary external config in tsup
+- Updated dependencies [30aea22]
+  - @arcanejs/protocol@0.4.1
+
 ## 0.3.0
 
 ### Minor Changes

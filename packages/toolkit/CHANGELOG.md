@@ -1,5 +1,24 @@
 # @arcanejs/toolkit
 
+## 1.1.0
+
+### Minor Changes
+
+- 3f71c86: Allow toolkit to be run outside of known contexts:
+
+  - Allow for the font file path to be given directly as an options
+  - Don't try to automatically determine the path of the `dist` directory if a
+    specific entrypoint file has been provided.
+
+- 8038521: Allow for the window title to be specified in options
+
+### Patch Changes
+
+- 30aea22: Fix dependencies, and remove unnecessary external config in tsup
+- Updated dependencies [30aea22]
+  - @arcanejs/protocol@0.4.1
+  - @arcanejs/toolkit-frontend@0.3.1
+
 ## 1.0.1
 
 ### Patch Changes
