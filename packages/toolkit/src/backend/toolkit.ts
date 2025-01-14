@@ -3,7 +3,7 @@ import { diffJson } from '@arcanejs/diff/diff';
 import {
   DEFAULT_LIGHT_DESK_OPTIONS,
   InitializationOptions,
-  LightDeskOptions,
+  ToolkitOptions,
 } from './options';
 import { Connection, Server } from './server';
 import { IDMap } from './util/id-map';
@@ -18,7 +18,7 @@ type ConnectionMetadata = {
 };
 
 export class Toolkit implements Parent {
-  private readonly options: LightDeskOptions;
+  private readonly options: ToolkitOptions;
   /**
    * Mapping from components to unique IDs that identify them
    */
@@ -26,7 +26,7 @@ export class Toolkit implements Parent {
   private readonly connections = new Map<Connection, ConnectionMetadata>();
   private rootGroup: Group | null = null;
 
-  constructor(options: Partial<LightDeskOptions> = {}) {
+  constructor(options: Partial<ToolkitOptions> = {}) {
     this.options = {
       ...DEFAULT_LIGHT_DESK_OPTIONS,
       ...options,

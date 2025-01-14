@@ -4,7 +4,7 @@ import type { Application } from 'express';
 import { Server } from './server';
 import { Logger } from '@arcanejs/protocol/logging';
 
-export interface LightDeskOptions {
+export interface ToolkitOptions {
   /**
    * What window title should the toolkit be initialized with?
    */
@@ -43,7 +43,7 @@ export interface LightDeskOptions {
   materialIconsFontFile?: string;
 }
 
-export const DEFAULT_LIGHT_DESK_OPTIONS: LightDeskOptions = {
+export const DEFAULT_LIGHT_DESK_OPTIONS: ToolkitOptions = {
   path: '/',
 };
 
