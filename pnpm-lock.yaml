@@ -381,6 +381,9 @@ importers:
       material-symbols:
         specifier: ^0.25.0
         version: 0.25.0
+      uuid:
+        specifier: ^11.0.3
+        version: 11.0.3
       ws:
         specifier: ^8.18.0
         version: 8.18.0
@@ -4716,6 +4719,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@11.0.3:
+    resolution: {integrity: sha512-d0z310fCWv5dJwnX1Y/MncBAqGMKEzlBb1AOf7z9K8ALnd0utBX/msg/fA0+sbyN1ihbMsLhrBlnl1ak7Wa0rg==}
+    hasBin: true
 
   v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
@@ -9955,6 +9962,8 @@ snapshots:
       punycode: 2.3.0
 
   utils-merge@1.0.1: {}
+
+  uuid@11.0.3: {}
 
   v8-compile-cache-lib@3.0.1:
     optional: true

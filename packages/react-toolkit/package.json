@@ -31,6 +31,12 @@
       "import": "./dist/colors.mjs",
       "require": "./dist/colors.js"
     },
+    "./connections": {
+      "@arcanejs/source": "./src/connections.tsx",
+      "types": "./dist/connections.d.ts",
+      "import": "./dist/connections.mjs",
+      "require": "./dist/connections.js"
+    },
     "./data": {
       "@arcanejs/source": "./src/data.tsx",
       "types": "./dist/data.d.ts",
