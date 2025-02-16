@@ -1,5 +1,16 @@
 # @toolkit-frontend
 
+## 0.4.0
+
+### Minor Changes
+
+- 11701df: Add the connection UUID to StageContext
+
+### Patch Changes
+
+- Updated dependencies [11701df]
+  - @arcanejs/protocol@0.5.0
+
 ## 0.3.1
 
 ### Patch Changes
