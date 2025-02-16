@@ -3,7 +3,7 @@ import {
   Base,
   BaseParent,
 } from '@arcanejs/toolkit/components/base';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 export type ComponentRegister = {
   [type: string]: {
@@ -17,17 +17,13 @@ type ComponentsDefinition = {
   [key: string]: ComponentClass;
 };
 
-type Child = JSX.Element | null | undefined | false | string;
-
-type Children = Child | Child[];
-
 type PropsOfComponent<T extends ComponentClass> =
   // All props optional (with children)
   T extends new (props?: infer P) => BaseParent<any, any, any>
-    ? Partial<P & { children: Children }>
+    ? Partial<P & { children: ReactNode }>
     : // Some props required (with children)
       T extends new (props: infer P) => BaseParent<any, any, any>
-      ? P & { children?: Children }
+      ? P & { children?: ReactNode }
       : // All props optional
         T extends new (props?: infer P) => Base<any, any, any>
         ? Partial<P>

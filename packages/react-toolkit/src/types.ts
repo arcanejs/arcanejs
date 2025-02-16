@@ -42,13 +42,11 @@ import type {
   Props as TimelineProps,
   Timeline,
 } from '@arcanejs/toolkit/components/timeline';
-import type { Ref } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 // React Types
 
 export type Props = { [key: string]: any };
-type Child = JSX.Element | string | null | undefined | boolean;
-type Children = Child | Child[];
 
 export interface LightDeskIntrinsicElements {
   button: ButtonProps & {
@@ -57,12 +55,12 @@ export interface LightDeskIntrinsicElements {
     ref?: Ref<Button>;
   };
   group: GroupProps & {
-    children?: Children;
+    children?: ReactNode;
     onTitleChanged?: GroupEvents['title-changed'];
     ref?: Ref<Group>;
   };
   'group-header': {
-    children?: Children;
+    children?: ReactNode;
     ref?: Ref<GroupHeader>;
   };
   label: LabelProps & {
@@ -84,15 +82,15 @@ export interface LightDeskIntrinsicElements {
     ref?: Ref<Switch>;
   };
   tab: TabProps & {
-    children?: JSX.Element | string;
+    children?: ReactNode;
     ref?: Ref<Tab>;
   };
   tabs: TabsProps & {
-    children?: JSX.Element | JSX.Element[];
+    children?: ReactNode;
     ref?: Ref<Tabs>;
   };
   'text-input': TextInputProps & {
-    children?: JSX.Element | JSX.Element[];
+    children?: ReactNode;
     onChange?: TextInputEvents['change'];
     ref?: Ref<TextInput>;
   };
