@@ -108,6 +108,7 @@ export const ToolkitSimulatorProvider: React.FC<
             uuid: '',
           }),
         renderComponent,
+        connectionUuid: 'simulator',
       }}
     >
       <ToolkitSimulatorContext.Provider value={{ tree, renderComponent }}>

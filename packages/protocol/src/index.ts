@@ -7,6 +7,14 @@ export type BaseComponentProto<Namespace extends string> = {
 
 export type AnyComponentProto = BaseComponentProto<string>;
 
+export type MetadataMessage = {
+  type: 'metadata';
+  /**
+   * The UUID for the current connection
+   */
+  connectionUuid: string;
+};
+
 export type SendTreeMsg = {
   type: 'tree-full';
   root: BaseComponentProto<string>;
@@ -17,7 +25,7 @@ export type UpdateTreeMsg = {
   diff: Diff<BaseComponentProto<string>>;
 };
 
-export type ServerMessage = SendTreeMsg | UpdateTreeMsg;
+export type ServerMessage = MetadataMessage | SendTreeMsg | UpdateTreeMsg;
 
 export type BaseClientComponentMessage<Namespace extends string> = {
   type: 'component-message';

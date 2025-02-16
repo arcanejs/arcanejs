@@ -153,6 +153,10 @@ export class Toolkit implements Parent, Listenable<Events> {
     };
     this.connections.set(connection, { publicConnection, lastTreeSent });
     this.events.emit('new-connection', publicConnection);
+    connection.sendMessage({
+      type: 'metadata',
+      connectionUuid: uuid,
+    });
     if (lastTreeSent) {
       connection.sendMessage({
         type: 'tree-full',
