@@ -162,7 +162,7 @@ export class Toolkit implements Parent, Listenable<Events> {
   };
 
   private onClosedConnection = (connection: Connection) => {
-    this.options.log?.debug('removing connection');
+    this.log()?.debug('removing connection');
     const con = this.connections.get(connection);
     this.connections.delete(connection);
     if (con) {
@@ -171,11 +171,25 @@ export class Toolkit implements Parent, Listenable<Events> {
   };
 
   private onMessage = (connection: Connection, message: ClientMessage) => {
-    this.options.log?.debug('got message: %o', message);
+    const con = this.connections.get(connection);
+    if (!con) {
+      this.log()?.warn(`got message from unknown connection`);
+      return;
+    }
+    const { publicConnection } = con;
+    this.log()?.debug(
+      'got message: %o from %s',
+      message,
+      publicConnection.uuid,
+    );
     switch (message.type) {
       case 'component-message':
         if (this.rootGroup)
-          this.rootGroup.routeMessage(this.componentIDMap, message);
+          this.rootGroup.routeMessage(
+            this.componentIDMap,
+            message,
+            publicConnection,
+          );
         break;
     }
   };

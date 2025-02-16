@@ -3,9 +3,13 @@ import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
 import { AnyClientComponentMessage } from '@arcanejs/protocol';
+import { ToolkitConnection } from '../toolkit';
 
 export type Events = {
-  change: (value: string) => void | Promise<void>;
+  change: (
+    value: string,
+    connection: ToolkitConnection,
+  ) => void | Promise<void>;
 };
 
 type InternalProps = {
@@ -54,11 +58,14 @@ export class TextInput
   };
 
   /** @hidden */
-  public handleMessage = (message: AnyClientComponentMessage) => {
+  public handleMessage = (
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) => {
     if (proto.isCoreComponentMessage(message, 'text-input')) {
       if (this.props.value !== message.value) {
         this.updateProps({ value: message.value });
-        this.events.emit('change', message.value);
+        this.events.emit('change', message.value, connection);
       }
     }
   };

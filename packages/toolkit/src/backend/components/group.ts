@@ -8,6 +8,7 @@ import {
   AnyClientComponentMessage,
   AnyComponentProto,
 } from '@arcanejs/protocol';
+import { ToolkitConnection } from '../toolkit';
 
 const GROUP_DEFAULT_STYLE: GroupComponentStyle = {
   direction: 'horizontal',
@@ -21,7 +22,7 @@ type GroupOptions = {
 };
 
 export type Events = {
-  'title-changed': (title: string) => void;
+  'title-changed': (title: string, connection: ToolkitConnection) => void;
 };
 
 export type InternalProps = GroupComponentStyle &
@@ -163,9 +164,12 @@ export class Group
   };
 
   /** @hidden */
-  public handleMessage = (message: AnyClientComponentMessage) => {
+  public handleMessage = (
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) => {
     if (proto.isCoreComponentMessage(message, 'group')) {
-      this.events.emit('title-changed', message.title);
+      this.events.emit('title-changed', message.title, connection);
     }
   };
 }

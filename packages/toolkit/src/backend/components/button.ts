@@ -3,9 +3,10 @@ import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
 import { AnyClientComponentMessage } from '@arcanejs/protocol';
+import { ToolkitConnection } from '../toolkit';
 
 export type Events = {
-  click: () => void | Promise<void>;
+  click: (connection: ToolkitConnection) => void | Promise<void>;
 };
 
 export type ButtonMode = 'normal' | 'pressed';
@@ -85,10 +86,13 @@ export class Button
   };
 
   /** @hidden */
-  public handleMessage = (message: AnyClientComponentMessage) => {
+  public handleMessage = (
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) => {
     if (proto.isCoreComponentMessage(message, 'button')) {
       this.events
-        .emit('click')
+        .emit('click', connection)
         .then(() => {
           if (this.props.error) {
             this.updateProps({
