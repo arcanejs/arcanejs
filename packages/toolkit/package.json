@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/toolkit",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "private": false,
   "description": "Build web-accessible control interfaces for your long-running Node.js processes",
   "keywords": [
@@ -136,6 +136,7 @@
     "express": "^4.21.1",
     "lodash": "^4.17.21",
     "material-symbols": "^0.25.0",
+    "uuid": "^11.0.3",
     "ws": "^8.18.0"
   },
   "peerDependencies": {

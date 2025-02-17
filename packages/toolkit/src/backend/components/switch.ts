@@ -3,9 +3,13 @@ import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
 import { AnyClientComponentMessage } from '@arcanejs/protocol';
+import { ToolkitConnection } from '../toolkit';
 
 export type Events = {
-  change: (state: 'on' | 'off') => void | Promise<void>;
+  change: (
+    state: 'on' | 'off',
+    connection: ToolkitConnection,
+  ) => void | Promise<void>;
 };
 
 type InternalProps = {
@@ -61,7 +65,10 @@ export class Switch
   }
 
   /** @hidden */
-  public handleMessage(message: AnyClientComponentMessage) {
+  public handleMessage(
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) {
     if (proto.isCoreComponentMessage(message, 'switch')) {
       // Toggle state value
       const state = this._value === 'on' ? 'off' : 'on';
@@ -71,7 +78,7 @@ export class Switch
         // Tree update has to be manual as we're not updating props
         this.updateTree();
       }
-      this.events.emit('change', state);
+      this.events.emit('change', state, connection);
     }
   }
 

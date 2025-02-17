@@ -2,12 +2,16 @@ import { createContext } from 'react';
 
 import * as proto from '@arcanejs/protocol';
 
-export const StageContext = createContext<{
+type StageContextData = {
   sendMessage: (<M extends proto.ClientMessage>(msg: M) => void) | null;
   renderComponent: (info: proto.AnyComponentProto) => JSX.Element;
-}>({
-  sendMessage: null,
-  renderComponent: () => {
-    throw new Error(`missing root context`);
-  },
-});
+  connectionUuid: string;
+};
+
+export const StageContext = createContext<StageContextData>(
+  new Proxy({} as StageContextData, {
+    get: () => {
+      throw new Error('Missing StageContext.Provider');
+    },
+  }),
+);

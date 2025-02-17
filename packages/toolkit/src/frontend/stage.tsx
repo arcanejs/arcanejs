@@ -32,6 +32,7 @@ const Stage: React.FC<Props> = ({ className, renderers }) => {
     undefined,
   );
   const socket = useRef<Promise<WebSocket> | null>(null);
+  const uuid = useRef<string | null>(null);
 
   const preparedRenderers = useMemo(() => {
     const prepared: Record<string, FrontendComponentRenderer> = {};
@@ -90,6 +91,10 @@ const Stage: React.FC<Props> = ({ className, renderers }) => {
 
   const handleMessage = (msg: proto.ServerMessage) => {
     switch (msg.type) {
+      case 'metadata':
+        // This should always be the first message
+        uuid.current = msg.connectionUuid;
+        return;
       case 'tree-full':
         setRoot(msg.root);
         return;
@@ -104,6 +109,12 @@ const Stage: React.FC<Props> = ({ className, renderers }) => {
       value={{
         sendMessage,
         renderComponent,
+        get connectionUuid() {
+          if (!uuid.current) {
+            throw new Error('Unexpected missing UUID')!;
+          }
+          return uuid.current;
+        },
       }}
     >
       <GroupStateWrapper openByDefault={false}>

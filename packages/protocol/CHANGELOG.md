@@ -1,5 +1,11 @@
 # @arcanejs/protocol
 
+## 0.5.0
+
+### Minor Changes
+
+- 11701df: Add the connection UUID to StageContext
+
 ## 0.4.1
 
 ### Patch Changes

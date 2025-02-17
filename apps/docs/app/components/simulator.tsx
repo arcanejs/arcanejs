@@ -104,8 +104,11 @@ export const ToolkitSimulatorProvider: React.FC<
     <StageContext.Provider
       value={{
         sendMessage: (msg) =>
-          rootGroup?.current?.routeMessage(componentIDMap.current, msg),
+          rootGroup?.current?.routeMessage(componentIDMap.current, msg, {
+            uuid: '',
+          }),
         renderComponent,
+        connectionUuid: 'simulator',
       }}
     >
       <ToolkitSimulatorContext.Provider value={{ tree, renderComponent }}>

@@ -1,5 +1,30 @@
 # @arcanejs/toolkit
 
+## 2.0.0
+
+### Minor Changes
+
+- 3467342: Introduce ability to listen to connection changes
+
+  Expose the `Connection` interface,
+  and listeners on the `Toolkit` class that can be used to listen to
+  new or closed connections to the Toolkit.
+  In addition to a `getConnections()` method.
+
+- 2b82fc4: Pass connection to all messageHandlers & component listeners
+
+  Make the ToolkitConnection object available to all components that handle
+  messages,
+  and include it as a parameter for all existing component event listeners.
+
+- 11701df: Add the connection UUID to StageContext
+
+### Patch Changes
+
+- Updated dependencies [11701df]
+  - @arcanejs/toolkit-frontend@0.4.0
+  - @arcanejs/protocol@0.5.0
+
 ## 1.1.1
 
 ### Patch Changes

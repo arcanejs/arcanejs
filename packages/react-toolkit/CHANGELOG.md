@@ -1,5 +1,29 @@
 # @arcanejs/react-toolkit
 
+## 0.9.0
+
+### Minor Changes
+
+- 73c47d7: Use ReactNode for all children
+
+  Avoid causing type errors in TypeScript when certain types of elements or
+  components are given as children even though react can render them properly
+  by using `ReactNode` everywhere.
+
+- 3467342: Introduce `ConnectionsContext` and `connections` module
+
+  A new `ConnectionsContextProvider` component can be used at the root
+  of an application to add a context that tracks the list of active connections
+  to the toolkit.
+
+### Patch Changes
+
+- Updated dependencies [3467342]
+- Updated dependencies [2b82fc4]
+- Updated dependencies [11701df]
+  - @arcanejs/toolkit@2.0.0
+  - @arcanejs/protocol@0.5.0
+
 ## 0.8.5
 
 ### Patch Changes

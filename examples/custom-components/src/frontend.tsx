@@ -21,6 +21,11 @@ const StyledDiv = styled.div`
   align-items: center;
 `;
 
+const Connection = styled.div`
+  padding: 10px;
+  color: green;
+`;
+
 const Time = styled.div`
   cursor: pointer;
   padding: 10px;
@@ -45,7 +50,8 @@ const display = (time: StopwatchComponentProto['state']) => {
 };
 
 const Stopwatch: React.FC<{ info: StopwatchComponentProto }> = ({ info }) => {
-  const { sendMessage, renderComponent } = useContext(StageContext);
+  const { sendMessage, renderComponent, connectionUuid } =
+    useContext(StageContext);
   const { handlers } = usePressable(() =>
     sendMessage<StopwatchPressMessage>?.({
       type: 'component-message',
@@ -73,6 +79,7 @@ const Stopwatch: React.FC<{ info: StopwatchComponentProto }> = ({ info }) => {
 
   return (
     <StyledDiv>
+      <Connection>{`Connection UUID: ${connectionUuid}`}</Connection>
       <Time {...handlers}>{timeDisplay}</Time>
       {info.state.type === 'stopped' && info.child && (
         <ChildrenContainer>{renderComponent(info.child)}</ChildrenContainer>

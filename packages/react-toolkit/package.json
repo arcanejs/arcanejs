@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/react-toolkit",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "private": false,
   "description": "Build web-accessible control interfaces for your long-running Node.js processes",
   "keywords": [
@@ -30,6 +30,12 @@
       "types": "./dist/colors.d.ts",
       "import": "./dist/colors.mjs",
       "require": "./dist/colors.js"
+    },
+    "./connections": {
+      "@arcanejs/source": "./src/connections.tsx",
+      "types": "./dist/connections.d.ts",
+      "import": "./dist/connections.mjs",
+      "require": "./dist/connections.js"
     },
     "./data": {
       "@arcanejs/source": "./src/data.tsx",

@@ -4,6 +4,7 @@ import {
 } from '@arcanejs/protocol';
 import { IDMap } from '../util/id-map';
 import { Logger } from '@arcanejs/protocol/logging';
+import { ToolkitConnection } from '../toolkit';
 
 export abstract class Base<
   Namespace extends string,
@@ -110,11 +111,15 @@ export abstract class Base<
   public abstract getProtoInfo(idMap: IDMap): Proto;
 
   /** @hidden */
-  public handleMessage(_message: AnyClientComponentMessage): void {}
+  public handleMessage(
+    _message: AnyClientComponentMessage,
+    _connection: ToolkitConnection,
+  ): void {}
 
   public routeMessage(
     _idMap: IDMap,
     _message: AnyClientComponentMessage,
+    _connection: ToolkitConnection,
   ): void {
     // Do nothing by default, only useful for Parent components
   }
@@ -191,15 +196,19 @@ export abstract class BaseParent<
    *
    * @hidden
    */
-  public routeMessage(idMap: IDMap, message: AnyClientComponentMessage) {
+  public routeMessage(
+    idMap: IDMap,
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) {
     if (idMap.getId(this) === message.componentKey) {
-      this.handleMessage(message);
+      this.handleMessage(message, connection);
     } else {
       for (const c of this.children) {
         if (idMap.getId(c) === message.componentKey) {
-          c.handleMessage(message);
+          c.handleMessage(message, connection);
         } else {
-          c.routeMessage(idMap, message);
+          c.routeMessage(idMap, message, connection);
         }
       }
     }

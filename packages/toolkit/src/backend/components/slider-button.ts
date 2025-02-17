@@ -3,9 +3,13 @@ import { IDMap } from '../util/id-map';
 
 import { Base, EventEmitter, Listenable } from './base';
 import { AnyClientComponentMessage } from '@arcanejs/protocol';
+import { ToolkitConnection } from '../toolkit';
 
 export type Events = {
-  change: (value: number) => void | Promise<void>;
+  change: (
+    value: number,
+    connection: ToolkitConnection,
+  ) => void | Promise<void>;
 };
 
 type InternalProps = Pick<
@@ -76,7 +80,10 @@ export class SliderButton
   }
 
   /** @hidden */
-  public handleMessage(message: AnyClientComponentMessage) {
+  public handleMessage(
+    message: AnyClientComponentMessage,
+    connection: ToolkitConnection,
+  ) {
     if (!proto.isCoreComponentMessage(message, 'slider_button')) return;
     const newValue = this.sanitizeNumber(message.value);
     if (this._value === newValue) return;
@@ -86,7 +93,7 @@ export class SliderButton
       // Tree update has to be manual as we're not updating props
       this.updateTree();
     }
-    this.events.emit('change', newValue);
+    this.events.emit('change', newValue, connection);
   }
 
   public setValue(value: number) {

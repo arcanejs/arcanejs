@@ -9,15 +9,35 @@ import { Connection, Server } from './server';
 import { IDMap } from './util/id-map';
 import { WebSocketServer } from 'ws';
 import { createServer } from 'http';
+import { v4 as uuidv4 } from 'uuid';
 import { Group } from './components/group';
-import { AnyComponent, Parent } from './components/base';
+import {
+  AnyComponent,
+  EventEmitter,
+  Listenable,
+  Parent,
+} from './components/base';
 import { ClientMessage, AnyComponentProto } from '@arcanejs/protocol';
 
+export type ToolkitConnection = {
+  uuid: string;
+};
+
 type ConnectionMetadata = {
+  /**
+   * The publicly-exposed connection object that can be shared throughout
+   * the library, and externally.
+   */
+  publicConnection: ToolkitConnection;
   lastTreeSent: AnyComponentProto | undefined;
 };
 
-export class Toolkit implements Parent {
+export type Events = {
+  'new-connection': (connection: ToolkitConnection) => void;
+  'closed-connection': (connection: ToolkitConnection) => void;
+};
+
+export class Toolkit implements Parent, Listenable<Events> {
   private readonly options: ToolkitOptions;
   /**
    * Mapping from components to unique IDs that identify them
@@ -25,6 +45,9 @@ export class Toolkit implements Parent {
   private readonly componentIDMap = new IDMap();
   private readonly connections = new Map<Connection, ConnectionMetadata>();
   private rootGroup: Group | null = null;
+
+  /** @hidden */
+  private readonly events = new EventEmitter<Events>();
 
   constructor(options: Partial<ToolkitOptions> = {}) {
     this.options = {
@@ -40,6 +63,9 @@ export class Toolkit implements Parent {
       );
     }
   }
+
+  public addListener = this.events.addListener;
+  public removeListener = this.events.removeListener;
 
   public start = (opts: InitializationOptions) => {
     const server = new Server(
@@ -86,6 +112,10 @@ export class Toolkit implements Parent {
     return this.options.log ?? null;
   }
 
+  public getConnections = (): ToolkitConnection[] => {
+    return [...this.connections.values()].map((c) => c.publicConnection);
+  };
+
   public updateTree = _.throttle(
     () => {
       setImmediate(() => {
@@ -115,7 +145,18 @@ export class Toolkit implements Parent {
   private onNewConnection = (connection: Connection) => {
     const lastTreeSent =
       this.rootGroup?.getProtoInfo(this.componentIDMap) ?? undefined;
-    this.connections.set(connection, { lastTreeSent });
+    const uuid = uuidv4();
+    const publicConnection: ToolkitConnection = {
+      get uuid() {
+        return uuid;
+      },
+    };
+    this.connections.set(connection, { publicConnection, lastTreeSent });
+    this.events.emit('new-connection', publicConnection);
+    connection.sendMessage({
+      type: 'metadata',
+      connectionUuid: uuid,
+    });
     if (lastTreeSent) {
       connection.sendMessage({
         type: 'tree-full',
@@ -125,16 +166,34 @@ export class Toolkit implements Parent {
   };
 
   private onClosedConnection = (connection: Connection) => {
-    this.options.log?.debug('removing connection');
+    this.log()?.debug('removing connection');
+    const con = this.connections.get(connection);
     this.connections.delete(connection);
+    if (con) {
+      this.events.emit('closed-connection', con.publicConnection);
+    }
   };
 
-  private onMessage = (_connection: Connection, message: ClientMessage) => {
-    this.options.log?.debug('got message: %o', message);
+  private onMessage = (connection: Connection, message: ClientMessage) => {
+    const con = this.connections.get(connection);
+    if (!con) {
+      this.log()?.warn(`got message from unknown connection`);
+      return;
+    }
+    const { publicConnection } = con;
+    this.log()?.debug(
+      'got message: %o from %s',
+      message,
+      publicConnection.uuid,
+    );
     switch (message.type) {
       case 'component-message':
         if (this.rootGroup)
-          this.rootGroup.routeMessage(this.componentIDMap, message);
+          this.rootGroup.routeMessage(
+            this.componentIDMap,
+            message,
+            publicConnection,
+          );
         break;
     }
   };
