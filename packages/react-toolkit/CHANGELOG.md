@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.9.2
+
+### Patch Changes
+
+- 8a7d944: Test new release
+
 ## 0.9.1
 
 ### Patch Changes
