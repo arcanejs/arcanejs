@@ -1,5 +1,11 @@
 # @arcanejs/react-toolkit
 
+## 0.9.1
+
+### Patch Changes
+
+- 6fa616a: Test new publish action
+
 ## 0.9.0
 
 ### Minor Changes
