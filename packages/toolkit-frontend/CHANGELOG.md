@@ -1,5 +1,14 @@
 # @toolkit-frontend
 
+## 0.5.0
+
+### Minor Changes
+
+- 911f3db: Add light-mode support
+
+  Introduce a LIGHT_THEME and use prefers-color-scheme to
+  pick between a light and dark mode.
+
 ## 0.4.0
 
 ### Minor Changes

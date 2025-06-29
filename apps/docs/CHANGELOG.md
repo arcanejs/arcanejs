@@ -1,5 +1,20 @@
 # docs
 
+## 0.2.0
+
+### Minor Changes
+
+- 911f3db: Add light-mode support
+
+  Introduce a LIGHT_THEME and use prefers-color-scheme to
+  pick between a light and dark mode.
+
+### Patch Changes
+
+- Updated dependencies [911f3db]
+  - @arcanejs/toolkit-frontend@0.5.0
+  - @arcanejs/toolkit@3.0.0
+
 ## 0.1.18
 
 ### Patch Changes
