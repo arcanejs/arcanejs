@@ -12,6 +12,7 @@ import * as proto from '@arcanejs/protocol';
 import {
   BaseStyle,
   GlobalStyle,
+  Theme,
   DARK_THEME,
   LIGHT_THEME,
 } from '@arcanejs/toolkit-frontend/styling';
@@ -27,6 +28,10 @@ import { PreferredThemeProvider } from '../../../toolkit-frontend/src/styling';
 export type Props = {
   className?: string;
   renderers: FrontendComponentRenderers;
+  themes?: {
+    dark: Theme;
+    light: Theme;
+  };
 };
 
 const Stage: React.FC<Props> = ({ className, renderers }) => {
@@ -144,7 +149,10 @@ const StyledStage = styled(Stage)`
 
 export function rootComponent(props: Props) {
   return (
-    <PreferredThemeProvider dark={DARK_THEME} light={LIGHT_THEME}>
+    <PreferredThemeProvider
+      dark={props.themes?.dark ?? DARK_THEME}
+      light={props.themes?.light ?? LIGHT_THEME}
+    >
       <BaseStyle />
       <GlobalStyle />
       <StyledStage {...props} />

@@ -1,5 +1,16 @@
 # @arcanejs/toolkit
 
+## 3.1.0
+
+### Minor Changes
+
+- 6c607cd: Allow theme to be specified in startArcaneFrontend
+
+### Patch Changes
+
+- Updated dependencies [6c607cd]
+  - @arcanejs/toolkit-frontend@0.6.0
+
 ## 3.0.0
 
 ### Minor Changes

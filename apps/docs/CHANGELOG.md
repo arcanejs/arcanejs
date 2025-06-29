@@ -1,5 +1,13 @@
 # docs
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [6c607cd]
+  - @arcanejs/toolkit-frontend@0.6.0
+  - @arcanejs/toolkit@4.0.0
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @toolkit-frontend
 
+## 0.6.0
+
+### Minor Changes
+
+- 6c607cd: Allow theme to be specified in startArcaneFrontend
+
 ## 0.5.0
 
 ### Minor Changes
