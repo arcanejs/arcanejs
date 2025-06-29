@@ -2,12 +2,9 @@ import { createRoot } from 'react-dom/client';
 
 import { initialiseListeners } from '@arcanejs/toolkit-frontend/util';
 
-import { rootComponent } from './stage';
-import { FrontendComponentRenderers } from '@arcanejs/toolkit-frontend/types';
+import { rootComponent, Props as RootProps } from './stage';
 
-export type ArcaneFrontendOptions = {
-  renderers: FrontendComponentRenderers;
-};
+export type ArcaneFrontendOptions = Pick<RootProps, 'renderers' | 'themes'>;
 
 export const startArcaneFrontend = (opts: ArcaneFrontendOptions) => {
   initialiseListeners();
