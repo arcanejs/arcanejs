@@ -10,7 +10,6 @@ import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol/core';
 
-import { THEME } from '../styling';
 import { calculateClass, usePressable } from '../util';
 
 import { StageContext } from './context';
@@ -30,11 +29,11 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   padding: 5px 2px;
-  background: ${THEME.borderDark};
-  border-bottom: 1px solid ${THEME.borderDark};
+  background: ${(p) => p.theme.borderDark};
+  border-bottom: 1px solid ${(p) => p.theme.borderDark};
 
   &.touching {
-    background: ${THEME.bgDark1};
+    background: ${(p) => p.theme.bgDark1};
   }
 
   &.collapsed {
@@ -49,8 +48,8 @@ const Header = styled.div`
 const Label = styled.span`
   display: inline-block;
   border-radius: 3px;
-  background: ${THEME.bg};
-  border: 1px solid ${THEME.bgLight1};
+  background: ${(p) => p.theme.bg};
+  border: 1px solid ${(p) => p.theme.bgLight1};
   padding: 3px 4px;
 `;
 
@@ -72,7 +71,7 @@ const GroupChildren = styled.div<Pick<Props, 'info'>>`
   ${(p) => (p.info.direction === 'vertical' ? '' : 'align-items: center;')}
 
   > * {
-    margin: ${THEME.sizingPx.spacing / 2}px;
+    margin: ${(p) => p.theme.sizingPx.spacing / 2}px;
   }
 `;
 
@@ -88,14 +87,14 @@ const EditableTitle = styled.span`
   }
 
   > .icon {
-    color: ${THEME.bg};
+    color: ${(p) => p.theme.textMuted};
   }
 
   &:hover {
-    background: ${THEME.bg};
+    background: ${(p) => p.theme.bg};
 
     > .icon {
-      color: ${THEME.hint};
+      color: ${(p) => p.theme.hint};
     }
   }
 `;
@@ -104,7 +103,7 @@ const TitleInput = styled.input`
   background: none;
   border: none;
   outline: none;
-  color: ${THEME.textNormal};
+  color: ${(p) => p.theme.textNormal};
 `;
 
 const GroupStateContext = React.createContext<{
@@ -269,12 +268,12 @@ const Group: FC<Props> = ({ className, info }) => {
 Group.displayName = 'Group';
 
 const StyledGroup: FC<Props> = styled(Group)`
-  border: 1px solid ${THEME.borderDark};
+  border: 1px solid ${(p) => p.theme.borderDark};
 
   > .title {
     padding: 5px;
-    background: ${THEME.borderDark};
-    border-bottom: 1px solid ${THEME.borderDark};
+    background: ${(p) => p.theme.borderDark};
+    border-bottom: 1px solid ${(p) => p.theme.borderDark};
   }
 
   &.no-border {

@@ -6,13 +6,14 @@ import React, {
   useEffect,
   useMemo,
 } from 'react';
-import { styled, ThemeProvider } from 'styled-components';
+import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol';
 import {
   BaseStyle,
   GlobalStyle,
-  THEME,
+  DARK_THEME,
+  LIGHT_THEME,
 } from '@arcanejs/toolkit-frontend/styling';
 
 import { GroupStateWrapper, StageContext } from '@arcanejs/toolkit-frontend';
@@ -21,6 +22,7 @@ import {
   FrontendComponentRenderer,
   FrontendComponentRenderers,
 } from '@arcanejs/toolkit-frontend/types';
+import { PreferredThemeProvider } from '../../../toolkit-frontend/src/styling';
 
 export type Props = {
   className?: string;
@@ -135,19 +137,17 @@ const Stage: React.FC<Props> = ({ className, renderers }) => {
 const StyledStage = styled(Stage)`
   width: 100%;
   height: 100%;
-  background-color: #333;
-  color: ${THEME.textNormal};
-  padding: ${THEME.sizingPx.spacing}px;
+  background-color: ${(p) => p.theme.pageBg};
+  color: ${(p) => p.theme.textNormal};
+  padding: ${(p) => p.theme.sizingPx.spacing}px;
 `;
 
 export function rootComponent(props: Props) {
   return (
-    <>
+    <PreferredThemeProvider dark={DARK_THEME} light={LIGHT_THEME}>
       <BaseStyle />
       <GlobalStyle />
-      <ThemeProvider theme={THEME}>
-        <StyledStage {...props} />
-      </ThemeProvider>
-    </>
+      <StyledStage {...props} />
+    </PreferredThemeProvider>
   );
 }

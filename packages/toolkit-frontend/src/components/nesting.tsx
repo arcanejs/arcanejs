@@ -3,8 +3,6 @@ import { styled } from 'styled-components';
 
 import { calculateClass } from '../util';
 
-import { THEME } from '../styling';
-
 type GroupColor = 'dark' | 'lighter' | 'lighterer';
 
 function nextColor(currentColor: GroupColor): GroupColor {
@@ -40,19 +38,19 @@ const NestedContent: FC<NestContentProps> = ({ className, children }) => {
 NestedContent.displayName = 'NestedContent';
 
 const StyledNestedContent: FC<NestContentProps> = styled(NestedContent)`
-  padding: ${THEME.sizingPx.spacing / 2}px;
-  box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+  padding: ${(p) => p.theme.sizingPx.spacing / 2}px;
+  box-shadow: ${(p) => p.theme.shadows.boxShadowInset};
 
   &.color-dark {
-    background: ${THEME.bgDark1};
+    background: ${(p) => p.theme.bgDark1};
   }
 
   &.color-lighter {
-    background: ${THEME.bg};
+    background: ${(p) => p.theme.bg};
   }
 
   &.color-lighterer {
-    background: ${THEME.bgLight1};
+    background: ${(p) => p.theme.bgLight1};
   }
 `;
 

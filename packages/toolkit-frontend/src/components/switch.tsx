@@ -3,11 +3,7 @@ import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol/core';
 
-import {
-  THEME,
-  touchIndicatorNormal,
-  touchIndicatorTouching,
-} from '../styling';
+import { touchIndicatorNormal, touchIndicatorTouching } from '../styling';
 import { calculateClass } from '../util';
 
 import { StageContext } from './context';
@@ -87,7 +83,7 @@ const StyledSwitch: FC<Props> = styled(Switch)`
     min-width: ${BUTTON_WIDTH + TEXT_WIDTH}px;
     height: ${SWITCH_HEIGHT}px;
     border-radius: 3px;
-    border: 1px solid ${THEME.borderDark};
+    border: 1px solid ${(p) => p.theme.borderDark};
 
     > .slider {
       position: absolute;
@@ -109,7 +105,7 @@ const StyledSwitch: FC<Props> = styled(Switch)`
         text-align: center;
         top: 0;
         line-height: ${SWITCH_HEIGHT - 2}px;
-        text-shadow: 0 -1px rgba(0, 0, 0, 0.4);
+        text-shadow: ${(p) => p.theme.shadows.textShadowActive};
         box-shadow:
           inset 0 1px 2px rgba(0, 0, 0, 0.2),
           0 1px 0 0 rgba(255, 255, 255, 0.15);
@@ -117,26 +113,22 @@ const StyledSwitch: FC<Props> = styled(Switch)`
 
       > .on-text {
         left: -40px;
-        background: linear-gradient(
-          to bottom,
-          ${THEME.hintDark1},
-          ${THEME.hint}
-        );
+        background: ${(p) => p.theme.gradients.hintPressed};
       }
 
       > .button {
         top: -1px;
         left: -1px;
         width: ${BUTTON_WIDTH}px;
-        background: linear-gradient(to bottom, #4f5053, #343436);
-        text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+        background: ${(p) => p.theme.gradients.button};
+        text-shadow: ${(p) => p.theme.shadows.textShadow};
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
         border-radius: 3px;
-        border: 1px solid ${THEME.borderDark};
+        border: 1px solid ${(p) => p.theme.borderDark};
       }
 
       > .off-text {
-        background: linear-gradient(to bottom, #242525, #37383a);
+        background: ${(p) => p.theme.gradients.buttonActive};
         left: ${BUTTON_WIDTH - 2}px;
       }
 
@@ -145,7 +137,7 @@ const StyledSwitch: FC<Props> = styled(Switch)`
       }
 
       &:hover > .button {
-        background: linear-gradient(to bottom, #5e6064, #393a3b);
+        background: ${(p) => p.theme.gradients.buttonHover};
       }
     }
   }
