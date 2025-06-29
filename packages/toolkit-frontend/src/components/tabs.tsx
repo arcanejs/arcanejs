@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol/core';
 
-import { THEME } from '../styling';
 import { calculateClass } from '../util';
 
 import { StageContext } from './context';
@@ -16,39 +15,39 @@ interface Props {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: ${THEME.borderDark};
-  border: 1px solid ${THEME.borderDark};
+  background: ${(p) => p.theme.borderDark};
+  border: 1px solid ${(p) => p.theme.borderDark};
 `;
 
 const TabList = styled.div`
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid ${THEME.borderDark};
+  border-bottom: 1px solid ${(p) => p.theme.borderDark};
 `;
 
 const TabItem = styled.div`
-  height: ${THEME.sizingPx.spacing * 3}px;
+  height: ${(p) => p.theme.sizingPx.spacing * 3}px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 ${THEME.sizingPx.spacing}px;
+  padding: 0 ${(p) => p.theme.sizingPx.spacing}px;
   cursor: pointer;
-  background: ${THEME.bgDark1};
+  background: ${(p) => p.theme.bgDark1};
   margin-right: 1px;
 
   &:hover,
   &.touching {
-    background: ${THEME.bgLight1};
+    background: ${(p) => p.theme.bgLight1};
   }
 
   &.current {
-    color: ${THEME.hint};
+    color: ${(p) => p.theme.hint};
 
     &::after {
       content: '';
-      border-bottom: 2px solid ${THEME.hint};
+      border-bottom: 2px solid ${(p) => p.theme.hint};
       display: block;
-      margin-top: ${THEME.sizingPx.spacing / 2}px;
+      margin-top: ${(p) => p.theme.sizingPx.spacing / 2}px;
     }
   }
 `;

@@ -1,4 +1,10 @@
-import { createGlobalStyle, css, RuleSet } from 'styled-components';
+import {
+  createGlobalStyle,
+  css,
+  RuleSet,
+  ThemeProvider,
+} from 'styled-components';
+import { usePreferredColorScheme } from './util';
 
 export const GlobalStyle: ReturnType<typeof createGlobalStyle> =
   createGlobalStyle`
@@ -9,7 +15,8 @@ body {
 }
 `;
 
-export const THEME = {
+export const DARK_THEME = {
+  pageBg: '#333',
   colorGreen: '#98c379',
   colorRed: '#e06c75',
   colorAmber: '#d19a66',
@@ -24,14 +31,60 @@ export const THEME = {
   hintRGB: '66, 134, 244',
   hintDark1: '#2a77f3',
   textNormal: '#F3F3F5',
+  textActive: '#ffffff',
   textMuted: '#777777',
+  shadows: {
+    boxShadowInset: 'inset 0px 0px 8px 0px rgba(0, 0, 0, 0.3)',
+    textShadow: '0 -1px rgba(0, 0, 0, 0.7)',
+    textShadowActive: '0 -1px rgba(0, 0, 0, 0.4)',
+  },
+  gradients: {
+    button: 'linear-gradient(to bottom, #4f5053, #343436)',
+    buttonHover: 'linear-gradient(to bottom, #5e6064, #393a3b)',
+    buttonActive: 'linear-gradient(to bottom, #242525, #37383a)',
+    buttonPressedHover: 'linear-gradient(to bottom, #282929, #414243)',
+    hintPressed: 'linear-gradient(to bottom,#2a77f3,#4286f4)',
+  },
   sizingPx: {
     spacing: 15,
     unitHeight: 40,
   },
 };
 
-export type Theme = typeof THEME;
+export type Theme = typeof DARK_THEME;
+
+export const LIGHT_THEME: Theme = {
+  pageBg: '#f8f9fa',
+  colorGreen: '#22863a',
+  colorRed: '#d73a49',
+  colorAmber: '#b08800',
+  bgDark1: '#e9ecef',
+  bg: '#ffffff',
+  bgLight1: '#f5f5f5',
+  borderDark: '#c7c7c7',
+  borderLight: '#d7d7d7',
+  borderLighter: '#eaecef',
+  borderLighterer: '#f6f8fa',
+  hint: '#4286f4',
+  hintRGB: '0, 92, 197',
+  hintDark1: '#2a77f3',
+  textNormal: '#24292e',
+  textActive: '#202020',
+  textMuted: '#6a737d',
+  shadows: {
+    boxShadowInset: 'inset 0px 0px 8px 0px rgba(0, 0, 0, 0.05)',
+    textShadow: '0 1px rgba(255, 255, 255, 0.7)',
+    textShadowActive: '0 1px rgba(255, 255, 255, 0.4)',
+  },
+  gradients: {
+    button: 'linear-gradient(to bottom, #e1e4e8, #d1d5da)',
+    buttonHover: 'linear-gradient(to bottom, #d1d5da, #c1c6cc)',
+    buttonActive: 'linear-gradient(to bottom, #b1b6bc, #d2d6da)',
+    buttonPressedHover: 'linear-gradient(to bottom, #a1a6ac, #91969c)',
+    hintPressed: 'linear-gradient(to bottom, #438bff, #85b3ff)',
+  },
+  sizingPx: DARK_THEME.sizingPx,
+};
 
 export const BaseStyle: ReturnType<typeof createGlobalStyle> =
   createGlobalStyle`
@@ -40,7 +93,7 @@ export const BaseStyle: ReturnType<typeof createGlobalStyle> =
 }
 
 body {
-  background: #333;
+  background: ${(p) => p.theme.pageBg};
   margin: 0;
   padding: 0;
   font-size: 14px;
@@ -50,8 +103,8 @@ body {
 
 export const buttonStateNormal: RuleSet<object> = css`
   color: ${(p) => p.theme.textNormal};
-  background: linear-gradient(to bottom, #4f5053, #343436);
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  background: ${(p) => p.theme.gradients.button};
+  text-shadow: ${(p) => p.theme.shadows.textShadow};
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     0 1px 0 0 rgba(0, 0, 0, 0.25);
@@ -60,15 +113,15 @@ export const buttonStateNormal: RuleSet<object> = css`
 export const buttonStateNormalHover: RuleSet<object> = css`
   color: ${(p) => p.theme.textNormal};
   outline-color: rgba(243, 243, 245, 0.3);
-  background: linear-gradient(to bottom, #5e6064, #393a3b);
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  background: ${(p) => p.theme.gradients.buttonHover};
+  text-shadow: ${(p) => p.theme.shadows.textShadow};
 `;
 
 export const buttonStateNormalActive: RuleSet<object> = css`
-  color: #ffffff;
+  color: ${(p) => p.theme.textNormal};
   outline-color: rgba(255, 255, 255, 0.3);
-  background: linear-gradient(to bottom, #242525, #37383a);
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.4);
+  background: ${(p) => p.theme.gradients.buttonActive};
+  text-shadow: ${(p) => p.theme.shadows.textShadowActive};
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.2),
     0 1px 0 0 rgba(255, 255, 255, 0.15);
@@ -83,7 +136,7 @@ const buttonStatePressed: RuleSet<object> = css`
 const buttonStatePressedHover: RuleSet<object> = css`
   ${buttonStateNormalActive}
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(255,255,255,0.15);
-  background: linear-gradient(to bottom, #282929, #414243);
+  background: ${(p) => p.theme.gradients.buttonPressedHover};
 `;
 
 const buttonStatePressedActive: RuleSet<object> = buttonStateNormalActive;
@@ -158,3 +211,17 @@ export const touchIndicatorTouching: RuleSet<object> = css`
   background-color: rgba(${(p) => p.theme.hintRGB}, 0.2);
   transition: border-color 0s;
 `;
+
+export const PreferredThemeProvider: React.FC<{
+  dark: Theme;
+  light: Theme;
+  children: React.ReactNode;
+}> = ({ dark, light, children }) => {
+  const theme = usePreferredColorScheme();
+
+  return (
+    <ThemeProvider theme={theme === 'dark' ? dark : light}>
+      {children}
+    </ThemeProvider>
+  );
+};

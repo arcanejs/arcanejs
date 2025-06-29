@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 import * as proto from '@arcanejs/protocol/core';
 
 import {
-  THEME,
   buttonPressed,
   buttonStateNormal,
   buttonStateNormalHover,
@@ -263,11 +262,11 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
     cursor: pointer;
     transition: all 200ms;
     border-radius: 3px;
-    border: 1px solid ${THEME.borderDark};
+    border: 1px solid ${(p) => p.theme.borderDark};
     ${buttonStateNormal}
 
     > input {
-      color: ${THEME.textNormal};
+      color: ${(p) => p.theme.textNormal};
       opacity: 0;
       margin: 0 -9px;
       padding: 6px 8px;
@@ -275,22 +274,22 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
       pointer-events: none;
       transition: all 200ms;
       border-radius: 3px;
-      background: ${THEME.bgDark1};
-      border: 1px solid ${THEME.borderDark};
+      background: ${(p) => p.theme.bgDark1};
+      border: 1px solid ${(p) => p.theme.borderDark};
       overflow: hidden;
-      box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
+      box-shadow: ${(p) => p.theme.shadows.boxShadowInset};
     }
 
     > .${CLASS_SLIDER_DISPLAY} {
       flex-grow: 1;
       margin: 0 ${SLIDER_PADDING / 2}px;
       height: 4px;
-      background: ${THEME.bgDark1};
-      border: 1px solid ${THEME.borderDark};
+      background: ${(p) => p.theme.bgDark1};
+      border: 1px solid ${(p) => p.theme.borderDark};
 
       > .inner {
         height: 100%;
-        background: ${THEME.hint};
+        background: ${(p) => p.theme.hint};
       }
 
       &.${CLASS_GRADIENT} {
@@ -299,7 +298,7 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
         > .inner {
           position: relative;
           background: none;
-          border-right: 2px solid ${THEME.borderDark};
+          border-right: 2px solid ${(p) => p.theme.borderDark};
 
           &::before {
             content: '';
@@ -308,7 +307,7 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
             top: -5px;
             bottom: -5px;
             right: -3px;
-            background: ${THEME.borderDark};
+            background: ${(p) => p.theme.borderDark};
           }
 
           &::after {
@@ -318,7 +317,7 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
             top: -4px;
             bottom: -4px;
             right: -2px;
-            background: ${THEME.textNormal};
+            background: ${(p) => p.theme.textNormal};
           }
         }
       }
@@ -358,7 +357,7 @@ const StyledSliderButton: FC<Props> = styled(SliderButton)`
     z-index: 100;
 
     .inner {
-      background: ${THEME.bgDark1};
+      background: ${(p) => p.theme.bgDark1};
       width: ${OPEN_SLIDER_WIDTH}px;
 
       > .${CLASS_SLIDER_VALUE} {

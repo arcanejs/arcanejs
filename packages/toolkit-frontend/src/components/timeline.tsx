@@ -5,8 +5,6 @@ import * as proto from '@arcanejs/protocol/core';
 
 import { Icon } from './core';
 
-import { THEME } from '../styling';
-
 interface Props {
   className?: string;
   info: proto.TimelineComponent;
@@ -38,13 +36,13 @@ const IndicatorIcon = styled(Icon)`
 const Bar = styled.div`
   width: 100%;
   height: 10px;
-  border: 1px solid ${THEME.borderDark};
-  background: ${THEME.borderDark};
+  border: 1px solid ${(p) => p.theme.borderDark};
+  background: ${(p) => p.theme.borderDark};
 `;
 
 const Fill = styled.div`
   height: 100%;
-  background: ${THEME.hint};
+  background: ${(p) => p.theme.hint};
 `;
 
 const Title = styled.div`

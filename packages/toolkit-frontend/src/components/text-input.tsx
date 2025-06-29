@@ -5,8 +5,6 @@ import * as proto from '@arcanejs/protocol/core';
 
 import { StageContext } from './context';
 
-import { THEME } from '../styling';
-
 interface Props {
   className?: string;
   info: proto.TextInputComponent;
@@ -46,12 +44,12 @@ const StyledTextInput: FC<Props> = styled(TextInput)`
   box-sizing: border-box;
   padding: 6px 8px;
   border-radius: 3px;
-  background: ${THEME.bgDark1};
-  border: 1px solid ${THEME.borderDark};
+  background: ${(p) => p.theme.bgDark1};
+  border: 1px solid ${(p) => p.theme.borderDark};
   overflow: hidden;
-  box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.3);
-  color: ${THEME.textNormal};
-  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  box-shadow: ${(p) => p.theme.shadows.boxShadowInset};
+  color: ${(p) => p.theme.textNormal};
+  text-shadow: ${(p) => p.theme.shadows.textShadow};
 
   @media (max-width: 500px) {
     flex-basis: 100%;

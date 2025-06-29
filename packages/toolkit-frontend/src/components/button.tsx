@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 import * as proto from '@arcanejs/protocol/core';
 
 import {
-  THEME,
   buttonStateNormalActive,
   rectButton,
   touchIndicatorNormal,
@@ -82,8 +81,8 @@ const StyledButton: FC<Props> = styled(Button)`
   }
 
   &.${ERROR_CLASS} {
-    color: ${THEME.colorRed};
-    border-color: ${THEME.colorRed};
+    color: ${(p) => p.theme.colorRed};
+    border-color: ${(p) => p.theme.colorRed};
   }
 
   &.${TOUCHING_CLASS} {

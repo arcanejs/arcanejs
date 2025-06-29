@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { styled } from 'styled-components';
 
 import * as proto from '@arcanejs/protocol/core';
-import { THEME } from '../styling';
 import { TRANSPARENCY_SVG_URI } from './core';
 import { calculateClass } from '../util';
 
@@ -21,7 +20,7 @@ const Wrapper = styled.div`
   background: url('${TRANSPARENCY_SVG_URI}');
   background-repeat: repeat;
   background-size: 10px;
-  border: 1px solid ${THEME.borderDark};
+  border: 1px solid ${(p) => p.theme.borderDark};
 
   &.${CLS_GROW} {
     flex-grow: 1;

@@ -4,7 +4,7 @@ export default defineConfig({
   entry: [
     'src/components/index.tsx',
     'src/components/core/index.ts',
-    'src/styling.ts',
+    'src/styling.tsx',
     'src/types.ts',
     'src/util/index.ts',
   ],

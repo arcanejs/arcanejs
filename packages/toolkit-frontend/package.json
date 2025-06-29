@@ -27,7 +27,7 @@
       "require": "./dist/components/core/index.js"
     },
     "./styling": {
-      "@arcanejs/source": "./src/styling.ts",
+      "@arcanejs/source": "./src/styling.tsx",
       "types": "./dist/styling.d.ts",
       "import": "./dist/styling.mjs",
       "require": "./dist/styling.js"
