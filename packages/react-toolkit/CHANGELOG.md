@@ -1,5 +1,20 @@
 # @arcanejs/react-toolkit
 
+## 0.10.0
+
+### Minor Changes
+
+- 911f3db: Add light-mode support
+
+  Introduce a LIGHT_THEME and use prefers-color-scheme to
+  pick between a light and dark mode.
+
+### Patch Changes
+
+- 8a7d944: Test new release
+- Updated dependencies [911f3db]
+  - @arcanejs/toolkit@3.0.0
+
 ## 0.9.1
 
 ### Patch Changes
