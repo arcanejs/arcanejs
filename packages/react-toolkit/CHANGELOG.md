@@ -1,5 +1,16 @@
 # @arcanejs/react-toolkit
 
+## 0.11.0
+
+### Minor Changes
+
+- 6c607cd: Allow theme to be specified in startArcaneFrontend
+
+### Patch Changes
+
+- Updated dependencies [6c607cd]
+  - @arcanejs/toolkit@4.0.0
+
 ## 0.10.0
 
 ### Minor Changes

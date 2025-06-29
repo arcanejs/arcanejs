@@ -1,6 +1,6 @@
 {
   "name": "@arcanejs/examples-react",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "private": true,
   "description": "Example app using toolkit",
   "scripts": {
